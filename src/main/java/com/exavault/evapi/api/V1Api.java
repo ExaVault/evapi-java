@@ -165,7 +165,7 @@ public class V1Api {
        throw new ApiException(400, "missing required params");
     }
     // create path and map variables
-    String path = "/v1/createFolder".replaceAll("\\{format\\}","json");
+    String relativePath = "/v1/createFolder".replaceAll("\\{format\\}","json");
 
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
@@ -184,7 +184,7 @@ public class V1Api {
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
+      String response = apiInvoker.invokeAPI(basePath, relativePath, "GET", queryParams, null, headerParams, formParams, contentType);
       if(response != null){
         return (Response) ApiInvoker.deserialize(response, "", Response.class);
       }
@@ -505,7 +505,7 @@ public class V1Api {
        throw new ApiException(400, "missing required params");
     }
     // create path and map variables
-    String path = "/v1/getFolders".replaceAll("\\{format\\}","json");
+    String relativePath = "/v1/getFolders".replaceAll("\\{format\\}","json");
 
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
@@ -522,7 +522,7 @@ public class V1Api {
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
+      String response = apiInvoker.invokeAPI(basePath, relativePath, "GET", queryParams, null, headerParams, formParams, contentType);
       if(response != null){
         return (ResourcePropertiesResponse) ApiInvoker.deserialize(response, "", ResourcePropertiesResponse.class);
       }
@@ -544,7 +544,7 @@ public class V1Api {
        throw new ApiException(400, "missing required params");
     }
     // create path and map variables
-    String path = "/v1/getResourceList".replaceAll("\\{format\\}","json");
+    String relativePath = "/v1/getResourceList".replaceAll("\\{format\\}","json");
 
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
@@ -573,7 +573,7 @@ public class V1Api {
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
+      String response = apiInvoker.invokeAPI(basePath, relativePath, "GET", queryParams, null, headerParams, formParams, contentType);
       if(response != null){
         return (ResourceResponse) ApiInvoker.deserialize(response, "", ResourceResponse.class);
       }
@@ -837,7 +837,7 @@ public class V1Api {
        throw new ApiException(400, "missing required params");
     }
     // create path and map variables
-    String path = "/v1/previewFile".replaceAll("\\{format\\}","json");
+    String relativePath = "/v1/previewFile".replaceAll("\\{format\\}","json");
 
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
@@ -862,7 +862,7 @@ public class V1Api {
     String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
+      String response = apiInvoker.invokeAPI(basePath, relativePath, "GET", queryParams, null, headerParams, formParams, contentType);
       if(response != null){
         return (PreviewFileResponse) ApiInvoker.deserialize(response, "", PreviewFileResponse.class);
       }
