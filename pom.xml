@@ -68,6 +68,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.9.1</version>
         <executions>
           <execution>
             <id>add_sources</id>
@@ -245,6 +246,7 @@
   </dependencies>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jersey-version>1.7</jersey-version>
     <jackson-version>2.1.4</jackson-version>
     <jodatime-version>2.3</jodatime-version>
