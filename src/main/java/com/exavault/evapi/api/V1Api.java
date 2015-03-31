@@ -111,7 +111,7 @@ public class V1Api {
       }
     }
   }
-  
+ 
   public ModifiedResourcesResponse copyResources (String access_token, List<String> filePaths, String destinationPath) throws ApiException {
     // verify required params are set
     if(access_token == null || filePaths == null || destinationPath == null ) {
