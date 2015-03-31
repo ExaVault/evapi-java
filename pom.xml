@@ -5,7 +5,7 @@
   <artifactId>evapi</artifactId>
   <packaging>jar</packaging>
   <name>evapi</name>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.0</version>
   <scm>
     <connection>scm:git:git@github.com:ExaVault/evapi-java.git</connection>
     <developerConnection>scm:git:git@github.com:ExaVault/evapi-java.git</developerConnection>
