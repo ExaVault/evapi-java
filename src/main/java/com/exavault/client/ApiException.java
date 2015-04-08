@@ -1,8 +1,11 @@
 package com.exavault.client;
 
 public class ApiException extends Exception {
-  int code = 0;
-  String message = null;
+  
+  private static final long serialVersionUID = 1L;
+  
+  private int code = 0;
+  private String message = null;
 
   public ApiException() {}
 

@@ -53,14 +53,10 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(username)))
-      queryParams.put("username", String.valueOf(username));
-    if(!"null".equals(String.valueOf(password)))
-      queryParams.put("password", String.valueOf(password));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("username", username);
+    queryParams.put("password", password);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -79,6 +75,7 @@ public class V1Api {
       }
     }
   }
+  
   public ExistingResourcesResponse checkFilesExist (String access_token, List<String> filePaths) throws ApiException {
     // verify required params are set
     if(access_token == null || filePaths == null ) {
@@ -92,14 +89,10 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(filePaths)))
-      queryParams.put("filePaths", String.valueOf(filePaths));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("filePaths", stringListToCsv(filePaths));
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -118,6 +111,7 @@ public class V1Api {
       }
     }
   }
+ 
   public ModifiedResourcesResponse copyResources (String access_token, List<String> filePaths, String destinationPath) throws ApiException {
     // verify required params are set
     if(access_token == null || filePaths == null || destinationPath == null ) {
@@ -131,16 +125,12 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(filePaths)))
-      queryParams.put("filePaths", String.valueOf(filePaths));
-    if(!"null".equals(String.valueOf(destinationPath)))
-      queryParams.put("destinationPath", String.valueOf(destinationPath));
-    String[] contentTypes = {
-      "application/json"};
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    queryParams.put("access_token", access_token);
+    queryParams.put("filePaths", stringListToCsv(filePaths));
+    queryParams.put("destinationPath", destinationPath);
+
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -159,32 +149,28 @@ public class V1Api {
       }
     }
   }
+  
   public Response createFolder (String access_token, String folderName, String path) throws ApiException {
     // verify required params are set
     if(access_token == null || folderName == null || path == null ) {
        throw new ApiException(400, "missing required params");
     }
     // create path and map variables
-    String path = "/v1/createFolder".replaceAll("\\{format\\}","json");
+    String relativePath = "/v1/createFolder".replaceAll("\\{format\\}","json");
 
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(folderName)))
-      queryParams.put("folderName", String.valueOf(folderName));
-    if(!"null".equals(String.valueOf(path)))
-      queryParams.put("path", String.valueOf(path));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("folderName", folderName);
+    queryParams.put("path", path);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
+      String response = apiInvoker.invokeAPI(basePath, relativePath, "GET", queryParams, null, headerParams, formParams, contentType);
       if(response != null){
         return (Response) ApiInvoker.deserialize(response, "", Response.class);
       }
@@ -200,6 +186,7 @@ public class V1Api {
       }
     }
   }
+  
   public Response createUser (String access_token, String username, String destinationFolder, String email, String password, String role, List<String> permissions, String nickname, Boolean locked, Boolean welcomeEmail, String timeZone) throws ApiException {
     // verify required params are set
     if(access_token == null || username == null || destinationFolder == null || email == null || password == null || role == null || permissions == null || timeZone == null ) {
@@ -213,32 +200,26 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(username)))
-      queryParams.put("username", String.valueOf(username));
-    if(!"null".equals(String.valueOf(destinationFolder)))
-      queryParams.put("destinationFolder", String.valueOf(destinationFolder));
-    if(!"null".equals(String.valueOf(email)))
-      queryParams.put("email", String.valueOf(email));
-    if(!"null".equals(String.valueOf(password)))
-      queryParams.put("password", String.valueOf(password));
-    if(!"null".equals(String.valueOf(role)))
-      queryParams.put("role", String.valueOf(role));
-    if(!"null".equals(String.valueOf(permissions)))
-      queryParams.put("permissions", String.valueOf(permissions));
-    if(!"null".equals(String.valueOf(timeZone)))
-      queryParams.put("timeZone", String.valueOf(timeZone));
-    if(!"null".equals(String.valueOf(nickname)))
-      queryParams.put("nickname", String.valueOf(nickname));
-    if(!"null".equals(String.valueOf(locked)))
-      queryParams.put("locked", String.valueOf(locked));
-    if(!"null".equals(String.valueOf(welcomeEmail)))
-      queryParams.put("welcomeEmail", String.valueOf(welcomeEmail));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("username", username);
+    queryParams.put("destinationFolder", destinationFolder);
+    queryParams.put("email", email);
+    queryParams.put("password", password);
+    queryParams.put("role", role);
+    queryParams.put("permissions", stringListToCsv(permissions));
+    queryParams.put("timeZone", timeZone);
+    
+    if (nickname != null) {
+      queryParams.put("nickname", nickname);
+    }
+    if (locked != null) {
+      queryParams.put("locked", locked.toString());
+    }
+    if (welcomeEmail != null) {
+      queryParams.put("welcomeEmail", welcomeEmail.toString());
+    }
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -257,6 +238,7 @@ public class V1Api {
       }
     }
   }
+  
   public FilesResponse deleteResources (String access_token, List<String> filePaths) throws ApiException {
     // verify required params are set
     if(access_token == null || filePaths == null ) {
@@ -270,14 +252,10 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(filePaths)))
-      queryParams.put("filePaths", String.valueOf(filePaths));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("filePaths", stringListToCsv(filePaths));
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -296,6 +274,7 @@ public class V1Api {
       }
     }
   }
+  
   public Response deleteUser (String access_token, String username) throws ApiException {
     // verify required params are set
     if(access_token == null || username == null ) {
@@ -309,14 +288,10 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(username)))
-      queryParams.put("username", String.valueOf(username));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("username", username);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -335,6 +310,7 @@ public class V1Api {
       }
     }
   }
+  
   public AccountResponse getAccount (String access_token) throws ApiException {
     // verify required params are set
     if(access_token == null ) {
@@ -348,12 +324,9 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    String[] contentTypes = {
-      "application/json"};
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    queryParams.put("access_token", access_token);
+    
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -372,6 +345,7 @@ public class V1Api {
       }
     }
   }
+  
   public UserResponse getCurrentUser (String access_token) throws ApiException {
     // verify required params are set
     if(access_token == null ) {
@@ -384,13 +358,10 @@ public class V1Api {
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
+    
+    queryParams.put("access_token", access_token);
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    String[] contentTypes = {
-      "application/json"};
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -409,6 +380,7 @@ public class V1Api {
       }
     }
   }
+  
   public UrlResponse getDownloadFileUrl (String access_token, String filePaths, String downloadName) throws ApiException {
     // verify required params are set
     if(access_token == null || filePaths == null ) {
@@ -422,16 +394,13 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(filePaths)))
-      queryParams.put("filePaths", String.valueOf(filePaths));
-    if(!"null".equals(String.valueOf(downloadName)))
-      queryParams.put("downloadName", String.valueOf(downloadName));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("filePaths", filePaths);
+    if(downloadName != null) {
+      queryParams.put("downloadName", downloadName);
+    }
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -450,6 +419,7 @@ public class V1Api {
       }
     }
   }
+  
   public LogResponse getFileActivityLogs (String access_token, String filterBy, String filter, Integer itemLimit, Integer offset, String sortBy, String sortOrder) throws ApiException {
     // verify required params are set
     if(access_token == null ) {
@@ -463,24 +433,27 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(offset)))
+    queryParams.put("access_token", access_token);
+    if(offset != null) {
       queryParams.put("offset", String.valueOf(offset));
-    if(!"null".equals(String.valueOf(sortBy)))
-      queryParams.put("sortBy", String.valueOf(sortBy));
-    if(!"null".equals(String.valueOf(sortOrder)))
-      queryParams.put("sortOrder", String.valueOf(sortOrder));
-    if(!"null".equals(String.valueOf(filterBy)))
-      queryParams.put("filterBy", String.valueOf(filterBy));
-    if(!"null".equals(String.valueOf(filter)))
-      queryParams.put("filter", String.valueOf(filter));
-    if(!"null".equals(String.valueOf(itemLimit)))
+    }
+    if(sortBy != null) {
+      queryParams.put("sortBy", sortBy);
+    }
+    if(sortOrder != null) {
+      queryParams.put("sortOrder", sortOrder);
+    }
+    if(filterBy != null) {
+      queryParams.put("filterBy", filterBy);
+    }
+    if(filter != null) {
+      queryParams.put("filter", filter);
+    }
+    if(itemLimit != null) {
       queryParams.put("itemLimit", String.valueOf(itemLimit));
-    String[] contentTypes = {
-      "application/json"};
+    }
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -499,30 +472,27 @@ public class V1Api {
       }
     }
   }
+  
   public ResourcePropertiesResponse getFolders (String access_token, String path) throws ApiException {
     // verify required params are set
     if(access_token == null || path == null ) {
        throw new ApiException(400, "missing required params");
     }
     // create path and map variables
-    String path = "/v1/getFolders".replaceAll("\\{format\\}","json");
+    String relativePath = "/v1/getFolders".replaceAll("\\{format\\}","json");
 
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(path)))
-      queryParams.put("path", String.valueOf(path));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("path", path);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
+      String response = apiInvoker.invokeAPI(basePath, relativePath, "GET", queryParams, null, headerParams, formParams, contentType);
       if(response != null){
         return (ResourcePropertiesResponse) ApiInvoker.deserialize(response, "", ResourcePropertiesResponse.class);
       }
@@ -538,42 +508,37 @@ public class V1Api {
       }
     }
   }
+  
   public ResourceResponse getResourceList (String access_token, String path, String sortBy, String sortOrder, Integer offset, Integer limit, Boolean detailed, String pattern) throws ApiException {
     // verify required params are set
     if(access_token == null || path == null || sortBy == null || sortOrder == null || offset == null || limit == null ) {
        throw new ApiException(400, "missing required params");
     }
     // create path and map variables
-    String path = "/v1/getResourceList".replaceAll("\\{format\\}","json");
+    String relativePath = "/v1/getResourceList".replaceAll("\\{format\\}","json");
 
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(path)))
-      queryParams.put("path", String.valueOf(path));
-    if(!"null".equals(String.valueOf(sortBy)))
-      queryParams.put("sortBy", String.valueOf(sortBy));
-    if(!"null".equals(String.valueOf(sortOrder)))
-      queryParams.put("sortOrder", String.valueOf(sortOrder));
-    if(!"null".equals(String.valueOf(offset)))
-      queryParams.put("offset", String.valueOf(offset));
-    if(!"null".equals(String.valueOf(limit)))
-      queryParams.put("limit", String.valueOf(limit));
-    if(!"null".equals(String.valueOf(detailed)))
-      queryParams.put("detailed", String.valueOf(detailed));
-    if(!"null".equals(String.valueOf(pattern)))
-      queryParams.put("pattern", String.valueOf(pattern));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("path", path);
+    queryParams.put("sortBy", sortBy);
+    queryParams.put("sortOrder", sortOrder);
+    queryParams.put("offset", String.valueOf(offset));
+    queryParams.put("limit", String.valueOf(limit));   
+    if(detailed != null) {
+      queryParams.put("detailed", detailed.toString());
+    }
+    if(pattern != null) {
+      queryParams.put("pattern", pattern);
+    }
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
+      String response = apiInvoker.invokeAPI(basePath, relativePath, "GET", queryParams, null, headerParams, formParams, contentType);
       if(response != null){
         return (ResourceResponse) ApiInvoker.deserialize(response, "", ResourceResponse.class);
       }
@@ -589,6 +554,7 @@ public class V1Api {
       }
     }
   }
+  
   public ResourcePropertiesResponse getResourceProperties (String access_token, List<String> filePaths) throws ApiException {
     // verify required params are set
     if(access_token == null || filePaths == null ) {
@@ -602,14 +568,10 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(filePaths)))
-      queryParams.put("filePaths", String.valueOf(filePaths));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("filePaths", stringListToCsv(filePaths));
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -628,6 +590,7 @@ public class V1Api {
       }
     }
   }
+  
   public UrlResponse getUploadFileUrl (String access_token, Integer fileSize, String destinationPath, Boolean allowOverwrite, Boolean resume) throws ApiException {
     // verify required params are set
     if(access_token == null || fileSize == null || destinationPath == null ) {
@@ -641,20 +604,18 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(fileSize)))
-      queryParams.put("fileSize", String.valueOf(fileSize));
-    if(!"null".equals(String.valueOf(destinationPath)))
-      queryParams.put("destinationPath", String.valueOf(destinationPath));
-    if(!"null".equals(String.valueOf(allowOverwrite)))
-      queryParams.put("allowOverwrite", String.valueOf(allowOverwrite));
-    if(!"null".equals(String.valueOf(resume)))
-      queryParams.put("resume", String.valueOf(resume));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("fileSize", String.valueOf(fileSize));
+    queryParams.put("destinationPath", destinationPath);
+    
+    if(allowOverwrite != null) {
+      queryParams.put("allowOverwrite", allowOverwrite.toString());
+    }
+    if(resume != null) {
+      queryParams.put("resume", resume.toString());
+    }
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -673,6 +634,7 @@ public class V1Api {
       }
     }
   }
+  
   public UserResponse getUser (String access_token, String username) throws ApiException {
     // verify required params are set
     if(access_token == null || username == null ) {
@@ -686,14 +648,10 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(username)))
-      queryParams.put("username", String.valueOf(username));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("username", username);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -712,6 +670,7 @@ public class V1Api {
       }
     }
   }
+  
   public UsersResponse getUsers (String access_token, String sortBy, String sortOrder) throws ApiException {
     // verify required params are set
     if(access_token == null || sortBy == null || sortOrder == null ) {
@@ -725,16 +684,11 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(sortBy)))
-      queryParams.put("sortBy", String.valueOf(sortBy));
-    if(!"null".equals(String.valueOf(sortOrder)))
-      queryParams.put("sortOrder", String.valueOf(sortOrder));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("sortBy", sortBy);
+    queryParams.put("sortOrder", sortOrder);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -753,6 +707,7 @@ public class V1Api {
       }
     }
   }
+  
   public Response logoutUser (String access_token) throws ApiException {
     // verify required params are set
     if(access_token == null ) {
@@ -766,12 +721,9 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -790,6 +742,7 @@ public class V1Api {
       }
     }
   }
+  
   public ModifiedResourcesResponse moveResources (String access_token, List<String> filePaths, String destinationPath) throws ApiException {
     // verify required params are set
     if(access_token == null || filePaths == null || destinationPath == null ) {
@@ -803,16 +756,11 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(filePaths)))
-      queryParams.put("filePaths", String.valueOf(filePaths));
-    if(!"null".equals(String.valueOf(destinationPath)))
-      queryParams.put("destinationPath", String.valueOf(destinationPath));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", String.valueOf(access_token));
+    queryParams.put("filePaths", stringListToCsv(filePaths));
+    queryParams.put("destinationPath", destinationPath);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType ="application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -831,38 +779,38 @@ public class V1Api {
       }
     }
   }
+  
   public PreviewFileResponse previewFile (String access_token, String path, String size, Integer width, Integer height, Integer page) throws ApiException {
     // verify required params are set
     if(access_token == null || path == null || size == null ) {
        throw new ApiException(400, "missing required params");
     }
     // create path and map variables
-    String path = "/v1/previewFile".replaceAll("\\{format\\}","json");
+    String relativePath = "/v1/previewFile".replaceAll("\\{format\\}","json");
 
     // query params
     Map<String, String> queryParams = new HashMap<String, String>();
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(path)))
-      queryParams.put("path", String.valueOf(path));
-    if(!"null".equals(String.valueOf(size)))
-      queryParams.put("size", String.valueOf(size));
-    if(!"null".equals(String.valueOf(width)))
+    queryParams.put("access_token", access_token);
+    queryParams.put("path", path);
+    queryParams.put("size", size);
+    
+    if(width != null) {
       queryParams.put("width", String.valueOf(width));
-    if(!"null".equals(String.valueOf(height)))
+    }
+    if(height != null) {
       queryParams.put("height", String.valueOf(height));
-    if(!"null".equals(String.valueOf(page)))
+    }
+    if(page != null) {
       queryParams.put("page", String.valueOf(page));
-    String[] contentTypes = {
-      "application/json"};
+    }
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
-      String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
+      String response = apiInvoker.invokeAPI(basePath, relativePath, "GET", queryParams, null, headerParams, formParams, contentType);
       if(response != null){
         return (PreviewFileResponse) ApiInvoker.deserialize(response, "", PreviewFileResponse.class);
       }
@@ -878,6 +826,7 @@ public class V1Api {
       }
     }
   }
+  
   public Response renameResource (String access_token, String filePath, String newName) throws ApiException {
     // verify required params are set
     if(access_token == null || filePath == null || newName == null ) {
@@ -891,16 +840,11 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(filePath)))
-      queryParams.put("filePath", String.valueOf(filePath));
-    if(!"null".equals(String.valueOf(newName)))
-      queryParams.put("newName", String.valueOf(newName));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("filePath", filePath);
+    queryParams.put("newName", newName);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -919,6 +863,7 @@ public class V1Api {
       }
     }
   }
+  
   public Response updateUser (String access_token, Integer userId, String username, String nickname, String email, String destinationFolder, String password, Boolean locked, String role, List<String> permissions) throws ApiException {
     // verify required params are set
     if(access_token == null || userId == null ) {
@@ -932,30 +877,35 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(userId)))
-      queryParams.put("userId", String.valueOf(userId));
-    if(!"null".equals(String.valueOf(username)))
-      queryParams.put("username", String.valueOf(username));
-    if(!"null".equals(String.valueOf(nickname)))
-      queryParams.put("nickname", String.valueOf(nickname));
-    if(!"null".equals(String.valueOf(email)))
-      queryParams.put("email", String.valueOf(email));
-    if(!"null".equals(String.valueOf(destinationFolder)))
-      queryParams.put("destinationFolder", String.valueOf(destinationFolder));
-    if(!"null".equals(String.valueOf(password)))
-      queryParams.put("password", String.valueOf(password));
-    if(!"null".equals(String.valueOf(locked)))
-      queryParams.put("locked", String.valueOf(locked));
-    if(!"null".equals(String.valueOf(role)))
-      queryParams.put("role", String.valueOf(role));
-    if(!"null".equals(String.valueOf(permissions)))
-      queryParams.put("permissions", String.valueOf(permissions));
-    String[] contentTypes = {
-      "application/json"};
-
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    queryParams.put("access_token", access_token);
+    queryParams.put("userId", String.valueOf(userId));
+    
+    if(username != null) {
+      queryParams.put("username", username);
+    }
+    if(nickname != null) {
+      queryParams.put("nickname", nickname);
+    }
+    if(email != null) {
+      queryParams.put("email", email);
+    }
+    if(destinationFolder != null) {
+      queryParams.put("destinationFolder", destinationFolder);
+    }
+    if(password != null) {
+      queryParams.put("password", password);
+    }
+    if(locked != null) {
+      queryParams.put("locked", locked.toString());
+    }
+    if(role != null) {
+      queryParams.put("role", role);
+    }
+    if(permissions != null) {
+      queryParams.put("permissions", stringListToCsv(permissions));
+    }
+    
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -974,6 +924,7 @@ public class V1Api {
       }
     }
   }
+  
   public AvailableUserResponse userAvailable (String access_token, String username) throws ApiException {
     // verify required params are set
     if(access_token == null || username == null ) {
@@ -987,14 +938,10 @@ public class V1Api {
     Map<String, String> headerParams = new HashMap<String, String>();
     Map<String, String> formParams = new HashMap<String, String>();
 
-    if(!"null".equals(String.valueOf(access_token)))
-      queryParams.put("access_token", String.valueOf(access_token));
-    if(!"null".equals(String.valueOf(username)))
-      queryParams.put("username", String.valueOf(username));
-    String[] contentTypes = {
-      "application/json"};
+    queryParams.put("access_token", access_token);
+    queryParams.put("username", username);
 
-    String contentType = contentTypes.length > 0 ? contentTypes[0] : "application/json";
+    String contentType = "application/json";
 
     try {
       String response = apiInvoker.invokeAPI(basePath, path, "GET", queryParams, null, headerParams, formParams, contentType);
@@ -1013,5 +960,17 @@ public class V1Api {
       }
     }
   }
+  
+  private String stringListToCsv(List<String> list) {
+	  StringBuilder builder = new StringBuilder();
+	  for (String item : list) {
+		  builder.append(item).append(",");
+	  }
+	  String csv = builder.toString();
+	  if (csv != null && csv.length() > 0) {
+		  csv = csv.substring(0, csv.length() - 1);
+	  }
+	  return csv;
   }
+}
 
