@@ -7,9 +7,9 @@
   <name>evapi</name>
   <version>1.0.0</version>
   <scm>
-    <connection>scm:git:git@github.com:ExaVault/evapi-java.git</connection>
-    <developerConnection>scm:git:git@github.com:ExaVault/evapi-java.git</developerConnection>
-    <url>https://github.com/ExaVault/evapi-java</url>
+    <connection>scm:git:git@github.com:pentasoft/evapi-java.git</connection>
+    <developerConnection>scm:git:git@github.com:pentasoft/evapi-java.git</developerConnection>
+    <url>https://github.com/pentasoft/evapi-java</url>
   </scm>
   <prerequisites>
     <maven>2.2.0</maven>
