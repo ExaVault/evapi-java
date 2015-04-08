@@ -7,7 +7,6 @@
 package com.exavault.evapi.model;
 
 import java.util.*;
-import java.io.File;
 import com.exavault.evapi.model.Error;
 public class FilesResponse {
   private Integer success = null;
