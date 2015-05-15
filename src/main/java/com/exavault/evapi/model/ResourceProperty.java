@@ -4,10 +4,10 @@
  * NOTE: This file was generated automatically. Do not modify by hand.
  */ 
 
-package com.exavault.evapi.model;
+package main.java.com.exavault.evapi.model;
 
 import java.util.*;
-import com.exavault.evapi.model.Share;
+import main.java.com.exavault.evapi.model.Share;
 public class ResourceProperty {
   private Integer fileCount = null;
   private String file = null;

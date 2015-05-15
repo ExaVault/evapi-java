@@ -1,4 +1,4 @@
-package com.exavault.client;
+package main.java.com.exavault.client;
 
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.joda.*;

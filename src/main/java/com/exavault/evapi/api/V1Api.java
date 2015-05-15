@@ -4,24 +4,24 @@
  * NOTE: This file was generated automatically. Do not modify by hand.
  */
 
-package com.exavault.evapi.api;
+package main.java.com.exavault.evapi.api;
 
-import com.exavault.client.ApiException;
-import com.exavault.client.ApiInvoker;
-import com.exavault.evapi.model.LogResponse;
-import com.exavault.evapi.model.AvailableUserResponse;
-import com.exavault.evapi.model.PreviewFileResponse;
-import com.exavault.evapi.model.UrlResponse;
-import com.exavault.evapi.model.AccountResponse;
-import com.exavault.evapi.model.UsersResponse;
-import com.exavault.evapi.model.ModifiedResourcesResponse;
-import com.exavault.evapi.model.UserResponse;
-import com.exavault.evapi.model.AuthResponse;
-import com.exavault.evapi.model.ResourceResponse;
-import com.exavault.evapi.model.Response;
-import com.exavault.evapi.model.FilesResponse;
-import com.exavault.evapi.model.ResourcePropertiesResponse;
-import com.exavault.evapi.model.ExistingResourcesResponse;
+import main.java.com.exavault.client.ApiException;
+import main.java.com.exavault.client.ApiInvoker;
+import main.java.com.exavault.evapi.model.LogResponse;
+import main.java.com.exavault.evapi.model.AvailableUserResponse;
+import main.java.com.exavault.evapi.model.PreviewFileResponse;
+import main.java.com.exavault.evapi.model.UrlResponse;
+import main.java.com.exavault.evapi.model.AccountResponse;
+import main.java.com.exavault.evapi.model.UsersResponse;
+import main.java.com.exavault.evapi.model.ModifiedResourcesResponse;
+import main.java.com.exavault.evapi.model.UserResponse;
+import main.java.com.exavault.evapi.model.AuthResponse;
+import main.java.com.exavault.evapi.model.ResourceResponse;
+import main.java.com.exavault.evapi.model.Response;
+import main.java.com.exavault.evapi.model.FilesResponse;
+import main.java.com.exavault.evapi.model.ResourcePropertiesResponse;
+import main.java.com.exavault.evapi.model.ExistingResourcesResponse;
 import java.util.*;
 
 public class V1Api {

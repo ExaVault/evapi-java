@@ -1,18 +1,20 @@
-package com.exavault.client;
+package main.java.com.exavault.client;
+  
+import com.fasterxml.jackson.databind.JavaType;
 
-import com.fasterxml.jackson.databind.*;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.client.WebResource.Builder;
 
-import javax.ws.rs.core.Response.Status.Family;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.io.UnsupportedEncodingException;
+
+import javax.ws.rs.core.Response.Status.Family;
 
 public class ApiInvoker {
   private static ApiInvoker INSTANCE = new ApiInvoker();

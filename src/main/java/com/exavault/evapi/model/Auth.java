@@ -4,7 +4,7 @@
  * NOTE: This file was generated automatically. Do not modify by hand.
  */ 
 
-package com.exavault.evapi.model;
+package main.java.com.exavault.evapi.model;
 
 public class Auth {
   private String username = null;

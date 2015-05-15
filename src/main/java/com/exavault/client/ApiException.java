@@ -1,4 +1,4 @@
-package com.exavault.client;
+package main.java.com.exavault.client;
 
 public class ApiException extends Exception {
   

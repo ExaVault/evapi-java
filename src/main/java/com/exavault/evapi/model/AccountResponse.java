@@ -4,10 +4,10 @@
  * NOTE: This file was generated automatically. Do not modify by hand.
  */ 
 
-package com.exavault.evapi.model;
+package main.java.com.exavault.evapi.model;
 
-import com.exavault.evapi.model.Account;
-import com.exavault.evapi.model.Error;
+import main.java.com.exavault.evapi.model.Account;
+import main.java.com.exavault.evapi.model.Error;
 public class AccountResponse {
   private Integer success = null;
   private Error error = null;

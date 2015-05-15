@@ -1,4 +1,4 @@
-package com.exavault.evapi.model;
+package main.java.com.exavault.evapi.model;
 
 /**
  * File upload response. Not compatible with Response.

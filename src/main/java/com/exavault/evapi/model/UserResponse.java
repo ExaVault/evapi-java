@@ -4,10 +4,10 @@
  * NOTE: This file was generated automatically. Do not modify by hand.
  */ 
 
-package com.exavault.evapi.model;
+package main.java.com.exavault.evapi.model;
 
-import com.exavault.evapi.model.Error;
-import com.exavault.evapi.model.User;
+import main.java.com.exavault.evapi.model.Error;
+import main.java.com.exavault.evapi.model.User;
 public class UserResponse {
   private Integer success = null;
   private Error error = null;
