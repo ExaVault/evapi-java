@@ -1,20 +1,12 @@
 package com.exavault.client;
 
-import com.fasterxml.jackson.core.JsonGenerator.Feature;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.client.WebResource.Builder;
 
 import javax.ws.rs.core.Response.Status.Family;
-import javax.ws.rs.core.MediaType;
-
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
@@ -44,11 +36,11 @@ public class ApiInvoker {
     }
   }
 
-  public static Object deserialize(String json, String containerType, Class cls) throws ApiException {
+  public static Object deserialize(String json, String containerType, Class<?> cls) throws ApiException {
     try{
       if("List".equals(containerType)) {
         JavaType typeInfo = JsonUtil.getJsonMapper().getTypeFactory().constructCollectionType(List.class, cls);
-        List response = (List<?>) JsonUtil.getJsonMapper().readValue(json, typeInfo);
+        List<?> response = (List<?>) JsonUtil.getJsonMapper().readValue(json, typeInfo);
         return response;
       }
       else if(String.class.equals(cls)) {
