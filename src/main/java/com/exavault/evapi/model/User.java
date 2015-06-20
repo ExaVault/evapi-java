@@ -17,6 +17,7 @@ public class User {
   private String username = null;
   private String nickname = null;
   private String email = null;
+  private String expiration = null;
   private String homeDir = null;
   private Boolean download = null;
   private Boolean upload = null;
@@ -96,6 +97,13 @@ public class User {
   }
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getExpiration() {
+    return expiration;
+  }
+  public void setExpiration(String expiration) {
+    this.expiration = expiration;
   }
 
   public String getHomeDir() {
@@ -189,6 +197,7 @@ public class User {
     sb.append("  username: ").append(username).append("\n");
     sb.append("  nickname: ").append(nickname).append("\n");
     sb.append("  email: ").append(email).append("\n");
+    sb.append("  expiration: ").append(expiration).append("\n");
     sb.append("  homeDir: ").append(homeDir).append("\n");
     sb.append("  download: ").append(download).append("\n");
     sb.append("  upload: ").append(upload).append("\n");

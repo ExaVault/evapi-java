@@ -28,7 +28,7 @@ public class Account {
   private Boolean showReferralLinks = null;
   private String externalDomains = null;
   private Boolean freeTrial = null;
-  private String appliedPromotion = null;
+  private String appliedTrial = null;
   private String clientId = null;
   private String created = null;
   private String modified = null;
@@ -179,11 +179,11 @@ public class Account {
     this.freeTrial = freeTrial;
   }
 
-  public String getAppliedPromotion() {
-    return appliedPromotion;
+  public String getAppliedTrial() {
+    return appliedTrial;
   }
-  public void setAppliedPromotion(String appliedPromotion) {
-    this.appliedPromotion = appliedPromotion;
+  public void setAppliedTrial(String appliedTrial) {
+    this.appliedTrial = appliedTrial;
   }
 
   public String getClientId() {
@@ -232,7 +232,7 @@ public class Account {
     sb.append("  showReferralLinks: ").append(showReferralLinks).append("\n");
     sb.append("  externalDomains: ").append(externalDomains).append("\n");
     sb.append("  freeTrial: ").append(freeTrial).append("\n");
-    sb.append("  appliedPromotion: ").append(appliedPromotion).append("\n");
+    sb.append("  appliedTrial: ").append(appliedTrial).append("\n");
     sb.append("  clientId: ").append(clientId).append("\n");
     sb.append("  created: ").append(created).append("\n");
     sb.append("  modified: ").append(modified).append("\n");
