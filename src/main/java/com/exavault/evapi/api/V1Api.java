@@ -30,9 +30,15 @@ import main.java.com.exavault.evapi.model.ExistingResourcesResponse;
 import main.java.com.exavault.evapi.model.SharesResponse;
 import java.util.*;
 
+// EV NOTE: use multimap functionality for serialization of "array"
+// request parameters
+import com.google.common.collect.Multimap;
+import com.google.common.collect.HashMultimap;
+
+
 public class V1Api {
     
-    String basePath = "https://api.exavault.com";
+    String basePath = "https://evapi-dev-dgleason.exavault.com";
     ApiInvoker apiInvoker = ApiInvoker.getInstance();
 
     public ApiInvoker getInvoker() {
@@ -48,21 +54,17 @@ public class V1Api {
     }
 
     /**
-     * This function is needed to properly serialize a List<String> to
-     * a csv
+     * This function is needed to properly convert an array to a list
+     * of URL encoded params.
      *
-     * @author Juan Carlos González
+     * @param String              paramName
+     * @param List<String>        list
+     * @param Map<String, String> params
      */
-    private String serialize(List<String> list) {
-        StringBuilder builder = new StringBuilder();
+    private void addParam(String paramName, List<String> list, Multimap<String, String> params) {
         for (String item : list) {
-            builder.append(item).append(",");
+            params.put(paramName + "[]", String.valueOf(item));
         }
-        String csv = builder.toString();
-        if (csv != null && csv.length() > 0) {
-            csv = csv.substring(0, csv.length() - 1);
-        }
-        return csv;
     }
 
     // EV NOTE: These dummy methods are needed because we can't
@@ -70,16 +72,16 @@ public class V1Api {
     // List<String> needs to be serialized so we simply return the
     // object.
 
-    private String serialize(Boolean b) {
-        return String.valueOf(b);
+    private void addParam(String paramName, Boolean b, Multimap<String, String> params) {
+        params.put(paramName, String.valueOf(b));
     }
 
-    private String serialize(Integer i) {
-        return String.valueOf(i);
+    private void addParam(String paramName, Integer i, Multimap<String, String> params) {
+        params.put(paramName, String.valueOf(i));
     }
 
-    private String serialize(String s) {
-        return String.valueOf(s);
+    private void addParam(String paramName, String s, Multimap<String, String> params) {
+        params.put(paramName, String.valueOf(s));
     }
 
     public AuthResponse authenticateUser (String username, String password) throws ApiException {
@@ -90,14 +92,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/authenticateUser".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("username", serialize(username));
-        formParams.put("password", serialize(password));
-        String contentType = "application/json";
+        addParam("username", username, formParams);
+        addParam("password", password, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -124,14 +125,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/checkFilesExist".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("filePaths", serialize(filePaths));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("filePaths", filePaths, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -158,15 +158,14 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/copyResources".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("filePaths", serialize(filePaths));
-        formParams.put("destinationPath", serialize(destinationPath));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("filePaths", filePaths, formParams);
+        addParam("destinationPath", destinationPath, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -193,15 +192,14 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/createFolder".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("folderName", serialize(folderName));
-        formParams.put("path", serialize(path));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("folderName", folderName, formParams);
+        addParam("path", path, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -228,18 +226,17 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/createNotification".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("path", serialize(path));
-        formParams.put("action", serialize(action));
-        formParams.put("usernames", serialize(usernames));
-        formParams.put("sendEmail", serialize(sendEmail));
-        formParams.put("emails", serialize(emails));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("path", path, formParams);
+        addParam("action", action, formParams);
+        addParam("usernames", usernames, formParams);
+        addParam("sendEmail", sendEmail, formParams);
+        addParam("emails", emails, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -266,29 +263,28 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/createShare".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("type", serialize(type));
-        formParams.put("name", serialize(name));
-        formParams.put("filePaths", serialize(filePaths));
-        formParams.put("subject", serialize(subject));
-        formParams.put("message", serialize(message));
-        formParams.put("emails", serialize(emails));
-        formParams.put("ccEmail", serialize(ccEmail));
-        formParams.put("requireEmail", serialize(requireEmail));
-        formParams.put("accessMode", serialize(accessMode));
-        formParams.put("embed", serialize(embed));
-        formParams.put("isPublic", serialize(isPublic));
-        formParams.put("password", serialize(password));
-        formParams.put("expiration", serialize(expiration));
-        formParams.put("hasNotification", serialize(hasNotification));
-        formParams.put("notificationEmails", serialize(notificationEmails));
-        formParams.put("fileDropCreateFolders", serialize(fileDropCreateFolders));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("type", type, formParams);
+        addParam("name", name, formParams);
+        addParam("filePaths", filePaths, formParams);
+        addParam("subject", subject, formParams);
+        addParam("message", message, formParams);
+        addParam("emails", emails, formParams);
+        addParam("ccEmail", ccEmail, formParams);
+        addParam("requireEmail", requireEmail, formParams);
+        addParam("accessMode", accessMode, formParams);
+        addParam("embed", embed, formParams);
+        addParam("isPublic", isPublic, formParams);
+        addParam("password", password, formParams);
+        addParam("expiration", expiration, formParams);
+        addParam("hasNotification", hasNotification, formParams);
+        addParam("notificationEmails", notificationEmails, formParams);
+        addParam("fileDropCreateFolders", fileDropCreateFolders, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -315,24 +311,23 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/createUser".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("username", serialize(username));
-        formParams.put("destinationFolder", serialize(destinationFolder));
-        formParams.put("email", serialize(email));
-        formParams.put("password", serialize(password));
-        formParams.put("role", serialize(role));
-        formParams.put("permissions", serialize(permissions));
-        formParams.put("timeZone", serialize(timeZone));
-        formParams.put("nickname", serialize(nickname));
-        formParams.put("expiration", serialize(expiration));
-        formParams.put("locked", serialize(locked));
-        formParams.put("welcomeEmail", serialize(welcomeEmail));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("username", username, formParams);
+        addParam("destinationFolder", destinationFolder, formParams);
+        addParam("email", email, formParams);
+        addParam("password", password, formParams);
+        addParam("role", role, formParams);
+        addParam("permissions", permissions, formParams);
+        addParam("timeZone", timeZone, formParams);
+        addParam("nickname", nickname, formParams);
+        addParam("expiration", expiration, formParams);
+        addParam("locked", locked, formParams);
+        addParam("welcomeEmail", welcomeEmail, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -359,14 +354,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/deleteNotification".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("id", serialize(id));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("id", id, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -393,14 +387,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/deleteResources".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("filePaths", serialize(filePaths));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("filePaths", filePaths, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -427,14 +420,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/deleteShare".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("id", serialize(id));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("id", id, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -461,14 +453,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/deleteUser".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("username", serialize(username));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("username", username, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -495,13 +486,12 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getAccount".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -528,13 +518,12 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getCurrentUser".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -561,15 +550,14 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getDownloadFileUrl".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("filePaths", serialize(filePaths));
-        formParams.put("downloadName", serialize(downloadName));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("filePaths", filePaths, formParams);
+        addParam("downloadName", downloadName, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -596,19 +584,18 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getFileActivityLogs".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("offset", serialize(offset));
-        formParams.put("sortBy", serialize(sortBy));
-        formParams.put("sortOrder", serialize(sortOrder));
-        formParams.put("filterBy", serialize(filterBy));
-        formParams.put("filter", serialize(filter));
-        formParams.put("itemLimit", serialize(itemLimit));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("offset", offset, formParams);
+        addParam("sortBy", sortBy, formParams);
+        addParam("sortOrder", sortOrder, formParams);
+        addParam("filterBy", filterBy, formParams);
+        addParam("filter", filter, formParams);
+        addParam("itemLimit", itemLimit, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -635,14 +622,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getFolders".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("path", serialize(path));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("path", path, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -669,14 +655,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getNotification".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("id", serialize(id));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("id", id, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -703,17 +688,16 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getNotifications".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("type", serialize(type));
-        formParams.put("sortBy", serialize(sortBy));
-        formParams.put("sortOrder", serialize(sortOrder));
-        formParams.put("filter", serialize(filter));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("type", type, formParams);
+        addParam("sortBy", sortBy, formParams);
+        addParam("sortOrder", sortOrder, formParams);
+        addParam("filter", filter, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -740,13 +724,12 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getNotificationActivity".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -773,20 +756,19 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getResourceList".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("path", serialize(path));
-        formParams.put("sortBy", serialize(sortBy));
-        formParams.put("sortOrder", serialize(sortOrder));
-        formParams.put("offset", serialize(offset));
-        formParams.put("limit", serialize(limit));
-        formParams.put("detailed", serialize(detailed));
-        formParams.put("pattern", serialize(pattern));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("path", path, formParams);
+        addParam("sortBy", sortBy, formParams);
+        addParam("sortOrder", sortOrder, formParams);
+        addParam("offset", offset, formParams);
+        addParam("limit", limit, formParams);
+        addParam("detailed", detailed, formParams);
+        addParam("pattern", pattern, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -813,14 +795,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getResourceProperties".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("filePaths", serialize(filePaths));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("filePaths", filePaths, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -847,14 +828,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getShare".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("id", serialize(id));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("id", id, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -881,20 +861,19 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getShares".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("type", serialize(type));
-        formParams.put("sortBy", serialize(sortBy));
-        formParams.put("sortOrder", serialize(sortOrder));
-        formParams.put("filter", serialize(filter));
-        formParams.put("include", serialize(include));
-        formParams.put("offset", serialize(offset));
-        formParams.put("limit", serialize(limit));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("type", type, formParams);
+        addParam("sortBy", sortBy, formParams);
+        addParam("sortOrder", sortOrder, formParams);
+        addParam("filter", filter, formParams);
+        addParam("include", include, formParams);
+        addParam("offset", offset, formParams);
+        addParam("limit", limit, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -921,14 +900,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getShareActivity".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("id", serialize(id));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("id", id, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -955,17 +933,16 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getUploadFileUrl".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("fileSize", serialize(fileSize));
-        formParams.put("destinationPath", serialize(destinationPath));
-        formParams.put("allowOverwrite", serialize(allowOverwrite));
-        formParams.put("resume", serialize(resume));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("fileSize", fileSize, formParams);
+        addParam("destinationPath", destinationPath, formParams);
+        addParam("allowOverwrite", allowOverwrite, formParams);
+        addParam("resume", resume, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -992,14 +969,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getUser".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("username", serialize(username));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("username", username, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -1026,15 +1002,14 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/getUsers".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("sortBy", serialize(sortBy));
-        formParams.put("sortOrder", serialize(sortOrder));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("sortBy", sortBy, formParams);
+        addParam("sortOrder", sortOrder, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -1061,13 +1036,12 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/logoutUser".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -1094,15 +1068,14 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/moveResources".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("filePaths", serialize(filePaths));
-        formParams.put("destinationPath", serialize(destinationPath));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("filePaths", filePaths, formParams);
+        addParam("destinationPath", destinationPath, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -1129,18 +1102,17 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/previewFile".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("path", serialize(path));
-        formParams.put("size", serialize(size));
-        formParams.put("width", serialize(width));
-        formParams.put("height", serialize(height));
-        formParams.put("page", serialize(page));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("path", path, formParams);
+        addParam("size", size, formParams);
+        addParam("width", width, formParams);
+        addParam("height", height, formParams);
+        addParam("page", page, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -1167,15 +1139,14 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/renameResource".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("filePath", serialize(filePath));
-        formParams.put("newName", serialize(newName));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("filePath", filePath, formParams);
+        addParam("newName", newName, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -1202,19 +1173,18 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/updateNotification".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("id", serialize(id));
-        formParams.put("path", serialize(path));
-        formParams.put("action", serialize(action));
-        formParams.put("usernames", serialize(usernames));
-        formParams.put("emails", serialize(emails));
-        formParams.put("sendEmail", serialize(sendEmail));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("id", id, formParams);
+        addParam("path", path, formParams);
+        addParam("action", action, formParams);
+        addParam("usernames", usernames, formParams);
+        addParam("emails", emails, formParams);
+        addParam("sendEmail", sendEmail, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -1241,29 +1211,28 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/updateShare".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("id", serialize(id));
-        formParams.put("name", serialize(name));
-        formParams.put("filePaths", serialize(filePaths));
-        formParams.put("subject", serialize(subject));
-        formParams.put("message", serialize(message));
-        formParams.put("emails", serialize(emails));
-        formParams.put("ccEmail", serialize(ccEmail));
-        formParams.put("requireEmail", serialize(requireEmail));
-        formParams.put("accessMode", serialize(accessMode));
-        formParams.put("embed", serialize(embed));
-        formParams.put("isPublic", serialize(isPublic));
-        formParams.put("password", serialize(password));
-        formParams.put("expiration", serialize(expiration));
-        formParams.put("hasNotification", serialize(hasNotification));
-        formParams.put("notificationEmails", serialize(notificationEmails));
-        formParams.put("fileDropCreateFolders", serialize(fileDropCreateFolders));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("id", id, formParams);
+        addParam("name", name, formParams);
+        addParam("filePaths", filePaths, formParams);
+        addParam("subject", subject, formParams);
+        addParam("message", message, formParams);
+        addParam("emails", emails, formParams);
+        addParam("ccEmail", ccEmail, formParams);
+        addParam("requireEmail", requireEmail, formParams);
+        addParam("accessMode", accessMode, formParams);
+        addParam("embed", embed, formParams);
+        addParam("isPublic", isPublic, formParams);
+        addParam("password", password, formParams);
+        addParam("expiration", expiration, formParams);
+        addParam("hasNotification", hasNotification, formParams);
+        addParam("notificationEmails", notificationEmails, formParams);
+        addParam("fileDropCreateFolders", fileDropCreateFolders, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -1290,23 +1259,22 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/updateUser".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("userId", serialize(userId));
-        formParams.put("username", serialize(username));
-        formParams.put("nickname", serialize(nickname));
-        formParams.put("expiration", serialize(expiration));
-        formParams.put("email", serialize(email));
-        formParams.put("destinationFolder", serialize(destinationFolder));
-        formParams.put("password", serialize(password));
-        formParams.put("locked", serialize(locked));
-        formParams.put("role", serialize(role));
-        formParams.put("permissions", serialize(permissions));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("userId", userId, formParams);
+        addParam("username", username, formParams);
+        addParam("nickname", nickname, formParams);
+        addParam("expiration", expiration, formParams);
+        addParam("email", email, formParams);
+        addParam("destinationFolder", destinationFolder, formParams);
+        addParam("password", password, formParams);
+        addParam("locked", locked, formParams);
+        addParam("role", role, formParams);
+        addParam("permissions", permissions, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
@@ -1333,14 +1301,13 @@ public class V1Api {
         // create path and map variables
         String relativePath = "/v1/userAvailable".replaceAll("\\{format\\}","json");
 
-        // query params
-        Map<String, String> queryParams = new HashMap<String, String>();
-        Map<String, String> headerParams = new HashMap<String, String>();
-        Map<String, String> formParams = new HashMap<String, String>();
+        Multimap<String, String> queryParams = HashMultimap.create();
+        Multimap<String, String> headerParams = HashMultimap.create();
+        Multimap<String, String> formParams = HashMultimap.create();
 
-        formParams.put("access_token", serialize(access_token));
-        formParams.put("username", serialize(username));
-        String contentType = "application/json";
+        addParam("access_token", access_token, formParams);
+        addParam("username", username, formParams);
+        String contentType = "application/x-www-form-urlencoded";
 
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);

@@ -1,12 +1,12 @@
 package main.java.com.exavault.client;
 
 import com.fasterxml.jackson.databind.JavaType;
-
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.client.WebResource.Builder;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +15,9 @@ import java.net.URLEncoder;
 import java.io.UnsupportedEncodingException;
 
 import javax.ws.rs.core.Response.Status.Family;
+
+// EV NOTE: need Multimap functionality for "array" request parameters
+import com.google.common.collect.Multimap;
 
 public class ApiInvoker {
 
@@ -74,24 +77,29 @@ public class ApiInvoker {
         }
     }
 
-    public String invokeAPI(String host, String path, String method, Map<String, String> queryParams, Object body, Map<String, String> headerParams, Map<String, String> formParams, String contentType) throws ApiException {
+    public String invokeAPI(String host, String path, String method, Multimap<String, String> queryParams, Object body, Multimap<String, String> headerParams, Multimap<String, String> formParams, String contentType) throws ApiException {
+
         Client client = getClient(host);
 
         StringBuilder b = new StringBuilder();
 
         for(String key : queryParams.keySet()) {
-            String value = queryParams.get(key);
-            if (value != null){
-                if(b.toString().length() == 0)
-                    b.append("?");
-                else
-                    b.append("&");
-                b.append(escapeString(key)).append("=").append(escapeString(value));
+            Collection<String> values = queryParams.get(key);
+            for (String value : values) {
+                if (value != null){
+                    if(b.toString().length() == 0) {
+                        b.append("?");
+                    } else {
+                        b.append("&");
+                    }
+                    b.append(escapeString(key)).append("=").append(escapeString(value));
+                }
             }
         }
+        
         String querystring = b.toString();
 
-        Builder builder = client.resource(host + path + querystring).accept("application/json");
+        Builder builder = client.resource(host + path + querystring).accept("*/*");
         for(String key : headerParams.keySet()) {
             builder.header(key, headerParams.get(key));
         }
@@ -107,34 +115,24 @@ public class ApiInvoker {
             response = (ClientResponse) builder.get(ClientResponse.class);
         }
         else if ("POST".equals(method)) {
-            if(body == null)
-                response = builder.post(ClientResponse.class, serialize(body));
-            else
+            if(body == null) {
+                // EV NOTE - codegen assumes that one "body" is passed
+                // via each method instead of a parameterized list,
+                // which is kinda not what we want. So, just serialize
+                // the queryParams and set to the body
+                String formData = encodeFormData(formParams);
+                response = builder.type(contentType).post(ClientResponse.class, formData);
+            } else {
                 response = builder.type(contentType).post(ClientResponse.class, serialize(body));
+            }
         }
         else if ("PUT".equals(method)) {
             if(body == null)
                 response = builder.put(ClientResponse.class, serialize(body));
             else {
                 if("application/x-www-form-urlencoded".equals(contentType)) {
-                    StringBuilder formParamBuilder = new StringBuilder();
-
-                    // encode the form params
-                    for(String key : headerParams.keySet()) {
-                        String value = headerParams.get(key);
-                        if(value != null && !"".equals(value.trim())) {
-                            if(formParamBuilder.length() > 0) {
-                                formParamBuilder.append("&");
-                            }
-                            try {
-                                formParamBuilder.append(URLEncoder.encode(key, "utf8")).append("=").append(URLEncoder.encode(value, "utf8"));
-                            }
-                            catch (Exception e) {
-                                // move on to next
-                            }
-                        }
-                    }
-                    response = builder.type(contentType).put(ClientResponse.class, formParamBuilder.toString());
+                    String formData = encodeFormData(headerParams);
+                    response = builder.type(contentType).put(ClientResponse.class, formData);
                 }
                 else
                     response = builder.type(contentType).put(ClientResponse.class, serialize(body));
@@ -160,6 +158,39 @@ public class ApiInvoker {
                 response.getClientResponseStatus().getStatusCode(),
                 response.getEntity(String.class));
         }
+    }
+
+    /**
+     * EV NOTE: this has been abstracted slightly to support both POST
+     * and PUT, since EV POST requests require data to be submitted as
+     * application/x-www-form-urlencoded.
+     *
+     * @param  Multimap<string, string> params
+     * @return String
+     */
+    private String encodeFormData(Multimap<String, String>params) {
+
+        StringBuilder formParamBuilder = new StringBuilder();
+
+        // encode the form params
+        for(String key : params.keySet()) {
+            Collection<String> values = params.get(key);
+            for (String value : values) {
+                if(value != null && !"".equals(value.trim())) {
+                    if(formParamBuilder.length() > 0) {
+                        formParamBuilder.append("&");
+                    }
+                    try {
+                        formParamBuilder.append(URLEncoder.encode(key, "utf8")).append("=").append(URLEncoder.encode(value, "utf8"));
+                    }
+                    catch (Exception e) {
+                        // move on to next
+                    }
+                }
+            }
+        }
+
+        return formParamBuilder.toString();
     }
 
     private Client getClient(String host) {

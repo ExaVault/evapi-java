@@ -7,7 +7,7 @@
 package main.java.com.exavault.evapi.model;
 
 import java.util.*;
-//import java.io.File;   EV NOTE - this somehow get's included during generation, though it's not needed
+import java.io.File;
 import main.java.com.exavault.evapi.model.Error;
 public class FilesResponse {
   private Integer success = null;
