@@ -38,7 +38,7 @@ import com.google.common.collect.HashMultimap;
 
 public class V1Api {
     
-    String basePath = "https://evapi-dev-dgleason.exavault.com";
+    String basePath = "https://api.exavault.com";
     ApiInvoker apiInvoker = ApiInvoker.getInstance();
 
     public ApiInvoker getInvoker() {
