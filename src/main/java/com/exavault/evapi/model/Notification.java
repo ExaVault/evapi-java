@@ -9,7 +9,7 @@ package main.java.com.exavault.evapi.model;
 import java.util.*;
 import main.java.com.exavault.evapi.model.Recipient;
 public class Notification {
-  private String id = null;
+  private Integer id = null;
   private String userId = null;
   private String type = null;
   private String path = null;
@@ -24,10 +24,10 @@ public class Notification {
   private String shareId = null;
   private String created = null;
   private String modified = null;
-  public String getId() {
+  public Integer getId() {
     return id;
   }
-  public void setId(String id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

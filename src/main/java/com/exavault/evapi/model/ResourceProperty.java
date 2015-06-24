@@ -18,7 +18,7 @@ public class ResourceProperty {
   private String path = null;
   private List<Share> shares = new ArrayList<Share>();
   private String notificationSettings = null;
-  private Integer size = null;
+  private Long size = null;
   private Boolean previewable = null;
   private String type = null;
   public Integer getFileCount() {
@@ -84,10 +84,10 @@ public class ResourceProperty {
     this.notificationSettings = notificationSettings;
   }
 
-  public Integer getSize() {
+  public Long getSize() {
     return size;
   }
-  public void setSize(Integer size) {
+  public void setSize(Long size) {
     this.size = size;
   }
 

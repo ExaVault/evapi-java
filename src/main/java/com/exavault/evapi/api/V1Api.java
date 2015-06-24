@@ -16,6 +16,7 @@ import main.java.com.exavault.evapi.model.UrlResponse;
 import main.java.com.exavault.evapi.model.AccountResponse;
 import main.java.com.exavault.evapi.model.UsersResponse;
 import main.java.com.exavault.evapi.model.NotificationActivityResponse;
+import main.java.com.exavault.evapi.model.DeletedResourcesResponse;
 import main.java.com.exavault.evapi.model.NotificationsResponse;
 import main.java.com.exavault.evapi.model.ModifiedResourcesResponse;
 import main.java.com.exavault.evapi.model.UserResponse;
@@ -24,21 +25,18 @@ import main.java.com.exavault.evapi.model.NotificationResponse;
 import main.java.com.exavault.evapi.model.ShareResponse;
 import main.java.com.exavault.evapi.model.ResourceResponse;
 import main.java.com.exavault.evapi.model.Response;
-import main.java.com.exavault.evapi.model.FilesResponse;
 import main.java.com.exavault.evapi.model.ResourcePropertiesResponse;
 import main.java.com.exavault.evapi.model.ExistingResourcesResponse;
 import main.java.com.exavault.evapi.model.SharesResponse;
 import java.util.*;
 
-// EV NOTE: use multimap functionality for serialization of "array"
-// request parameters
+// EV NOTE: use multimap functionality for serialization of "array" request parameters
 import com.google.common.collect.Multimap;
 import com.google.common.collect.HashMultimap;
 
-
 public class V1Api {
     
-    String basePath = "https://api.exavault.com";
+    String basePath = "https://evapi-dev-dgleason.exavault.com";
     ApiInvoker apiInvoker = ApiInvoker.getInstance();
 
     public ApiInvoker getInvoker() {
@@ -54,12 +52,12 @@ public class V1Api {
     }
 
     /**
-     * This function is needed to properly convert an array to a list
+     * EV NOTE: This function is needed to properly convert an array to a list
      * of URL encoded params.
      *
-     * @param String              paramName
-     * @param List<String>        list
-     * @param Map<String, String> params
+     * @param String paramName
+     * @param List<String> list
+     * @param Multimap<String, String> params
      */
     private void addParam(String paramName, List<String> list, Multimap<String, String> params) {
         for (String item : list) {
@@ -73,15 +71,27 @@ public class V1Api {
     // object.
 
     private void addParam(String paramName, Boolean b, Multimap<String, String> params) {
-        params.put(paramName, String.valueOf(b));
+        if (b != null) {
+            params.put(paramName, String.valueOf(b));
+        }
     }
 
     private void addParam(String paramName, Integer i, Multimap<String, String> params) {
-        params.put(paramName, String.valueOf(i));
+        if (i != null) {
+            params.put(paramName, String.valueOf(i));
+        }
+    }
+
+    private void addParam(String paramName, Long l, Multimap<String, String> params) {
+        if (l != null) {
+            params.put(paramName, String.valueOf(l));
+        }
     }
 
     private void addParam(String paramName, String s, Multimap<String, String> params) {
-        params.put(paramName, String.valueOf(s));
+        if (s != null) {
+            params.put(paramName, String.valueOf(s));
+        }
     }
 
     public AuthResponse authenticateUser (String username, String password) throws ApiException {
@@ -303,7 +313,7 @@ public class V1Api {
             }
         }
     }
-    public Response createUser (String access_token, String username, String destinationFolder, String email, String password, String role, List<String> permissions, String nickname, String expiration, Boolean locked, Boolean welcomeEmail, String timeZone) throws ApiException {
+    public Response createUser (String access_token, String username, String destinationFolder, String email, String password, String role, String permissions, String nickname, String expiration, Boolean locked, Boolean welcomeEmail, String timeZone) throws ApiException {
         // verify required params are set
         if(access_token == null || username == null || destinationFolder == null || email == null || password == null || role == null || permissions == null || timeZone == null ) {
             throw new ApiException(400, "missing required params");
@@ -379,7 +389,7 @@ public class V1Api {
             }
         }
     }
-    public FilesResponse deleteResources (String access_token, List<String> filePaths) throws ApiException {
+    public DeletedResourcesResponse deleteResources (String access_token, List<String> filePaths) throws ApiException {
         // verify required params are set
         if(access_token == null || filePaths == null ) {
             throw new ApiException(400, "missing required params");
@@ -398,7 +408,7 @@ public class V1Api {
         try {
             String response = apiInvoker.invokeAPI(basePath, relativePath, "POST", queryParams, null, headerParams, formParams, contentType);
             if(response != null){
-                return (FilesResponse) ApiInvoker.deserialize(response, "", FilesResponse.class);
+                return (DeletedResourcesResponse) ApiInvoker.deserialize(response, "", DeletedResourcesResponse.class);
             }
             else {
                 return null;
@@ -925,7 +935,7 @@ public class V1Api {
             }
         }
     }
-    public UrlResponse getUploadFileUrl (String access_token, Integer fileSize, String destinationPath, Boolean allowOverwrite, Boolean resume) throws ApiException {
+    public UrlResponse getUploadFileUrl (String access_token, Long fileSize, String destinationPath, Boolean allowOverwrite, Boolean resume) throws ApiException {
         // verify required params are set
         if(access_token == null || fileSize == null || destinationPath == null ) {
             throw new ApiException(400, "missing required params");
@@ -1251,7 +1261,7 @@ public class V1Api {
             }
         }
     }
-    public Response updateUser (String access_token, Integer userId, String username, String nickname, String expiration, String email, String destinationFolder, String password, Boolean locked, String role, List<String> permissions) throws ApiException {
+    public Response updateUser (String access_token, Integer userId, String username, String nickname, String expiration, String email, String destinationFolder, String password, Boolean locked, String role, String permissions) throws ApiException {
         // verify required params are set
         if(access_token == null || userId == null ) {
             throw new ApiException(400, "missing required params");
@@ -1326,5 +1336,5 @@ public class V1Api {
             }
         }
     }
-}
+    }
 

@@ -78,7 +78,7 @@ public class ApiInvoker {
     }
 
     public String invokeAPI(String host, String path, String method, Multimap<String, String> queryParams, Object body, Multimap<String, String> headerParams, Multimap<String, String> formParams, String contentType) throws ApiException {
-
+        
         Client client = getClient(host);
 
         StringBuilder b = new StringBuilder();
@@ -159,22 +159,22 @@ public class ApiInvoker {
                 response.getEntity(String.class));
         }
     }
-
+    
     /**
      * EV NOTE: this has been abstracted slightly to support both POST
      * and PUT, since EV POST requests require data to be submitted as
      * application/x-www-form-urlencoded.
-     *
+     * 
      * @param  Multimap<string, string> params
      * @return String
      */
     private String encodeFormData(Multimap<String, String>params) {
-
+        
         StringBuilder formParamBuilder = new StringBuilder();
 
         // encode the form params
         for(String key : params.keySet()) {
-            Collection<String> values = params.get(key);
+            Collection<String> values = params.get(key);    
             for (String value : values) {
                 if(value != null && !"".equals(value.trim())) {
                     if(formParamBuilder.length() > 0) {
@@ -189,7 +189,7 @@ public class ApiInvoker {
                 }
             }
         }
-
+        
         return formParamBuilder.toString();
     }
 

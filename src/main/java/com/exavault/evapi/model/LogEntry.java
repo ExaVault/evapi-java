@@ -11,8 +11,8 @@ public class LogEntry {
   private String fileSource = null;
   private String operation = null;
   private String duration = null;
-  private String bytesTransferred = null;
-  private String id = null;
+  private Long bytesTransferred = null;
+  private Integer id = null;
   private String created = null;
   private String username = null;
   private String sessionId = null;
@@ -47,17 +47,17 @@ public class LogEntry {
     this.duration = duration;
   }
 
-  public String getBytesTransferred() {
+  public Long getBytesTransferred() {
     return bytesTransferred;
   }
-  public void setBytesTransferred(String bytesTransferred) {
+  public void setBytesTransferred(Long bytesTransferred) {
     this.bytesTransferred = bytesTransferred;
   }
 
-  public String getId() {
+  public Integer getId() {
     return id;
   }
-  public void setId(String id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

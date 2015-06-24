@@ -6,10 +6,10 @@
 
 package main.java.com.exavault.evapi.model;
 
-import main.java.com.exavault.evapi.model.Resource;
+import main.java.com.exavault.evapi.model.ResourceProperty;
 public class ExistingResource {
   private Boolean exists = null;
-  private Resource resource = null;
+  private ResourceProperty resource = null;
   public Boolean getExists() {
     return exists;
   }
@@ -17,10 +17,10 @@ public class ExistingResource {
     this.exists = exists;
   }
 
-  public Resource getResource() {
+  public ResourceProperty getResource() {
     return resource;
   }
-  public void setResource(Resource resource) {
+  public void setResource(ResourceProperty resource) {
     this.resource = resource;
   }
 

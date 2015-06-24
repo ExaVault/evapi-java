@@ -7,17 +7,17 @@
 package main.java.com.exavault.evapi.model;
 
 public class ShareLogEntry {
-  private String id = null;
+  private Integer id = null;
   private String shareId = null;
   private String username = null;
   private String action = null;
   private String actionObjectId = null;
   private String detail = null;
   private String created = null;
-  public String getId() {
+  public Integer getId() {
     return id;
   }
-  public void setId(String id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
