@@ -108,8 +108,20 @@ public class EvapiTest {
      */
     private Response createTestUser() throws Exception {
         try {
-            Response response = api.createUser(accessToken, TEST_USER, ROOT_DIR, TEST_EMAIL, PASSWORD, USER_ROLE, PERMISSIONS, null, null, false, false, TIMEZONE);
-            return response;
+            return api.createUser(
+                accessToken,
+                TEST_USER,
+                ROOT_DIR,
+                TEST_EMAIL,
+                PASSWORD,
+                USER_ROLE,
+                PERMISSIONS,
+                null,
+                null,
+                false,
+                false,
+                TIMEZONE
+                );
         } catch (ApiException e) {
             throw new Exception (e);
         }
@@ -892,7 +904,10 @@ public class EvapiTest {
             // now update the user with a new username
             Integer userId = userResponse.getResults().getId();
             String username = userResponse.getResults().getUsername() + "-changed";
-            updatedUserResponse = api.updateUser(accessToken, userId, username, null, null, null, null, null, null, null, null);
+
+            updatedUserResponse = api.updateUser(
+                accessToken, userId, username, null, null, null, null, null, null, null, null
+                );
 			
             api.deleteUser(accessToken, username);
 			
