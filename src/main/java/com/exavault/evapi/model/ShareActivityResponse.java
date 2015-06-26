@@ -6,12 +6,13 @@
 
 package main.java.com.exavault.evapi.model;
 
+import java.util.*;
 import main.java.com.exavault.evapi.model.Error;
-import main.java.com.exavault.evapi.model.AvailableUser;
-public class AvailableUserResponse {
+import main.java.com.exavault.evapi.model.ShareLogEntry;
+public class ShareActivityResponse {
   private Integer success = null;
   private Error error = null;
-  private AvailableUser results = null;
+  private List<ShareLogEntry> results = new ArrayList<ShareLogEntry>();
   public Integer getSuccess() {
     return success;
   }
@@ -26,17 +27,17 @@ public class AvailableUserResponse {
     this.error = error;
   }
 
-  public AvailableUser getResults() {
+  public List<ShareLogEntry> getResults() {
     return results;
   }
-  public void setResults(AvailableUser results) {
+  public void setResults(List<ShareLogEntry> results) {
     this.results = results;
   }
 
   @Override
   public String toString()  {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AvailableUserResponse {\n");
+    sb.append("class ShareActivityResponse {\n");
     sb.append("  success: ").append(success).append("\n");
     sb.append("  error: ").append(error).append("\n");
     sb.append("  results: ").append(results).append("\n");

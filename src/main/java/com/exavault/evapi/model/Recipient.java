@@ -7,7 +7,7 @@
 package main.java.com.exavault.evapi.model;
 
 public class Recipient {
-  private String id = null;
+  private Integer id = null;
   private String shareId = null;
   private String type = null;
   private String hash = null;
@@ -15,10 +15,10 @@ public class Recipient {
   private Boolean sent = null;
   private Boolean received = null;
   private String created = null;
-  public String getId() {
+  public Integer getId() {
     return id;
   }
-  public void setId(String id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

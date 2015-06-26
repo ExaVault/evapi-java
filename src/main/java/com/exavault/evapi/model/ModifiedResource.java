@@ -9,7 +9,7 @@ package main.java.com.exavault.evapi.model;
 public class ModifiedResource {
   private String file = null;
   private String destination = null;
-  private Integer size = null;
+  private Long size = null;
   private Integer success = null;
   public String getFile() {
     return file;
@@ -25,10 +25,10 @@ public class ModifiedResource {
     this.destination = destination;
   }
 
-  public Integer getSize() {
+  public Long getSize() {
     return size;
   }
-  public void setSize(Integer size) {
+  public void setSize(Long size) {
     this.size = size;
   }
 

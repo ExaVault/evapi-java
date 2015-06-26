@@ -8,7 +8,7 @@ package main.java.com.exavault.evapi.model;
 
 public class PreviewFile {
   private String image = null;
-  private Integer size = null;
+  private Long size = null;
   private String imageId = null;
   public String getImage() {
     return image;
@@ -17,10 +17,10 @@ public class PreviewFile {
     this.image = image;
   }
 
-  public Integer getSize() {
+  public Long getSize() {
     return size;
   }
-  public void setSize(Integer size) {
+  public void setSize(Long size) {
     this.size = size;
   }
 

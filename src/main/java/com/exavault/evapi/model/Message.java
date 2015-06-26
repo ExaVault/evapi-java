@@ -7,24 +7,24 @@
 package main.java.com.exavault.evapi.model;
 
 public class Message {
-  private String id = null;
-  private String userId = null;
+  private Integer id = null;
+  private Integer userId = null;
   private String shareId = null;
   private String subject = null;
   private String body = null;
   private String created = null;
   private String modified = null;
-  public String getId() {
+  public Integer getId() {
     return id;
   }
-  public void setId(String id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
-  public String getUserId() {
+  public Integer getUserId() {
     return userId;
   }
-  public void setUserId(String userId) {
+  public void setUserId(Integer userId) {
     this.userId = userId;
   }
 

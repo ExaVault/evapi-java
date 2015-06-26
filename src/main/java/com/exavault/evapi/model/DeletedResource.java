@@ -6,9 +6,9 @@
 
 package main.java.com.exavault.evapi.model;
 
-public class File {
+public class DeletedResource {
   private String file = null;
-  private String size = null;
+  private Long size = null;
   private Integer success = null;
   public String getFile() {
     return file;
@@ -17,10 +17,10 @@ public class File {
     this.file = file;
   }
 
-  public String getSize() {
+  public Long getSize() {
     return size;
   }
-  public void setSize(String size) {
+  public void setSize(Long size) {
     this.size = size;
   }
 
@@ -34,7 +34,7 @@ public class File {
   @Override
   public String toString()  {
     StringBuilder sb = new StringBuilder();
-    sb.append("class File {\n");
+    sb.append("class DeletedResource {\n");
     sb.append("  file: ").append(file).append("\n");
     sb.append("  size: ").append(size).append("\n");
     sb.append("  success: ").append(success).append("\n");

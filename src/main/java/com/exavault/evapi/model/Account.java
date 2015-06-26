@@ -6,30 +6,31 @@
 
 package main.java.com.exavault.evapi.model;
 
+import main.java.com.exavault.evapi.model.User;
 public class Account {
   private Integer id = null;
   private String username = null;
   private Integer maxUsers = null;
   private Integer userCount = null;
-  private Account masterAccount = null;
+  private User masterAccount = null;
   private Integer status = null;
   private Boolean branding = null;
   private Boolean customDomain = null;
   private String planCode = null;
-  private String diskQuotaLimit = null;
-  private String bandwidthQuotaLimit = null;
-  private String diskQuotaUsed = null;
-  private String bandwidthQuotaUsed = null;
-  private String quotaNoticeEnabled = null;
-  private String quotaNoticeThreshold = null;
+  private Long diskQuotaLimit = null;
+  private Long bandwidthQuotaLimit = null;
+  private Long diskQuotaUsed = null;
+  private Long bandwidthQuotaUsed = null;
+  private Integer quotaNoticeEnabled = null;
+  private Integer quotaNoticeThreshold = null;
   private String redirect = null;
   private Boolean secureOnly = null;
   private Boolean complexPasswords = null;
   private Boolean showReferralLinks = null;
   private String externalDomains = null;
   private Boolean freeTrial = null;
-  private String appliedPromotion = null;
-  private String clientId = null;
+  private String appliedTrial = null;
+  private Integer clientId = null;
   private String created = null;
   private String modified = null;
   public Integer getId() {
@@ -60,10 +61,10 @@ public class Account {
     this.userCount = userCount;
   }
 
-  public Account getMasterAccount() {
+  public User getMasterAccount() {
     return masterAccount;
   }
-  public void setMasterAccount(Account masterAccount) {
+  public void setMasterAccount(User masterAccount) {
     this.masterAccount = masterAccount;
   }
 
@@ -95,45 +96,45 @@ public class Account {
     this.planCode = planCode;
   }
 
-  public String getDiskQuotaLimit() {
+  public Long getDiskQuotaLimit() {
     return diskQuotaLimit;
   }
-  public void setDiskQuotaLimit(String diskQuotaLimit) {
+  public void setDiskQuotaLimit(Long diskQuotaLimit) {
     this.diskQuotaLimit = diskQuotaLimit;
   }
 
-  public String getBandwidthQuotaLimit() {
+  public Long getBandwidthQuotaLimit() {
     return bandwidthQuotaLimit;
   }
-  public void setBandwidthQuotaLimit(String bandwidthQuotaLimit) {
+  public void setBandwidthQuotaLimit(Long bandwidthQuotaLimit) {
     this.bandwidthQuotaLimit = bandwidthQuotaLimit;
   }
 
-  public String getDiskQuotaUsed() {
+  public Long getDiskQuotaUsed() {
     return diskQuotaUsed;
   }
-  public void setDiskQuotaUsed(String diskQuotaUsed) {
+  public void setDiskQuotaUsed(Long diskQuotaUsed) {
     this.diskQuotaUsed = diskQuotaUsed;
   }
 
-  public String getBandwidthQuotaUsed() {
+  public Long getBandwidthQuotaUsed() {
     return bandwidthQuotaUsed;
   }
-  public void setBandwidthQuotaUsed(String bandwidthQuotaUsed) {
+  public void setBandwidthQuotaUsed(Long bandwidthQuotaUsed) {
     this.bandwidthQuotaUsed = bandwidthQuotaUsed;
   }
 
-  public String getQuotaNoticeEnabled() {
+  public Integer getQuotaNoticeEnabled() {
     return quotaNoticeEnabled;
   }
-  public void setQuotaNoticeEnabled(String quotaNoticeEnabled) {
+  public void setQuotaNoticeEnabled(Integer quotaNoticeEnabled) {
     this.quotaNoticeEnabled = quotaNoticeEnabled;
   }
 
-  public String getQuotaNoticeThreshold() {
+  public Integer getQuotaNoticeThreshold() {
     return quotaNoticeThreshold;
   }
-  public void setQuotaNoticeThreshold(String quotaNoticeThreshold) {
+  public void setQuotaNoticeThreshold(Integer quotaNoticeThreshold) {
     this.quotaNoticeThreshold = quotaNoticeThreshold;
   }
 
@@ -179,17 +180,17 @@ public class Account {
     this.freeTrial = freeTrial;
   }
 
-  public String getAppliedPromotion() {
-    return appliedPromotion;
+  public String getAppliedTrial() {
+    return appliedTrial;
   }
-  public void setAppliedPromotion(String appliedPromotion) {
-    this.appliedPromotion = appliedPromotion;
+  public void setAppliedTrial(String appliedTrial) {
+    this.appliedTrial = appliedTrial;
   }
 
-  public String getClientId() {
+  public Integer getClientId() {
     return clientId;
   }
-  public void setClientId(String clientId) {
+  public void setClientId(Integer clientId) {
     this.clientId = clientId;
   }
 
@@ -232,7 +233,7 @@ public class Account {
     sb.append("  showReferralLinks: ").append(showReferralLinks).append("\n");
     sb.append("  externalDomains: ").append(externalDomains).append("\n");
     sb.append("  freeTrial: ").append(freeTrial).append("\n");
-    sb.append("  appliedPromotion: ").append(appliedPromotion).append("\n");
+    sb.append("  appliedTrial: ").append(appliedTrial).append("\n");
     sb.append("  clientId: ").append(clientId).append("\n");
     sb.append("  created: ").append(created).append("\n");
     sb.append("  modified: ").append(modified).append("\n");

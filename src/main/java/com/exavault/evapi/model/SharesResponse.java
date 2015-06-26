@@ -8,10 +8,11 @@ package main.java.com.exavault.evapi.model;
 
 import java.util.*;
 import main.java.com.exavault.evapi.model.Error;
-public class FilesResponse {
+import main.java.com.exavault.evapi.model.Share;
+public class SharesResponse {
   private Integer success = null;
   private Error error = null;
-  private List<File> results = new ArrayList<File>();
+  private List<Share> results = new ArrayList<Share>();
   public Integer getSuccess() {
     return success;
   }
@@ -26,17 +27,17 @@ public class FilesResponse {
     this.error = error;
   }
 
-  public List<File> getResults() {
+  public List<Share> getResults() {
     return results;
   }
-  public void setResults(List<File> results) {
+  public void setResults(List<Share> results) {
     this.results = results;
   }
 
   @Override
   public String toString()  {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FilesResponse {\n");
+    sb.append("class SharesResponse {\n");
     sb.append("  success: ").append(success).append("\n");
     sb.append("  error: ").append(error).append("\n");
     sb.append("  results: ").append(results).append("\n");
