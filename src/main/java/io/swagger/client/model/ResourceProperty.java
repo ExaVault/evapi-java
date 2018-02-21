@@ -77,6 +77,8 @@ public class ResourceProperty {
     FILE("file"),
     
     FOLDER("folder");
+    
+    DIR("dir");
 
     private String value;
 
