@@ -75,9 +75,7 @@ public class ResourceProperty {
   @JsonAdapter(TypeEnum.Adapter.class)
   public enum TypeEnum {
     FILE("file"),
-    
-    FOLDER("folder");
-    
+    FOLDER("folder"),
     DIR("dir");
 
     private String value;
