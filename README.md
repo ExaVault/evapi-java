@@ -40,10 +40,11 @@ Once you're ready for full-scale development, we recommend looking at our code l
 The ExaVault API returns only two HTTP status codes for its responses: 200 and 500.  When the request could be successfully processed by the endpoint, the response status code will be 200, regardless of whether the requested action could be taken.  For example, the response to a getUser request for a username that does not exist in your account would have the status of 200,  indicating that the response was received and processed, but the error member of the returned response object would contain object with `message` and `code` properties.  
 
 **Result Format:**  
+
 |Success   | Error     | Results   | 
-| ---      | :---:       |  :---:      | 
+| ---      | :---:     |  :---:    | 
 | 0        |  `Object` |   Empty   | 
-| 1        |   Empty       |    `Object` or `Array`        |     
+| 1        |   Empty   |    `Object` or `Array`        |     
 
 When a malformed request is received, a 500 HTTP status code will be returned, indicating that the request could not be processed.  ExaVault's API does not currently support traditional REST response codes such as '201 Created' or '405 Method Not Allowed'.  
 
