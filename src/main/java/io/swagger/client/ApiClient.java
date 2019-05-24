@@ -1,8 +1,8 @@
 /*
  * ExaVault API
- * # Introduction  Welcome to the ExaVault API documentation. Our API lets you control nearly all aspects of your ExaVault account programatically, from uploading and downloading files to creating and managing shares and notifications. Our API supports both GET and POST operations.  Capabilities of the API include:  - Uploading and downloading files. - Managing files and folders; including standard operations like move, copy and delete. - Getting information about activity occuring in your account. - Creating, updating and deleting users. - Creating and managing shares, including download-only shares and recieve folders.  - Setting up and managing notifications.  ## The API Endpoint  The ExaVault API is located at: https://api.exavault.com/v1.2/  # Testing w/ Postman  We've made it easy for you to test our API before you start full-scale development. Download [Postman](https://www.getpostman.com/) or the [Postman Chrome Extension](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en), and then download our Postman collection, below. [Obtain your API key](#section/Code-Libraries-and-Sample-PHP-Code/Obtain-your-API-key) and you'll be able to interact with your ExaVault account immediately, so you can better understand what the capabilities of the API are.  <div class=\"postman-run-button\" data-postman-action=\"collection/import\" data-postman-var-1=\"e13395afc6278ce1555f\"></div>  ![ExaVault API Postman Colletion Usage](/images/postman.png)  If you'd prefer to skip Postman and start working with code directly, take a look at the sample code below.    # Code Libraries & Sample PHP Code  Once you're ready for full-scale development, we recommend looking at our code libraries available on [GitHub](https://github.com/ExaVault). We offer code libraries for [Python](https://github.com/ExaVault/evapi-python), [PHP](https://github.com/ExaVault/evapi-php) and [JavaScript](https://github.com/ExaVault/evapi-javascript).  While we recommend using our libraries, you're welcome to interact directly with our API via HTTP GET and POST requests -- a great option particularly if you're developing in a language for which we don't yet have sample code.     - [Download Python Library &amp; Sample Code &raquo;](https://github.com/ExaVault/evapi-python) - [Download PHP Library &amp; Sample Code &raquo;](https://github.com/ExaVault/evapi-php) - [Download JavaScript Library &amp; Sample Code &raquo;](https://github.com/ExaVault/evapi-javascript)  *Note: You can generate client libraries for any language using [Swagger Editor](http://editor2.swagger.io/). Just download our documentation file, past it into editor and use 'Generate Client' dropdown.*  ## Obtain Your API Key  You will need to obtain an API key for your application from the [Client Area](https://clients.exavault.com/clientarea.php?action=products) of your account.  To obtain an API key, please follow the instructions below.   + Login to the [Accounts](https://clients.exavault.com/clientarea.php?action=products) section of the Client Area.  + Use the drop down next to your desired account, and select *Manage API Keys*.  + You will be brought to the API Key management screen. Fill out the form and save to generate a new key for your app.  *NOTE: As of Oct 2017, we are in the progress of migrating customers to our next generation platform. If your account is already on our new platform, you should log into your File Manager and create your API key under Account->Developer->Manage API Keys*.  # Status Codes  The ExaVault API returns only two HTTP status codes for its responses: 200 and 500.  When the request could be successfully processed by the endpoint, the response status code will be 200, regardless of whether the requested action could be taken.  For example, the response to a getUser request for a username that does not exist in your account would have the status of 200,  indicating that the response was received and processed, but the error member of the returned response object would contain object with `message` and `code` properties.  **Result Format:**  |Success   | Error     | Results   | | ---      | :---:       |  :---:      | | 0        |  `Object` |   Empty   | | 1        |   Empty       |    `Object` or `Array`        |     When a malformed request is received, a 500 HTTP status code will be returned, indicating that the request could not be processed.  ExaVault's API does not currently support traditional REST response codes such as '201 Created' or '405 Method Not Allowed', although we intend to support such codes a future version of the API.   # File Paths  Many API calls require you to provide one or more file paths. For example, the <a href=\"#operation/moveResources\">moveResources</a> call requires both an array of source paths, **filePaths**, and a destination path, **destinationPath**. Here's a few tips for working with paths:   - File paths should always be specified as a string, using the standard Unix format: e.g. `/path/to/a/file.txt`  - File paths are always absolute _from the home directory of the logged in user_. For example, if the user **bob** had a home directory restriction of `/bob_home`, then an API call made using his login would specify a file as `/myfile.txt`, whereas an API call made using the master user ( no home directory restriction ) would specify the same file as `/bob_home/myfile.txt`.  # API Rate Limits  We rate limit the number of API calls you can make to help prevent abuse and protect system stablity. Each API key will support 500 requests per rolling five minutes. If you make more than 500 requests in a five minute period, you will receive a response with an error object for fifteen minutes.  # Webhooks  A webhook is an HTTP callback: a simple event-notification via HTTP POST. If you define webhooks for Exavault, ExaVault will POST a  message to a URL when certain things happen.     Webhooks can be used to receive a JSON object to your endpoint URL. You choose what events will trigger webhook messages to your endpoint URL.     Webhooks will attempt to send a message up to 8 times with increasing timeouts between each attempt. All webhook requests are tracked in the webhooks log.  ## Getting Started  1. Go to the Account tab inside SWFT.  2. Choose the Developer tab.  3. Configure your endpoint URL and select the events you want to trigger webhook messages.  4. Save settings.    You are all set to receive webhook callbacks on the events you selected.  ## Verification Signature  ExaVault includes a custom HTTP header, X-Exavault-Signature, with webhooks POST requests which will contain the signature for the request.  You can use the signature to verify the request for an additional level of security.  ## Generating the Signature  1. Go to Account tab inside SWFT.  2. Choose the Developer tab.  3. Obtain the verification token. This field will only be shown if you've configured your endpoint URL.  4. In your code that receives or processes the webhooks, you should concatenate the verification token with the JSON object that we sent in our      POST request and hash it with md5.     ```     md5($verificationToken.$webhooksObject);     ```  5. Compare signature that you generated to the signature provided in the X-Exavault-Signature HTTP header  ## Example JSON Response Object  ```json   {     \"accountname\": \"mycompanyname\",     \"username\": \"john\"     \"operation\": \"Upload\",     \"protocol\": \"https\",     \"path\": \"/testfolder/filename.jpg\"     \"attempt\": 1   } ```  ## Webhooks Logs  Keep track of all your webhooks requests in the Activity section of your account. You can find the following info for each request:    1. date and time - timestamp of the request.    2. endpoint url - where the webhook was sent.    3. event - what triggered the webhook.    4. status - HTTP status or curl error code.    5. attempt - how many times we tried to send this request.    6. response size - size of the response from your server.    7. details - you can check the response body if it was sent. 
+ * # Introduction  Welcome to the ExaVault API documentation. Our API lets you control nearly all aspects of your ExaVault account programatically, from uploading and downloading files to creating and managing shares and notifications. Our API supports both GET and POST operations.  Capabilities of the API include:  - Uploading and downloading files. - Managing files and folders; including standard operations like move, copy and delete. - Getting information about activity occuring in your account. - Creating, updating and deleting users. - Creating and managing shares, including download-only shares and receive folders.  - Setting up and managing notifications.  ## The API Endpoint  The ExaVault API is located at: https://api.exavault.com/v1.2/  ## Obtain Your API Key  You will need to obtain an API key to connect to the API. To do this, follow the instructions below.   + Log into your account through the usual way, or use https://app.exavault.com.  + Click the Gear icon to access the account settings  + Locate the Developer tab in the account settings  + Click the link for *Manage API Keys*  + You will be brought to the API Key management screen. Fill out the form and save to generate a new key for your app.  *NOTE: You must have admin or master permissions to create an API key for your account. If you do not have access to developer settings for your account, contact your account administrator to create an API key for you.  # Testing w/ Postman  We've made it easy for you to test our API before you start full-scale development. Download [Postman](https://www.getpostman.com/) or the [Postman Chrome Extension](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en), and then download our Postman collection, below. [Obtain your API key](#section/Introduction/Obtain-Your-API-Key) and you'll be able to interact with your ExaVault account immediately, so you can better understand what the capabilities of the API are.  <div class=\"postman-run-button\" data-postman-action=\"collection/import\" data-postman-var-1=\"07891ce73cc525084ceb\"></div>  ![ExaVault API Postman Colletion Usage](/images/postman.png)  If you'd prefer to skip Postman and start working with code directly, take a look at the sample code below.    # Code Libraries & Sample PHP Code  Once you're ready for full-scale development, we recommend looking at our code libraries available on [GitHub](https://github.com/ExaVault). We offer code libraries for [Python](https://github.com/ExaVault/evapi-python), [PHP](https://github.com/ExaVault/evapi-php), [JavaScript](https://github.com/ExaVault/evapi-javascript) and [Java](https://github.com/ExaVault/evapi-java).  While we recommend using our libraries, you're welcome to interact directly with our API via HTTP GET and POST requests -- a great option particularly if you're developing in a language for which we don't yet have sample code.     - [Download Python Library &amp; Sample Code &raquo;](https://github.com/ExaVault/evapi-python) - [Download PHP Library &amp; Sample Code &raquo;](https://github.com/ExaVault/evapi-php) - [Download JavaScript Library &amp; Sample Code &raquo;](https://github.com/ExaVault/evapi-javascript) - [Download Java Library &amp; Sample Code &raquo;](https://github.com/ExaVault/evapi-java)  *Note: You can generate client libraries for any language using [Swagger Editor](http://editor2.swagger.io/). Just download our documentation file, past it into editor and use 'Generate Client' dropdown.*  # Status Codes  The ExaVault API returns only two HTTP status codes for its responses: 200 and 500.  When the request could be successfully processed by the endpoint, the response status code will be 200, regardless of whether the requested action could be taken.  For example, the response to a getUser request for a username that does not exist in your account would have the status of 200,  indicating that the response was received and processed, but the error member of the returned response object would contain object with `message` and `code` properties.  **Result Format:**  |Success   | Error     | Results   | | ---      | :---:       |  :---:      | | 0        |  `Object` |   Empty   | | 1        |   Empty       |    `Object` or `Array`        |     When a malformed request is received, a 500 HTTP status code will be returned, indicating that the request could not be processed.  ExaVault's API does not currently support traditional REST response codes such as '201 Created' or '405 Method Not Allowed'.  # File Paths  Many API calls require you to provide one or more file paths. For example, the <a href=\"#operation/moveResources\">moveResources</a> call requires both an array of source paths, **filePaths**, and a destination path, **destinationPath**. Here's a few tips for working with paths:   - File paths should always be specified as a string, using the standard Unix format: e.g. `/path/to/a/file.txt`  - File paths are always absolute _from the home directory of the logged in user_. For example, if the user **bob** had a home directory restriction of `/bob_home`, then an API call made using his login would specify a file as `/myfile.txt`, whereas an API call made using the master user ( no home directory restriction ) would specify the same file as `/bob_home/myfile.txt`.  # API Rate Limits  We rate limit the number of API calls you can make to help prevent abuse and protect system stablity. Each API key will support 500 requests per rolling five minutes. If you make more than 500 requests in a five minute period, you will receive a response with an error object for fifteen minutes.  # Webhooks  A webhook is an HTTP callback: a simple event-notification via HTTP POST. If you define webhooks for Exavault, ExaVault will POST a  message to a URL when certain things happen.     Webhooks can be used to receive a JSON object to your endpoint URL. You choose what events will trigger webhook messages to your endpoint URL.     Webhooks will attempt to send a message up to 8 times with increasing timeouts between each attempt. All webhook requests are tracked in the webhooks log.  ## Getting Started  1. Go to the Account tab inside the web application.  2. Choose the Developer tab.  3. Configure your endpoint URL and select the events you want to trigger webhook messages.  4. Save settings.    You are all set to receive webhook callbacks on the events you selected.  ## Verification Signature  ExaVault includes a custom HTTP header, X-Exavault-Signature, with webhooks POST requests which will contain the signature for the request.  You can use the signature to verify the request for an additional level of security.  ## Generating the Signature  1. Go to Account tab inside the web application.  2. Choose the Developer tab.  3. Obtain the verification token. This field will only be shown if you've configured your endpoint URL.  4. In your code that receives or processes the webhooks, you should concatenate the verification token with the response string and hash it with md5.     ```     md5($verificationToken.$responseString);     ```  5. Compare signature that you generated to the signature provided in the X-Exavault-Signature HTTP header  ## Example JSON Response Object  ```json   {     \"accountname\": \"mycompanyname\",     \"username\": \"john\"     \"operation\": \"Upload\",     \"protocol\": \"https\",     \"path\": \"/testfolder/filename.jpg\"     \"attempt\": 1   } ```  ## Webhooks Logs  Keep track of all your webhooks requests in the Activity section of your account. You can find the following info for each request:    1. date and time - timestamp of the request.    2. endpoint url - where the webhook was sent.    3. event - what triggered the webhook.    4. status - HTTP status or curl error code.    5. attempt - how many times we tried to send this request.    6. response size - size of the response from your server.    7. details - you can check the response body if it was sent. 
  *
- * OpenAPI spec version: 1.0.1
+ * OpenAPI spec version: 1.2
  * 
  *
  * NOTE: This class is auto generated by the swagger code generator program.
@@ -13,45 +13,24 @@
 
 package io.swagger.client;
 
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.*;
 import com.squareup.okhttp.internal.http.HttpMethod;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor.Level;
+import okio.BufferedSink;
+import okio.Okio;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
 
-import java.lang.reflect.Type;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-// EV add Arrays class
-import java.util.Arrays;
-import java.util.Date;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import java.net.URLEncoder;
-import java.net.URLConnection;
-
+import javax.net.ssl.*;
 import java.io.File;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-
+import java.lang.reflect.Type;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.SecureRandom;
@@ -59,22 +38,12 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
-
-import okio.BufferedSink;
-import okio.Okio;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.swagger.client.auth.Authentication;
 import io.swagger.client.auth.HttpBasicAuth;
@@ -82,40 +51,8 @@ import io.swagger.client.auth.ApiKeyAuth;
 import io.swagger.client.auth.OAuth;
 
 public class ApiClient {
-    public static final double JAVA_VERSION;
-    public static final boolean IS_ANDROID;
-    public static final int ANDROID_SDK_VERSION;
-
-    static {
-        JAVA_VERSION = Double.parseDouble(System.getProperty("java.specification.version"));
-        boolean isAndroid;
-        try {
-            Class.forName("android.app.Activity");
-            isAndroid = true;
-        } catch (ClassNotFoundException e) {
-            isAndroid = false;
-        }
-        IS_ANDROID = isAndroid;
-        int sdkVersion = 0;
-        if (IS_ANDROID) {
-            try {
-                sdkVersion = Class.forName("android.os.Build$VERSION").getField("SDK_INT").getInt(null);
-            } catch (Exception e) {
-                try {
-                    sdkVersion = Integer.parseInt((String) Class.forName("android.os.Build$VERSION").getField("SDK").get(null));
-                } catch (Exception e2) { }
-            }
-        }
-        ANDROID_SDK_VERSION = sdkVersion;
-    }
-
-    /**
-     * The datetime format to be used when <code>lenientDatetimeFormat</code> is enabled.
-     */
-    public static final String LENIENT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
     private String basePath = "https://api.exavault.com/v1.2";
-    private boolean lenientOnJson = false;
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;
@@ -141,27 +78,17 @@ public class ApiClient {
      */
     public ApiClient() {
         httpClient = new OkHttpClient();
-
+//        httpClient.setConnectTimeout(300000L);
 
         verifyingSsl = true;
 
-        json = new JSON(this);
-
-        /*
-         * Use RFC3339 format for date and datetime.
-         * See http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14
-         */
-        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        // Always use UTC as the default time zone when dealing with date (without time).
-        this.dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        initDatetimeFormat();
-
-        // Be lenient on datetime formats when parsing datetime from string.
-        // See <code>parseDatetime</code>.
-        this.lenientDatetimeFormat = true;
+        json = new JSON();
 
         // Set default User-Agent.
         setUserAgent("Swagger-Codegen/1.0.0/java");
+        setReadTimeout(300000);
+        setWriteTimeout(300000);
+        setConnectTimeout(300000);
 
         // Setup authentications (key: authentication name, value: authentication).
         authentications = new HashMap<String, Authentication>();
@@ -296,138 +223,28 @@ public class ApiClient {
     }
 
     public ApiClient setDateFormat(DateFormat dateFormat) {
-        this.dateFormat = dateFormat;
-        this.dateLength = this.dateFormat.format(new Date()).length();
+        this.json.setDateFormat(dateFormat);
         return this;
     }
 
-    public DateFormat getDatetimeFormat() {
-        return datetimeFormat;
-    }
-
-    public ApiClient setDatetimeFormat(DateFormat datetimeFormat) {
-        this.datetimeFormat = datetimeFormat;
+    public ApiClient setSqlDateFormat(DateFormat dateFormat) {
+        this.json.setSqlDateFormat(dateFormat);
         return this;
     }
 
-    /**
-     * Whether to allow various ISO 8601 datetime formats when parsing a datetime string.
-     * @see #parseDatetime(String)
-     * @return True if lenientDatetimeFormat flag is set to true
-     */
-    public boolean isLenientDatetimeFormat() {
-        return lenientDatetimeFormat;
-    }
-
-    public ApiClient setLenientDatetimeFormat(boolean lenientDatetimeFormat) {
-        this.lenientDatetimeFormat = lenientDatetimeFormat;
+    public ApiClient setOffsetDateTimeFormat(DateTimeFormatter dateFormat) {
+        this.json.setOffsetDateTimeFormat(dateFormat);
         return this;
     }
 
-    /**
-     * Parse the given date string into Date object.
-     * The default <code>dateFormat</code> supports these ISO 8601 date formats:
-     *   2015-08-16
-     *   2015-8-16
-     * @param str String to be parsed
-     * @return Date
-     */
-    public Date parseDate(String str) {
-        if (str == null)
-            return null;
-        try {
-            return dateFormat.parse(str);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+    public ApiClient setLocalDateFormat(DateTimeFormatter dateFormat) {
+        this.json.setLocalDateFormat(dateFormat);
+        return this;
     }
 
-    /**
-     * Parse the given datetime string into Date object.
-     * When lenientDatetimeFormat is enabled, the following ISO 8601 datetime formats are supported:
-     *   2015-08-16T08:20:05Z
-     *   2015-8-16T8:20:05Z
-     *   2015-08-16T08:20:05+00:00
-     *   2015-08-16T08:20:05+0000
-     *   2015-08-16T08:20:05.376Z
-     *   2015-08-16T08:20:05.376+00:00
-     *   2015-08-16T08:20:05.376+00
-     * Note: The 3-digit milli-seconds is optional. Time zone is required and can be in one of
-     *   these formats:
-     *   Z (same with +0000)
-     *   +08:00 (same with +0800)
-     *   -02 (same with -0200)
-     *   -0200
-     * @see <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>
-     * @param str Date time string to be parsed
-     * @return Date representation of the string
-     */
-    public Date parseDatetime(String str) {
-        if (str == null)
-            return null;
-
-        DateFormat format;
-        if (lenientDatetimeFormat) {
-            /*
-             * When lenientDatetimeFormat is enabled, normalize the date string
-             * into <code>LENIENT_DATETIME_FORMAT</code> to support various formats
-             * defined by ISO 8601.
-             */
-            // normalize time zone
-            //   trailing "Z": 2015-08-16T08:20:05Z => 2015-08-16T08:20:05+0000
-            str = str.replaceAll("[zZ]\\z", "+0000");
-            //   remove colon in time zone: 2015-08-16T08:20:05+00:00 => 2015-08-16T08:20:05+0000
-            str = str.replaceAll("([+-]\\d{2}):(\\d{2})\\z", "$1$2");
-            //   expand time zone: 2015-08-16T08:20:05+00 => 2015-08-16T08:20:05+0000
-            str = str.replaceAll("([+-]\\d{2})\\z", "$100");
-            // add milliseconds when missing
-            //   2015-08-16T08:20:05+0000 => 2015-08-16T08:20:05.000+0000
-            str = str.replaceAll("(:\\d{1,2})([+-]\\d{4})\\z", "$1.000$2");
-            format = new SimpleDateFormat(LENIENT_DATETIME_FORMAT);
-        } else {
-            format = this.datetimeFormat;
-        }
-
-        try {
-            return format.parse(str);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /*
-     * Parse date or date time in string format into Date object.
-     *
-     * @param str Date time string to be parsed
-     * @return Date representation of the string
-     */
-    public Date parseDateOrDatetime(String str) {
-        if (str == null)
-            return null;
-        else if (str.length() <= dateLength)
-            return parseDate(str);
-        else
-            return parseDatetime(str);
-    }
-
-    /**
-     * Format the given Date object into string (Date format).
-     *
-     * @param date Date object
-     * @return Formatted date in string representation
-     */
-    public String formatDate(Date date) {
-        return dateFormat.format(date);
-    }
-
-    /**
-     * Format the given Date object into string (Datetime format).
-     *
-     * @param date Date object
-     * @return Formatted datetime in string representation
-     */
-    public String formatDatetime(Date date) {
-        return datetimeFormat.format(date);
+    public ApiClient setLenientOnJson(boolean lenientOnJson) {
+        this.json.setLenientOnJson(lenientOnJson);
+        return this;
     }
 
     /**
@@ -548,26 +365,6 @@ public class ApiClient {
     }
 
     /**
-     * @see <a href="https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/stream/JsonReader.html#setLenient(boolean)">setLenient</a>
-     *
-     * @return True if lenientOnJson is enabled, false otherwise.
-     */
-    public boolean isLenientOnJson() {
-        return lenientOnJson;
-    }
-
-    /**
-     * Set LenientOnJson
-     *
-     * @param lenient True to enable lenientOnJson
-     * @return ApiClient
-     */
-    public ApiClient setLenientOnJson(boolean lenient) {
-        this.lenientOnJson = lenient;
-        return this;
-    }
-
-    /**
      * Check that whether debugging is enabled for this API client.
      *
      * @return True if debugging is enabled, false otherwise.
@@ -610,7 +407,7 @@ public class ApiClient {
     }
 
     /**
-     * Set the tempoaray folder path (for downloading files)
+     * Set the temporary folder path (for downloading files)
      *
      * @param tempFolderPath Temporary folder path
      * @return ApiClient
@@ -632,12 +429,57 @@ public class ApiClient {
     /**
      * Sets the connect timeout (in milliseconds).
      * A value of 0 means no timeout, otherwise values must be between 1 and
+     * {@link Integer#MAX_VALUE}.
      *
      * @param connectionTimeout connection timeout in milliseconds
      * @return Api client
      */
     public ApiClient setConnectTimeout(int connectionTimeout) {
         httpClient.setConnectTimeout(connectionTimeout, TimeUnit.MILLISECONDS);
+        return this;
+    }
+
+    /**
+     * Get read timeout (in milliseconds).
+     *
+     * @return Timeout in milliseconds
+     */
+    public int getReadTimeout() {
+        return httpClient.getReadTimeout();
+    }
+
+    /**
+     * Sets the read timeout (in milliseconds).
+     * A value of 0 means no timeout, otherwise values must be between 1 and
+     * {@link Integer#MAX_VALUE}.
+     *
+     * @param readTimeout read timeout in milliseconds
+     * @return Api client
+     */
+    public ApiClient setReadTimeout(int readTimeout) {
+        httpClient.setReadTimeout(readTimeout, TimeUnit.MILLISECONDS);
+        return this;
+    }
+
+    /**
+     * Get write timeout (in milliseconds).
+     *
+     * @return Timeout in milliseconds
+     */
+    public int getWriteTimeout() {
+        return httpClient.getWriteTimeout();
+    }
+
+    /**
+     * Sets the write timeout (in milliseconds).
+     * A value of 0 means no timeout, otherwise values must be between 1 and
+     * {@link Integer#MAX_VALUE}.
+     *
+     * @param writeTimeout connection timeout in milliseconds
+     * @return Api client
+     */
+    public ApiClient setWriteTimeout(int writeTimeout) {
+        httpClient.setWriteTimeout(writeTimeout, TimeUnit.MILLISECONDS);
         return this;
     }
 
@@ -650,8 +492,10 @@ public class ApiClient {
     public String parameterToString(Object param) {
         if (param == null) {
             return "";
-        } else if (param instanceof Date) {
-            return formatDatetime((Date) param);
+        } else if (param instanceof Date || param instanceof OffsetDateTime || param instanceof LocalDate) {
+            //Serialize to json string and remove the " enclosing characters
+            String jsonStr = json.serialize(param);
+            return jsonStr.substring(1, jsonStr.length() - 1);
         } else if (param instanceof Collection) {
             StringBuilder b = new StringBuilder();
             for (Object o : (Collection)param) {
@@ -667,62 +511,70 @@ public class ApiClient {
     }
 
     /**
-     * Format to {@code Pair} objects.
+     * Formats the specified query parameter to a list containing a single {@code Pair} object.
      *
-     * @param collectionFormat collection format (e.g. csv, tsv)
-     * @param name Name
-     * @param value Value
-     * @return A list of Pair objects
+     * Note that {@code value} must not be a collection.
+     *
+     * @param name The name of the parameter.
+     * @param value The value of the parameter.
+     * @return A list containing a single {@code Pair} object.
      */
-    public List<Pair> parameterToPairs(String collectionFormat, String name, Object value){
+    public List<Pair> parameterToPair(String name, Object value) {
         List<Pair> params = new ArrayList<Pair>();
 
         // preconditions
-        if (name == null || name.isEmpty() || value == null) return params;
+        if (name == null || name.isEmpty() || value == null || value instanceof Collection) return params;
 
-        Collection valueCollection = null;
-        if (value instanceof Collection) {
-            valueCollection = (Collection) value;
-        } else {
-            params.add(new Pair(name, parameterToString(value)));
+        params.add(new Pair(name, parameterToString(value)));
+        return params;
+    }
+
+    /**
+     * Formats the specified collection query parameters to a list of {@code Pair} objects.
+     *
+     * Note that the values of each of the returned Pair objects are percent-encoded.
+     *
+     * @param collectionFormat The collection format of the parameter.
+     * @param name The name of the parameter.
+     * @param value The value of the parameter.
+     * @return A list of {@code Pair} objects.
+     */
+    public List<Pair> parameterToPairs(String collectionFormat, String name, Collection value) {
+        List<Pair> params = new ArrayList<Pair>();
+
+        // preconditions
+        if (name == null || name.isEmpty() || value == null || value.isEmpty()) {
             return params;
         }
-
-        if (valueCollection.isEmpty()){
-            return params;
-        }
-
-        // get the collection format
-        collectionFormat = (collectionFormat == null || collectionFormat.isEmpty() ? "csv" : collectionFormat); // default: csv
 
         // create the params based on the collection format
-        if (collectionFormat.equals("multi")) {
-            for (Object item : valueCollection) {
-                params.add(new Pair(name, parameterToString(item)));
+        if ("multi".equals(collectionFormat)) {
+            for (Object item : value) {
+                params.add(new Pair(name, escapeString(parameterToString(item))));
             }
-
             return params;
         }
 
+        // collectionFormat is assumed to be "csv" by default
         String delimiter = ",";
 
-        if (collectionFormat.equals("csv")) {
-            delimiter = ",";
-        } else if (collectionFormat.equals("ssv")) {
-            delimiter = " ";
-        } else if (collectionFormat.equals("tsv")) {
-            delimiter = "\t";
-        } else if (collectionFormat.equals("pipes")) {
-            delimiter = "|";
+        // escape all delimiters except commas, which are URI reserved
+        // characters
+        if ("ssv".equals(collectionFormat)) {
+            delimiter = escapeString(" ");
+        } else if ("tsv".equals(collectionFormat)) {
+            delimiter = escapeString("\t");
+        } else if ("pipes".equals(collectionFormat)) {
+            delimiter = escapeString("|");
         }
 
         StringBuilder sb = new StringBuilder() ;
-        for (Object item : valueCollection) {
+        for (Object item : value) {
             sb.append(delimiter);
-            sb.append(parameterToString(item));
+            sb.append(escapeString(parameterToString(item)));
         }
 
-        params.add(new Pair(name, sb.substring(1)));
+        params.add(new Pair(name, sb.substring(delimiter.length())));
 
         return params;
     }
@@ -745,12 +597,13 @@ public class ApiClient {
      *   application/json; charset=UTF8
      *   APPLICATION/JSON
      *   application/vnd.company+json
+     * "* / *" is also default to JSON
      * @param mime MIME (Multipurpose Internet Mail Extensions)
      * @return True if the given MIME is JSON, false otherwise.
      */
     public boolean isJsonMime(String mime) {
       String jsonMime = "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$";
-      return mime != null && (mime.matches(jsonMime) || mime.equalsIgnoreCase("application/json-patch+json"));
+      return mime != null && (mime.matches(jsonMime) || mime.equals("*/*"));
     }
 
     /**
@@ -781,11 +634,11 @@ public class ApiClient {
      *
      * @param contentTypes The Content-Type array to select from
      * @return The Content-Type header to use. If the given array is empty,
-     *   JSON will be used.
+     *   or matches "any", JSON will be used.
      */
     public String selectHeaderContentType(String[] contentTypes) {
-        if (contentTypes.length == 0) {
-            return "application/json";
+        if (contentTypes.length == 0 || contentTypes[0].equals("*/*")) {
+             return "application/json";
         }
         for (String contentType : contentTypes) {
             if (isJsonMime(contentType)) {
@@ -987,6 +840,7 @@ public class ApiClient {
      */
     public <T> ApiResponse<T> execute(Call call, Type returnType) throws ApiException {
         try {
+
             Response response = call.execute();
             T data = handleResponse(response, returnType);
             return new ApiResponse<T>(response.code(), response.headers().toMultimap(), data);
@@ -1082,6 +936,7 @@ public class ApiClient {
      * @param path The sub-path of the HTTP URL
      * @param method The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
      * @param queryParams The query parameters
+     * @param collectionQueryParams The collection query parameters
      * @param body The request body object
      * @param headerParams The header parameters
      * @param formParams The form parameters
@@ -1090,8 +945,8 @@ public class ApiClient {
      * @return The HTTP call
      * @throws ApiException If fail to serialize the request body object
      */
-    public Call buildCall(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Request request = buildRequest(path, method, queryParams, body, headerParams, formParams, authNames, progressRequestListener);
+    public Call buildCall(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Request request = buildRequest(path, method, queryParams, collectionQueryParams, body, headerParams, formParams, authNames, progressRequestListener);
 
         return httpClient.newCall(request);
     }
@@ -1102,6 +957,7 @@ public class ApiClient {
      * @param path The sub-path of the HTTP URL
      * @param method The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
      * @param queryParams The query parameters
+     * @param collectionQueryParams The collection query parameters
      * @param body The request body object
      * @param headerParams The header parameters
      * @param formParams The form parameters
@@ -1110,10 +966,10 @@ public class ApiClient {
      * @return The HTTP request 
      * @throws ApiException If fail to serialize the request body object
      */
-    public Request buildRequest(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public Request buildRequest(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         updateParamsForAuth(authNames, queryParams, headerParams);
 
-        final String url = buildUrl(path, queryParams);
+        final String url = buildUrl(path, queryParams, collectionQueryParams);
         final Request.Builder reqBuilder = new Request.Builder().url(url);
         processHeaderParams(headerParams, reqBuilder);
 
@@ -1159,9 +1015,10 @@ public class ApiClient {
      *
      * @param path The sub path
      * @param queryParams The query parameters
+     * @param collectionQueryParams The collection query parameters
      * @return The full URL
      */
-    public String buildUrl(String path, List<Pair> queryParams) {
+    public String buildUrl(String path, List<Pair> queryParams, List<Pair> collectionQueryParams) {
         final StringBuilder url = new StringBuilder();
         url.append(basePath).append(path);
 
@@ -1178,6 +1035,23 @@ public class ApiClient {
                     }
                     String value = parameterToString(param.getValue());
                     url.append(escapeString(param.getName())).append("=").append(escapeString(value));
+                }
+            }
+        }
+
+        if (collectionQueryParams != null && !collectionQueryParams.isEmpty()) {
+            String prefix = url.toString().contains("?") ? "&" : "?";
+            for (Pair param : collectionQueryParams) {
+                if (param.getValue() != null) {
+                    if (prefix != null) {
+                        url.append(prefix);
+                        prefix = null;
+                    } else {
+                        url.append("&");
+                    }
+                    String value = parameterToString(param.getValue());
+                    // collection query parameter value already escaped as part of parameterToPairs
+                    url.append(escapeString(param.getName())).append("=").append(value);
                 }
             }
         }
@@ -1226,16 +1100,7 @@ public class ApiClient {
     public RequestBody buildRequestBodyFormEncoding(Map<String, Object> formParams) {
         FormEncodingBuilder formBuilder  = new FormEncodingBuilder();
         for (Entry<String, Object> param : formParams.entrySet()) {
-            //EV if we have our specififc filePaths param we need to build it differently
-            if ( param.getKey() == "filePaths[]" ) {
-                String s = parameterToString(param.getValue());
-                List<String> filePaths = new ArrayList<String>(Arrays.asList(s.split(",")));
-                for (String value : filePaths) {
-                    formBuilder.add(param.getKey(), value);
-                }
-            } else {
-                formBuilder.add(param.getKey(), parameterToString(param.getValue()));
-            }
+            formBuilder.add(param.getKey(), parameterToString(param.getValue()));
         }
         return formBuilder.build();
     }
@@ -1275,31 +1140,6 @@ public class ApiClient {
             return "application/octet-stream";
         } else {
             return contentType;
-        }
-    }
-
-    /**
-     * Initialize datetime format according to the current environment, e.g. Java 1.7 and Android.
-     */
-    private void initDatetimeFormat() {
-        String formatWithTimeZone = null;
-        if (IS_ANDROID) {
-            if (ANDROID_SDK_VERSION >= 18) {
-                // The time zone format "ZZZZZ" is available since Android 4.3 (SDK version 18)
-                formatWithTimeZone = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ";
-            }
-        } else if (JAVA_VERSION >= 1.7) {
-            // The time zone format "XXX" is available since Java 1.7
-            formatWithTimeZone = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
-        }
-        if (formatWithTimeZone != null) {
-            this.datetimeFormat = new SimpleDateFormat(formatWithTimeZone);
-            // NOTE: Use the system's default time zone (mainly for datetime formatting).
-        } else {
-            // Use a common format that works across all systems.
-            this.datetimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            // Always use the UTC time zone as we are using a constant trailing "Z" here.
-            this.datetimeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         }
     }
 
