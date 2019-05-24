@@ -236,7 +236,7 @@ public class ShareApiTest {
         Boolean hasNotification = null;
         List<String> notificationEmails = null;
         Boolean fileDropCreateFolders = null;
-        Response response = api.updateShare(apiKey, accessToken, id, name, filePaths, accessMode, subject, message, emails, ccEmail, requireEmail, embed, isPublic, password, expiration, hasNotification, notificationEmails, fileDropCreateFolders);
+        ShareResponse response = api.updateShare(apiKey, accessToken, id, name, filePaths, accessMode, subject, message, emails, ccEmail, requireEmail, embed, isPublic, password, expiration, hasNotification, notificationEmails, fileDropCreateFolders);
 
         // TODO: test validations
     }

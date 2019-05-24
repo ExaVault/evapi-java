@@ -166,7 +166,7 @@ public class FilesAndFoldersApiTest {
     public void getDownloadFileUrlTest() throws ApiException {
         String apiKey = null;
         String accessToken = null;
-        String filePaths = null;
+        List<String> filePaths = new ArrayList<String>();
         String downloadName = null;
         UrlResponse response = api.getDownloadFileUrl(apiKey, accessToken, filePaths, downloadName);
 
