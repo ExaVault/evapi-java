@@ -11,6 +11,8 @@ You will also need an ExaVault account, as well as an API key and access token.
 
 ## Compiling and Installing the Code Library
 
+### Option 1 - Using Maven
+
 To install the API client library to your local Maven repository, simply execute:
 
 ```shell
@@ -22,9 +24,6 @@ To deploy it to a remote Maven repository instead, configure the settings of the
 ```shell
 mvn clean deploy
 ```
-
-### Option 1 - Using Maven
-
 Add this dependency to your project's POM:
 
 ```xml
