@@ -1,0 +1,10 @@
+io/swagger/client/api/FormApiTest.class
+io/swagger/client/api/EmailListsApiTest.class
+io/swagger/client/api/ActivityApiTest.class
+io/swagger/client/api/ResourcesApiTest.class
+io/swagger/client/api/NotificationsApiTest.class
+io/swagger/client/api/AccountApiTest.class
+io/swagger/client/api/RecipientsApiTest.class
+io/swagger/client/api/EmailApiTest.class
+io/swagger/client/api/SharesApiTest.class
+io/swagger/client/api/UsersApiTest.class
