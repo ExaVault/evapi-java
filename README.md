@@ -1,7 +1,7 @@
-# ExaVault Java API Library - v2.0
+# ExaVault Java API Library - v2 API
 
 ## Introduction
-Welcome to ExaVault's Java code library for our v2 API. Our v2 API will allow you to interact with all aspects of the service the same way our web portal would. The library is generated from our API's [public swagger YAML file](https://www.exavault.com/api/docs/evapi_2.0_public.yaml)
+Welcome to ExaVault's Java code library for our v2 API. Our v2 API will allow you to interact with all aspects of the service the same way our web portal would. The library is generated from our API's [public swagger YAML file](https://www.exavault.com/api/docs/evapi_2.0_public.yaml).
 
 ## Requirements
 
