@@ -5,53 +5,54 @@ Welcome to ExaVault's Java code library for our v2 API. Our v2 API will allow yo
 
 ## Requirements
 
-To use this library, you'll need Java 1.7+ and Maven/Gradle
+To use this library, you'll need [Java 1.7+](https://www.java.com/en/download/help/download_options.xml) and [Maven](https://howtodoinjava.com/maven/how-to-install-maven-on-windows/).
 
-You will also need an ExaVault account, as well as an API key and access token.
+You will also need an [ExaVault](https://www.exavault.com/) account, as well as an [API key and access token](https://www.exavault.com/developer/api-docs/#section/Obtaining-Your-API-Key-and-Access-Token).
+
+## Setting Up
+
+Clone the project from our repository 
+
+````git clone https://github.com/ExaVault/evapi-java.git````
+
+As a next step, import the project into your favourite Java IDE, Please refer to this [guide]() to install an IDE and import the project into it.
+
 
 ## Compiling and Installing the Code Library
 
 ### Option 1 - Using Maven
 
-To install the API client library to your local Maven repository, simply execute:
+As a first step, you need to install **our Java SDK** into your local maven repository. To do so, please run the following command from the root folder (where you've imported/cloned our Java SDK).
 
 ```shell
 mvn clean install
 ```
 
-To deploy it to a remote Maven repository instead, configure the settings of the repository and execute:
+Now, our Java SDK and its related dependencies are installed into your local maven repository.
 
-```shell
-mvn clean deploy
-```
-Add this dependency to your project's POM:
+Furthermore, Add this dependency to **your project's** ````POM.XML````:
 
 ```xml
 <dependency>
-  <groupId>io.swagger</groupId>
+  <groupId>com.exavault</groupId>
   <artifactId>swagger-java-client</artifactId>
   <version>1.0.0</version>
   <scope>compile</scope>
 </dependency>
-```
+````
 
-### Option 2 - Using Gradle
+At the end of this step, your project should be able to use our Java SDK.
 
-Add this dependency to your project's build file:
+### Option 2 - Manual Installation
 
-```groovy
-compile "io.swagger:swagger-java-client:1.0.0"
-```
-
-### Option 3 - Manual Installation
-
-At first generate the JAR by executing:
+At first generate the JAR by executing (from the root folder of **our Java SDK**):
 
 ```shell
 mvn clean package
 ```
+This step will generate JAR file of **our SDK** and other related dependencies of our SDK are now present under the Target folder at the project root.
 
-Then manually install the following JARs:
+Then manually install the following JARs into **your project**, Please follow this [guide]() to configure jar files.
 
 * `target/swagger-java-client-1.0.0.jar`
 * `target/lib/*.jar`
@@ -65,18 +66,17 @@ For a gentle introduction to using Java code with ExaVault's API, check out [our
 
 When you're ready to write your own code using this library, you'll need to:
 
-1. Install our code library in your project, using above instructions in Installation section
-2. Provide your API key and access token with every function method on the Api classes, which are in io.swagger.client.api.* namespace.
+1. Install our code library in your project, using above instructions in Installation section.
+2. Provide your API key and access token with every function method on the Api classes, which are in com.exavault.client.api.* namespace.
 3. Whenever you instantiate an Api object (ResourcesApi, UsersApi, etc.), override the configuration to point the code at the correct API URL:
 ```java
-public static ApiClient apiInstance; 
+ 
 public static String apiUrl = "https://YOUR_ACCOUNT_NAME_HERE.exavault.com/api/v2/";
 
 ApiClient apiClient = new ApiClient();
-apiClient.setBasePath(apiUrl);
-apiInstance = apiClient;  
+apiClient.setBasePath(apiUrl); 
 
-AccountApi accountApiInstance = new AccountApi(apiInstance);
+AccountApi accountApiInstance = new AccountApi(apiClient);
 ```
 
 ## Author
