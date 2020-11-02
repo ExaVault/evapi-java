@@ -15,7 +15,7 @@ Clone the project from our repository
 
 ````git clone https://github.com/ExaVault/evapi-java.git````
 
-As a next step, import the project into your favourite Java IDE, Please refer to this [guide]() to install an IDE and import the project into it.
+As a next step, import the project into your favourite Java IDE, Please refer to this [guide](https://github.com/ExaVault/evapi-java-samples/blob/main/README.md#running-your-first-sample) to install an IDE and import the project into it.
 
 
 ## Compiling and Installing the Code Library
@@ -52,7 +52,7 @@ mvn clean package
 ```
 This step will generate JAR file of **our SDK** and other related dependencies of our SDK are now present under the Target folder at the project root.
 
-Then manually install the following JARs into **your project**, Please follow this [guide]() to configure jar files.
+Then manually install the following JARs into **your project**, Please follow this [guide](https://github.com/ExaVault/evapi-java-samples/blob/main/README.md#running-your-first-sample) to configure jar files.
 
 * `target/swagger-java-client-1.0.0.jar`
 * `target/lib/*.jar`
