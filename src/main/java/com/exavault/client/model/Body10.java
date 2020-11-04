@@ -35,7 +35,7 @@ public class Body10 {
   @SerializedName("parentResource")
   private String parentResource = null;
 
-  @SerializedName("archive Name")
+  @SerializedName("archiveName")
   private String archiveName = null;
 
   public Body10 resources(List<String> resources) {

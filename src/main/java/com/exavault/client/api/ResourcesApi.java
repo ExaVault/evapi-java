@@ -778,7 +778,7 @@ public class ResourcesApi {
      * @param evAccessToken Access token required to make the API call. (required)
      * @param resources Path of file or folder to be downloaded, starting from the root. Can also be an array of paths. (required)
      * @param downloadName If zipping multiple files, the name of the zip file to create and download. (optional)
-     * @param polling Used when downloading multiple files so url will be pulled till zip file is created. (optional)
+     * @param polling Used when downloading multiple files so url will be polled till zip file is created. (optional)
      * @param pollingZipName Reference to the previously created zip for polling operation. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
@@ -869,7 +869,7 @@ public class ResourcesApi {
      * @param evAccessToken Access token required to make the API call. (required)
      * @param resources Path of file or folder to be downloaded, starting from the root. Can also be an array of paths. (required)
      * @param downloadName If zipping multiple files, the name of the zip file to create and download. (optional)
-     * @param polling Used when downloading multiple files so url will be pulled till zip file is created. (optional)
+     * @param polling Used when downloading multiple files so url will be polled till zip file is created. (optional)
      * @param pollingZipName Reference to the previously created zip for polling operation. (optional)
      * @return File
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -886,7 +886,7 @@ public class ResourcesApi {
      * @param evAccessToken Access token required to make the API call. (required)
      * @param resources Path of file or folder to be downloaded, starting from the root. Can also be an array of paths. (required)
      * @param downloadName If zipping multiple files, the name of the zip file to create and download. (optional)
-     * @param polling Used when downloading multiple files so url will be pulled till zip file is created. (optional)
+     * @param polling Used when downloading multiple files so url will be polled till zip file is created. (optional)
      * @param pollingZipName Reference to the previously created zip for polling operation. (optional)
      * @return ApiResponse&lt;File&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -904,7 +904,7 @@ public class ResourcesApi {
      * @param evAccessToken Access token required to make the API call. (required)
      * @param resources Path of file or folder to be downloaded, starting from the root. Can also be an array of paths. (required)
      * @param downloadName If zipping multiple files, the name of the zip file to create and download. (optional)
-     * @param polling Used when downloading multiple files so url will be pulled till zip file is created. (optional)
+     * @param polling Used when downloading multiple files so url will be polled till zip file is created. (optional)
      * @param pollingZipName Reference to the previously created zip for polling operation. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
