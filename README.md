@@ -35,8 +35,8 @@ Furthermore, Add this dependency to **your project's** ````POM.XML````:
 ```xml
 <dependency>
   <groupId>com.exavault</groupId>
-  <artifactId>swagger-java-client</artifactId>
-  <version>1.0.0</version>
+  <artifactId>exavault-api-client</artifactId>
+  <version>INSERT_VERSION_NUMBER_HERE</version>
   <scope>compile</scope>
 </dependency>
 ````
@@ -45,18 +45,14 @@ At the end of this step, your project should be able to use our Java SDK.
 
 ### Option 2 - Manual Installation
 
-At first generate the JAR by executing (from the root folder of **our Java SDK**):
+We've provided pre-compiled jar files in the `lib` directory. You may manually install these files into **your project**. Please follow this [guide](https://github.com/ExaVault/evapi-java-samples/blob/main/README.md#running-your-first-sample) to configure jar files.
+
+If you'd like to build the jar package from source, you may do:
 
 ```shell
 mvn clean package
 ```
-This step will generate JAR file of **our SDK** and other related dependencies of our SDK are now present under the Target folder at the project root.
-
-Then manually install the following JARs into **your project**, Please follow this [guide](https://github.com/ExaVault/evapi-java-samples/blob/main/README.md#running-your-first-sample) to configure jar files.
-
-* `target/swagger-java-client-1.0.0.jar`
-* `target/lib/*.jar`
-
+This step will generate JAR files from **our SDK** (and other related dependencies) into the `target` folder at the project root. Generally, you can just use the compiled JAR files (or use maven), but if you want to build yourself, you can.
 
 ## Sample Code
 
