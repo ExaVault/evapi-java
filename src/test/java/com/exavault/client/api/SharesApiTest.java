@@ -13,11 +13,11 @@
 package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
-import com.exavault.client.model.Body16;
-import com.exavault.client.model.Body17;
+import com.exavault.client.model.AddShareRequestBody;
 import com.exavault.client.model.EmptyResponse;
 import com.exavault.client.model.ShareCollectionResponse;
 import com.exavault.client.model.ShareResponse;
+import com.exavault.client.model.UpdateShareRequestBody;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -46,7 +46,7 @@ public class SharesApiTest {
     public void addShareTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Body16 body = null;
+        AddShareRequestBody body = null;
         ShareResponse response = api.addShare(evApiKey, evAccessToken, body);
 
         // TODO: test validations
@@ -140,7 +140,7 @@ public class SharesApiTest {
      */
     @Test
     public void updateShareByIdTest() throws ApiException {
-        Body17 body = null;
+        UpdateShareRequestBody body = null;
         String evApiKey = null;
         String evAccessToken = null;
         Integer id = null;

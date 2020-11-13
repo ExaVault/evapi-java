@@ -13,8 +13,8 @@
 package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
-import com.exavault.client.model.Body15;
 import com.exavault.client.model.EmptyResponse;
+import com.exavault.client.model.SendReferralEmailRequestBody;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -43,7 +43,7 @@ public class EmailApiTest {
     public void sendReferralEmailTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Body15 body = null;
+        SendReferralEmailRequestBody body = null;
         EmptyResponse response = api.sendReferralEmail(evApiKey, evAccessToken, body);
 
         // TODO: test validations

@@ -14,7 +14,7 @@ package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
 import com.exavault.client.model.AccountResponse;
-import com.exavault.client.model.UpdateAccountBody;
+import com.exavault.client.model.UpdateAccountRequestBody;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -60,7 +60,7 @@ public class AccountApiTest {
     public void updateAccountTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        UpdateAccountBody body = null;
+        UpdateAccountRequestBody body = null;
         AccountResponse response = api.updateAccount(evApiKey, evAccessToken, body);
 
         // TODO: test validations

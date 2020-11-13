@@ -13,11 +13,11 @@
 package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
-import com.exavault.client.model.Body;
-import com.exavault.client.model.Body1;
+import com.exavault.client.model.AddEmailListRequestBody;
 import com.exavault.client.model.EmailListCollectionResponse;
 import com.exavault.client.model.EmailListResponse;
 import com.exavault.client.model.EmptyResponse;
+import com.exavault.client.model.UpdateEmailListRequestBody;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -46,7 +46,7 @@ public class EmailListsApiTest {
     public void addEmailListTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Body body = null;
+        AddEmailListRequestBody body = null;
         EmailListResponse response = api.addEmailList(evApiKey, evAccessToken, body);
 
         // TODO: test validations
@@ -89,7 +89,7 @@ public class EmailListsApiTest {
     /**
      * Get all email groups
      *
-     * 
+     * List all email groups for authenticated user
      *
      * @throws ApiException
      *          if the Api call fails
@@ -116,7 +116,7 @@ public class EmailListsApiTest {
         String evApiKey = null;
         String evAccessToken = null;
         Integer id = null;
-        Body1 body = null;
+        UpdateEmailListRequestBody body = null;
         EmailListResponse response = api.updateEmailListById(evApiKey, evAccessToken, id, body);
 
         // TODO: test validations

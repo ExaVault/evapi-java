@@ -13,21 +13,21 @@
 package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
-import com.exavault.client.model.Body10;
-import com.exavault.client.model.Body11;
-import com.exavault.client.model.Body12;
-import com.exavault.client.model.Body13;
-import com.exavault.client.model.Body7;
-import com.exavault.client.model.Body8;
-import com.exavault.client.model.Body9;
+import com.exavault.client.model.AddFolderRequestBody;
+import com.exavault.client.model.CompressFilesRequestBody;
+import com.exavault.client.model.CopyResourcesRequestBody;
+import com.exavault.client.model.DeleteResourcesRequestBody;
 import com.exavault.client.model.DownloadPollingResponse;
 import com.exavault.client.model.EmptyResponse;
+import com.exavault.client.model.ExtractFilesRequestBody;
 import java.io.File;
+import com.exavault.client.model.MoveResourcesRequestBody;
 import com.exavault.client.model.PreviewFileResponse;
 import com.exavault.client.model.ResourceCollectionResponse;
 import com.exavault.client.model.ResourceCopyMove;
 import com.exavault.client.model.ResourceMultiResponse;
 import com.exavault.client.model.ResourceResponse;
+import com.exavault.client.model.UpdateReourceByIdRequestBody;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -56,7 +56,7 @@ public class ResourcesApiTest {
     public void addFolderTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Body8 body = null;
+        AddFolderRequestBody body = null;
         ResourceResponse response = api.addFolder(evApiKey, evAccessToken, body);
 
         // TODO: test validations
@@ -73,7 +73,7 @@ public class ResourcesApiTest {
     public void compressFilesTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Body10 body = null;
+        CompressFilesRequestBody body = null;
         ResourceResponse response = api.compressFiles(evApiKey, evAccessToken, body);
 
         // TODO: test validations
@@ -90,7 +90,7 @@ public class ResourcesApiTest {
     public void copyResourcesTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Body12 body = null;
+        CopyResourcesRequestBody body = null;
         ResourceCopyMove response = api.copyResources(evApiKey, evAccessToken, body);
 
         // TODO: test validations
@@ -124,7 +124,7 @@ public class ResourcesApiTest {
     public void deleteResourcesTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Body9 body = null;
+        DeleteResourcesRequestBody body = null;
         EmptyResponse response = api.deleteResources(evApiKey, evAccessToken, body);
 
         // TODO: test validations
@@ -132,7 +132,7 @@ public class ResourcesApiTest {
     /**
      * Download a file
      *
-     * Downloads a file. If more than one path is supplied, the files will be zipped before downloading with the downloadName parameter if supplied. 
+     * Downloads a file. If more than one path is supplied, the files will be zipped before downloading with the downloadArchiveName parameter if supplied. 
      *
      * @throws ApiException
      *          if the Api call fails
@@ -142,10 +142,10 @@ public class ResourcesApiTest {
         String evApiKey = null;
         String evAccessToken = null;
         List<String> resources = null;
-        String downloadName = null;
+        String downloadArchiveName = null;
         Boolean polling = null;
-        String pollingZipName = null;
-        File response = api.download(evApiKey, evAccessToken, resources, downloadName, polling, pollingZipName);
+        String pollingArchiveName = null;
+        File response = api.download(evApiKey, evAccessToken, resources, downloadArchiveName, polling, pollingArchiveName);
 
         // TODO: test validations
     }
@@ -161,7 +161,7 @@ public class ResourcesApiTest {
     public void extractFilesTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Body11 body = null;
+        ExtractFilesRequestBody body = null;
         ResourceCollectionResponse response = api.extractFiles(evApiKey, evAccessToken, body);
 
         // TODO: test validations
@@ -280,7 +280,7 @@ public class ResourcesApiTest {
     public void moveResourcesTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Body13 body = null;
+        MoveResourcesRequestBody body = null;
         ResourceCopyMove response = api.moveResources(evApiKey, evAccessToken, body);
 
         // TODO: test validations
@@ -298,7 +298,7 @@ public class ResourcesApiTest {
         String evAccessToken = null;
         String evApiKey = null;
         Integer id = null;
-        Body7 body = null;
+        UpdateReourceByIdRequestBody body = null;
         ResourceResponse response = api.updateResourceById(evAccessToken, evApiKey, id, body);
 
         // TODO: test validations

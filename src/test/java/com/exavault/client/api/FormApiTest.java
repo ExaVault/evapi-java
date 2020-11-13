@@ -13,10 +13,10 @@
 package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
-import com.exavault.client.model.Body2;
 import com.exavault.client.model.EmptyResponse;
 import com.exavault.client.model.FormEntryResponse;
 import com.exavault.client.model.FormResponse;
+import com.exavault.client.model.UpdateFormByIdRequestBody;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -118,7 +118,7 @@ public class FormApiTest {
         String evApiKey = null;
         String evAccessToken = null;
         Integer id = null;
-        Body2 body = null;
+        UpdateFormByIdRequestBody body = null;
         FormResponse response = api.updateFormById(evApiKey, evAccessToken, id, body);
 
         // TODO: test validations

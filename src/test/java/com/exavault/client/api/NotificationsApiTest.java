@@ -13,11 +13,11 @@
 package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
-import com.exavault.client.model.Body3;
-import com.exavault.client.model.Body4;
+import com.exavault.client.model.AddNotificationRequestBody;
 import com.exavault.client.model.EmptyResponse;
 import com.exavault.client.model.NotificationCollectionResponse;
 import com.exavault.client.model.NotificationResponse;
+import com.exavault.client.model.UpdateNotificationByIdRequestBody;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -46,7 +46,7 @@ public class NotificationsApiTest {
     public void addNotificationTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Body4 body = null;
+        AddNotificationRequestBody body = null;
         NotificationResponse response = api.addNotification(evApiKey, evAccessToken, body);
 
         // TODO: test validations
@@ -121,7 +121,7 @@ public class NotificationsApiTest {
         String evApiKey = null;
         String evAccessToken = null;
         Integer id = null;
-        Body3 body = null;
+        UpdateNotificationByIdRequestBody body = null;
         NotificationResponse response = api.updateNotificationById(evApiKey, evAccessToken, id, body);
 
         // TODO: test validations
