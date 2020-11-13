@@ -23,35 +23,28 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.threeten.bp.OffsetDateTime;
 /**
- * Information for the email list, including its short title and recipient emails
+ * UpdateEmailListRequestBody
  */
-@Schema(description = "Information for the email list, including its short title and recipient emails")
 
-public class EmailListAttributes {
+
+public class UpdateEmailListRequestBody {
   @SerializedName("name")
   private String name = null;
 
   @SerializedName("emails")
   private List<String> emails = null;
 
-  @SerializedName("created")
-  private OffsetDateTime created = null;
-
-  @SerializedName("modified")
-  private OffsetDateTime modified = null;
-
-  public EmailListAttributes name(String name) {
+  public UpdateEmailListRequestBody name(String name) {
     this.name = name;
     return this;
   }
 
    /**
-   * Short title for email list
+   * Name of the email list.
    * @return name
   **/
-  @Schema(description = "Short title for email list")
+  @Schema(example = "My friends list", description = "Name of the email list.")
   public String getName() {
     return name;
   }
@@ -60,12 +53,12 @@ public class EmailListAttributes {
     this.name = name;
   }
 
-  public EmailListAttributes emails(List<String> emails) {
+  public UpdateEmailListRequestBody emails(List<String> emails) {
     this.emails = emails;
     return this;
   }
 
-  public EmailListAttributes addEmailsItem(String emailsItem) {
+  public UpdateEmailListRequestBody addEmailsItem(String emailsItem) {
     if (this.emails == null) {
       this.emails = new ArrayList<String>();
     }
@@ -74,52 +67,16 @@ public class EmailListAttributes {
   }
 
    /**
-   * Recipient emails in the email list
+   * Array of email addresses to add to the email list.
    * @return emails
   **/
-  @Schema(description = "Recipient emails in the email list")
+  @Schema(example = "[\"ykravchuk@exavault.com\",\"jdoe@exavault.com\"]", description = "Array of email addresses to add to the email list.")
   public List<String> getEmails() {
     return emails;
   }
 
   public void setEmails(List<String> emails) {
     this.emails = emails;
-  }
-
-  public EmailListAttributes created(OffsetDateTime created) {
-    this.created = created;
-    return this;
-  }
-
-   /**
-   * Created datetime
-   * @return created
-  **/
-  @Schema(description = "Created datetime")
-  public OffsetDateTime getCreated() {
-    return created;
-  }
-
-  public void setCreated(OffsetDateTime created) {
-    this.created = created;
-  }
-
-  public EmailListAttributes modified(OffsetDateTime modified) {
-    this.modified = modified;
-    return this;
-  }
-
-   /**
-   * Modified datetime
-   * @return modified
-  **/
-  @Schema(description = "Modified datetime")
-  public OffsetDateTime getModified() {
-    return modified;
-  }
-
-  public void setModified(OffsetDateTime modified) {
-    this.modified = modified;
   }
 
 
@@ -131,28 +88,24 @@ public class EmailListAttributes {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    EmailListAttributes emailListAttributes = (EmailListAttributes) o;
-    return Objects.equals(this.name, emailListAttributes.name) &&
-        Objects.equals(this.emails, emailListAttributes.emails) &&
-        Objects.equals(this.created, emailListAttributes.created) &&
-        Objects.equals(this.modified, emailListAttributes.modified);
+    UpdateEmailListRequestBody updateEmailListRequestBody = (UpdateEmailListRequestBody) o;
+    return Objects.equals(this.name, updateEmailListRequestBody.name) &&
+        Objects.equals(this.emails, updateEmailListRequestBody.emails);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, emails, created, modified);
+    return Objects.hash(name, emails);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class EmailListAttributes {\n");
+    sb.append("class UpdateEmailListRequestBody {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    emails: ").append(toIndentedString(emails)).append("\n");
-    sb.append("    created: ").append(toIndentedString(created)).append("\n");
-    sb.append("    modified: ").append(toIndentedString(modified)).append("\n");
     sb.append("}");
     return sb.toString();
   }

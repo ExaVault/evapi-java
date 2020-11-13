@@ -15,7 +15,7 @@ package com.exavault.client.model;
 import java.util.Objects;
 import java.util.Arrays;
 import com.exavault.client.model.ShareMessage;
-import com.exavault.client.model.ShareRecipient1;
+import com.exavault.client.model.ShareRecipient;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -42,14 +42,14 @@ public class ShareAttributes {
   private Boolean _public = null;
 
   /**
-   * Access rights for the share.
+   * Gets or Sets accessMode
    */
   @JsonAdapter(AccessModeEnum.Adapter.class)
   public enum AccessModeEnum {
-    UPLOAD("upload"),
     DOWNLOAD("download"),
-    DOWNLOAD_UPLOAD("download_upload"),
-    DOWNLOAD_UPLOAD_MODIFY_DELETE("download_upload_modify_delete");
+    UPLOAD("upload"),
+    MODIFY("modify"),
+    DELETE("delete");
 
     private String value;
 
@@ -85,7 +85,7 @@ public class ShareAttributes {
       }
     }
   }  @SerializedName("accessMode")
-  private AccessModeEnum accessMode = null;
+  private List<AccessModeEnum> accessMode = null;
 
   @SerializedName("accessDescription")
   private String accessDescription = null;
@@ -163,7 +163,7 @@ public class ShareAttributes {
   private List<String> paths = null;
 
   @SerializedName("recipients")
-  private List<ShareRecipient1> recipients = null;
+  private List<ShareRecipient> recipients = null;
 
   @SerializedName("messages")
   private List<ShareMessage> messages = null;
@@ -225,7 +225,7 @@ public class ShareAttributes {
   private OffsetDateTime modified = null;
 
   /**
-   * Checks recipient received status and returns whether it&#x27;s been recevied (&#x60;complete&#x60;,) partial recevied (&#x60;incomplete&#x60;,) or not recevied yet (&#x60;pending&#x60;.)
+   * Checks recipient received status and returns whether it&#x27;s been recevied (&#x60;complete&#x60;,) partial recevied (&#x60;incomplete&#x60;,) or not received yet (&#x60;pending&#x60;.)
    */
   @JsonAdapter(TrackingStatusEnum.Adapter.class)
   public enum TrackingStatusEnum {
@@ -326,8 +326,16 @@ public class ShareAttributes {
     this._public = _public;
   }
 
-  public ShareAttributes accessMode(AccessModeEnum accessMode) {
+  public ShareAttributes accessMode(List<AccessModeEnum> accessMode) {
     this.accessMode = accessMode;
+    return this;
+  }
+
+  public ShareAttributes addAccessModeItem(AccessModeEnum accessModeItem) {
+    if (this.accessMode == null) {
+      this.accessMode = new ArrayList<AccessModeEnum>();
+    }
+    this.accessMode.add(accessModeItem);
     return this;
   }
 
@@ -335,12 +343,12 @@ public class ShareAttributes {
    * Access rights for the share.
    * @return accessMode
   **/
-  @Schema(example = "upload", description = "Access rights for the share.")
-  public AccessModeEnum getAccessMode() {
+  @Schema(example = "[\"upload\",\"download\"]", description = "Access rights for the share.")
+  public List<AccessModeEnum> getAccessMode() {
     return accessMode;
   }
 
-  public void setAccessMode(AccessModeEnum accessMode) {
+  public void setAccessMode(List<AccessModeEnum> accessMode) {
     this.accessMode = accessMode;
   }
 
@@ -550,14 +558,14 @@ public class ShareAttributes {
     this.paths = paths;
   }
 
-  public ShareAttributes recipients(List<ShareRecipient1> recipients) {
+  public ShareAttributes recipients(List<ShareRecipient> recipients) {
     this.recipients = recipients;
     return this;
   }
 
-  public ShareAttributes addRecipientsItem(ShareRecipient1 recipientsItem) {
+  public ShareAttributes addRecipientsItem(ShareRecipient recipientsItem) {
     if (this.recipients == null) {
-      this.recipients = new ArrayList<ShareRecipient1>();
+      this.recipients = new ArrayList<ShareRecipient>();
     }
     this.recipients.add(recipientsItem);
     return this;
@@ -568,11 +576,11 @@ public class ShareAttributes {
    * @return recipients
   **/
   @Schema(example = "[{\"id\":2,\"shareId\":23,\"type\":\"direct\",\"hash\":\"fseowxan\",\"email\":\"recipient@gmail.com\",\"sent\":true,\"received\":false,\"created\":\"2017-04-21T10:53:47Z\"}]", description = "Array of recipients.")
-  public List<ShareRecipient1> getRecipients() {
+  public List<ShareRecipient> getRecipients() {
     return recipients;
   }
 
-  public void setRecipients(List<ShareRecipient1> recipients) {
+  public void setRecipients(List<ShareRecipient> recipients) {
     this.recipients = recipients;
   }
 
@@ -698,10 +706,10 @@ public class ShareAttributes {
   }
 
    /**
-   * Checks recipient received status and returns whether it&#x27;s been recevied (&#x60;complete&#x60;,) partial recevied (&#x60;incomplete&#x60;,) or not recevied yet (&#x60;pending&#x60;.)
+   * Checks recipient received status and returns whether it&#x27;s been recevied (&#x60;complete&#x60;,) partial recevied (&#x60;incomplete&#x60;,) or not received yet (&#x60;pending&#x60;.)
    * @return trackingStatus
   **/
-  @Schema(description = "Checks recipient received status and returns whether it's been recevied (`complete`,) partial recevied (`incomplete`,) or not recevied yet (`pending`.)")
+  @Schema(description = "Checks recipient received status and returns whether it's been recevied (`complete`,) partial recevied (`incomplete`,) or not received yet (`pending`.)")
   public TrackingStatusEnum getTrackingStatus() {
     return trackingStatus;
   }

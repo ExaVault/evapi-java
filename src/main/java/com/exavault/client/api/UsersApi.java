@@ -26,10 +26,10 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import com.exavault.client.model.AddUserRequestBody;
 import java.math.BigDecimal;
-import com.exavault.client.model.Body5;
-import com.exavault.client.model.Body6;
 import com.exavault.client.model.EmptyResponse;
+import com.exavault.client.model.UpdateUserRequestBody;
 import com.exavault.client.model.UserCollectionResponse;
 import com.exavault.client.model.UserResponse;
 
@@ -68,7 +68,7 @@ public class UsersApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call addUserCall(String evApiKey, String evAccessToken, Body5 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call addUserCall(String evApiKey, String evAccessToken, AddUserRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -114,7 +114,7 @@ public class UsersApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call addUserValidateBeforeCall(String evApiKey, String evAccessToken, Body5 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call addUserValidateBeforeCall(String evApiKey, String evAccessToken, AddUserRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling addUser(Async)");
@@ -142,7 +142,7 @@ public class UsersApi {
      * @return UserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public UserResponse addUser(String evApiKey, String evAccessToken, Body5 body) throws ApiException {
+    public UserResponse addUser(String evApiKey, String evAccessToken, AddUserRequestBody body) throws ApiException {
         ApiResponse<UserResponse> resp = addUserWithHttpInfo(evApiKey, evAccessToken, body);
         return resp.getData();
     }
@@ -156,7 +156,7 @@ public class UsersApi {
      * @return ApiResponse&lt;UserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<UserResponse> addUserWithHttpInfo(String evApiKey, String evAccessToken, Body5 body) throws ApiException {
+    public ApiResponse<UserResponse> addUserWithHttpInfo(String evApiKey, String evAccessToken, AddUserRequestBody body) throws ApiException {
         com.squareup.okhttp.Call call = addUserValidateBeforeCall(evApiKey, evAccessToken, body, null, null);
         Type localVarReturnType = new TypeToken<UserResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -172,7 +172,7 @@ public class UsersApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call addUserAsync(String evApiKey, String evAccessToken, Body5 body, final ApiCallback<UserResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call addUserAsync(String evApiKey, String evAccessToken, AddUserRequestBody body, final ApiCallback<UserResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -707,7 +707,7 @@ public class UsersApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateUserCall(String evApiKey, String evAccessToken, BigDecimal id, Body6 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateUserCall(String evApiKey, String evAccessToken, BigDecimal id, UpdateUserRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -754,7 +754,7 @@ public class UsersApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateUserValidateBeforeCall(String evApiKey, String evAccessToken, BigDecimal id, Body6 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateUserValidateBeforeCall(String evApiKey, String evAccessToken, BigDecimal id, UpdateUserRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling updateUser(Async)");
@@ -787,7 +787,7 @@ public class UsersApi {
      * @return UserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public UserResponse updateUser(String evApiKey, String evAccessToken, BigDecimal id, Body6 body) throws ApiException {
+    public UserResponse updateUser(String evApiKey, String evAccessToken, BigDecimal id, UpdateUserRequestBody body) throws ApiException {
         ApiResponse<UserResponse> resp = updateUserWithHttpInfo(evApiKey, evAccessToken, id, body);
         return resp.getData();
     }
@@ -802,7 +802,7 @@ public class UsersApi {
      * @return ApiResponse&lt;UserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<UserResponse> updateUserWithHttpInfo(String evApiKey, String evAccessToken, BigDecimal id, Body6 body) throws ApiException {
+    public ApiResponse<UserResponse> updateUserWithHttpInfo(String evApiKey, String evAccessToken, BigDecimal id, UpdateUserRequestBody body) throws ApiException {
         com.squareup.okhttp.Call call = updateUserValidateBeforeCall(evApiKey, evAccessToken, id, body, null, null);
         Type localVarReturnType = new TypeToken<UserResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -819,7 +819,7 @@ public class UsersApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateUserAsync(String evApiKey, String evAccessToken, BigDecimal id, Body6 body, final ApiCallback<UserResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateUserAsync(String evApiKey, String evAccessToken, BigDecimal id, UpdateUserRequestBody body, final ApiCallback<UserResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

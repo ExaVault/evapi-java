@@ -20,60 +20,33 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 /**
  * Body
  */
 
 
 public class Body {
-  @SerializedName("name")
-  private String name = null;
+  @SerializedName("file")
+  private File file = null;
 
-  @SerializedName("emails")
-  private List<String> emails = new ArrayList<String>();
-
-  public Body name(String name) {
-    this.name = name;
+  public Body file(File file) {
+    this.file = file;
     return this;
   }
 
    /**
-   * Name of the email list. 
-   * @return name
+   * Get file
+   * @return file
   **/
-  @Schema(example = "My friends list", required = true, description = "Name of the email list. ")
-  public String getName() {
-    return name;
+  @Schema(description = "")
+  public File getFile() {
+    return file;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Body emails(List<String> emails) {
-    this.emails = emails;
-    return this;
-  }
-
-  public Body addEmailsItem(String emailsItem) {
-    this.emails.add(emailsItem);
-    return this;
-  }
-
-   /**
-   * Array of email addresses to include in the email list. 
-   * @return emails
-  **/
-  @Schema(example = "[\"ykravchuk@exavault.com\",\"jdoe@exavault.com\"]", required = true, description = "Array of email addresses to include in the email list. ")
-  public List<String> getEmails() {
-    return emails;
-  }
-
-  public void setEmails(List<String> emails) {
-    this.emails = emails;
+  public void setFile(File file) {
+    this.file = file;
   }
 
 
@@ -86,13 +59,12 @@ public class Body {
       return false;
     }
     Body body = (Body) o;
-    return Objects.equals(this.name, body.name) &&
-        Objects.equals(this.emails, body.emails);
+    return Objects.equals(this.file, body.file);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, emails);
+    return Objects.hash(Objects.hashCode(file));
   }
 
 
@@ -101,8 +73,7 @@ public class Body {
     StringBuilder sb = new StringBuilder();
     sb.append("class Body {\n");
     
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    emails: ").append(toIndentedString(emails)).append("\n");
+    sb.append("    file: ").append(toIndentedString(file)).append("\n");
     sb.append("}");
     return sb.toString();
   }

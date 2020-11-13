@@ -14,6 +14,7 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.exavault.client.model.CallbackSettingsValuesTriggers;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,51 +23,51 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * ResourceRelationshipsParentResourceData
+ * CallbackSettingsValues
  */
 
 
-public class ResourceRelationshipsParentResourceData {
-  @SerializedName("id")
-  private Long id = null;
+public class CallbackSettingsValues {
+  @SerializedName("endpointUrl")
+  private String endpointUrl = null;
 
-  @SerializedName("type")
-  private String type = null;
+  @SerializedName("triggers")
+  private CallbackSettingsValuesTriggers triggers = null;
 
-  public ResourceRelationshipsParentResourceData id(Long id) {
-    this.id = id;
+  public CallbackSettingsValues endpointUrl(String endpointUrl) {
+    this.endpointUrl = endpointUrl;
     return this;
   }
 
    /**
-   * Get id
-   * @return id
+   * Get endpointUrl
+   * @return endpointUrl
   **/
-  @Schema(example = "2", description = "")
-  public Long getId() {
-    return id;
+  @Schema(description = "")
+  public String getEndpointUrl() {
+    return endpointUrl;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setEndpointUrl(String endpointUrl) {
+    this.endpointUrl = endpointUrl;
   }
 
-  public ResourceRelationshipsParentResourceData type(String type) {
-    this.type = type;
+  public CallbackSettingsValues triggers(CallbackSettingsValuesTriggers triggers) {
+    this.triggers = triggers;
     return this;
   }
 
    /**
-   * Get type
-   * @return type
+   * Get triggers
+   * @return triggers
   **/
-  @Schema(example = "resource", description = "")
-  public String getType() {
-    return type;
+  @Schema(description = "")
+  public CallbackSettingsValuesTriggers getTriggers() {
+    return triggers;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setTriggers(CallbackSettingsValuesTriggers triggers) {
+    this.triggers = triggers;
   }
 
 
@@ -78,24 +79,24 @@ public class ResourceRelationshipsParentResourceData {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ResourceRelationshipsParentResourceData resourceRelationshipsParentResourceData = (ResourceRelationshipsParentResourceData) o;
-    return Objects.equals(this.id, resourceRelationshipsParentResourceData.id) &&
-        Objects.equals(this.type, resourceRelationshipsParentResourceData.type);
+    CallbackSettingsValues callbackSettingsValues = (CallbackSettingsValues) o;
+    return Objects.equals(this.endpointUrl, callbackSettingsValues.endpointUrl) &&
+        Objects.equals(this.triggers, callbackSettingsValues.triggers);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type);
+    return Objects.hash(endpointUrl, triggers);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ResourceRelationshipsParentResourceData {\n");
+    sb.append("class CallbackSettingsValues {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    endpointUrl: ").append(toIndentedString(endpointUrl)).append("\n");
+    sb.append("    triggers: ").append(toIndentedString(triggers)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -21,52 +21,38 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 /**
- * ResourceRelationshipsParentResourceData
+ * DeleteResourcesRequestBody
  */
 
 
-public class ResourceRelationshipsParentResourceData {
-  @SerializedName("id")
-  private Long id = null;
+public class DeleteResourcesRequestBody {
+  @SerializedName("resources")
+  private List<String> resources = new ArrayList<String>();
 
-  @SerializedName("type")
-  private String type = null;
+  public DeleteResourcesRequestBody resources(List<String> resources) {
+    this.resources = resources;
+    return this;
+  }
 
-  public ResourceRelationshipsParentResourceData id(Long id) {
-    this.id = id;
+  public DeleteResourcesRequestBody addResourcesItem(String resourcesItem) {
+    this.resources.add(resourcesItem);
     return this;
   }
 
    /**
-   * Get id
-   * @return id
+   * Resource identifiers of items to delete.
+   * @return resources
   **/
-  @Schema(example = "2", description = "")
-  public Long getId() {
-    return id;
+  @Schema(required = true, description = "Resource identifiers of items to delete.")
+  public List<String> getResources() {
+    return resources;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public ResourceRelationshipsParentResourceData type(String type) {
-    this.type = type;
-    return this;
-  }
-
-   /**
-   * Get type
-   * @return type
-  **/
-  @Schema(example = "resource", description = "")
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
+  public void setResources(List<String> resources) {
+    this.resources = resources;
   }
 
 
@@ -78,24 +64,22 @@ public class ResourceRelationshipsParentResourceData {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ResourceRelationshipsParentResourceData resourceRelationshipsParentResourceData = (ResourceRelationshipsParentResourceData) o;
-    return Objects.equals(this.id, resourceRelationshipsParentResourceData.id) &&
-        Objects.equals(this.type, resourceRelationshipsParentResourceData.type);
+    DeleteResourcesRequestBody deleteResourcesRequestBody = (DeleteResourcesRequestBody) o;
+    return Objects.equals(this.resources, deleteResourcesRequestBody.resources);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type);
+    return Objects.hash(resources);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ResourceRelationshipsParentResourceData {\n");
+    sb.append("class DeleteResourcesRequestBody {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    resources: ").append(toIndentedString(resources)).append("\n");
     sb.append("}");
     return sb.toString();
   }

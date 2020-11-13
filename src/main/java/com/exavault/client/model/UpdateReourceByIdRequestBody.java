@@ -22,51 +22,30 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * ResourceRelationshipsParentResourceData
+ * UpdateReourceByIdRequestBody
  */
 
 
-public class ResourceRelationshipsParentResourceData {
-  @SerializedName("id")
-  private Long id = null;
+public class UpdateReourceByIdRequestBody {
+  @SerializedName("name")
+  private String name = null;
 
-  @SerializedName("type")
-  private String type = null;
-
-  public ResourceRelationshipsParentResourceData id(Long id) {
-    this.id = id;
+  public UpdateReourceByIdRequestBody name(String name) {
+    this.name = name;
     return this;
   }
 
    /**
-   * Get id
-   * @return id
+   * The new name for the resource (file or folder).
+   * @return name
   **/
-  @Schema(example = "2", description = "")
-  public Long getId() {
-    return id;
+  @Schema(example = "my-renamed-file.txt", description = "The new name for the resource (file or folder).")
+  public String getName() {
+    return name;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public ResourceRelationshipsParentResourceData type(String type) {
-    this.type = type;
-    return this;
-  }
-
-   /**
-   * Get type
-   * @return type
-  **/
-  @Schema(example = "resource", description = "")
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
+  public void setName(String name) {
+    this.name = name;
   }
 
 
@@ -78,24 +57,22 @@ public class ResourceRelationshipsParentResourceData {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ResourceRelationshipsParentResourceData resourceRelationshipsParentResourceData = (ResourceRelationshipsParentResourceData) o;
-    return Objects.equals(this.id, resourceRelationshipsParentResourceData.id) &&
-        Objects.equals(this.type, resourceRelationshipsParentResourceData.type);
+    UpdateReourceByIdRequestBody updateReourceByIdRequestBody = (UpdateReourceByIdRequestBody) o;
+    return Objects.equals(this.name, updateReourceByIdRequestBody.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type);
+    return Objects.hash(name);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ResourceRelationshipsParentResourceData {\n");
+    sb.append("class UpdateReourceByIdRequestBody {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -26,11 +26,11 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.exavault.client.model.Body3;
-import com.exavault.client.model.Body4;
+import com.exavault.client.model.AddNotificationRequestBody;
 import com.exavault.client.model.EmptyResponse;
 import com.exavault.client.model.NotificationCollectionResponse;
 import com.exavault.client.model.NotificationResponse;
+import com.exavault.client.model.UpdateNotificationByIdRequestBody;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public class NotificationsApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call addNotificationCall(String evApiKey, String evAccessToken, Body4 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call addNotificationCall(String evApiKey, String evAccessToken, AddNotificationRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -113,7 +113,7 @@ public class NotificationsApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call addNotificationValidateBeforeCall(String evApiKey, String evAccessToken, Body4 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call addNotificationValidateBeforeCall(String evApiKey, String evAccessToken, AddNotificationRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling addNotification(Async)");
@@ -141,7 +141,7 @@ public class NotificationsApi {
      * @return NotificationResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public NotificationResponse addNotification(String evApiKey, String evAccessToken, Body4 body) throws ApiException {
+    public NotificationResponse addNotification(String evApiKey, String evAccessToken, AddNotificationRequestBody body) throws ApiException {
         ApiResponse<NotificationResponse> resp = addNotificationWithHttpInfo(evApiKey, evAccessToken, body);
         return resp.getData();
     }
@@ -155,7 +155,7 @@ public class NotificationsApi {
      * @return ApiResponse&lt;NotificationResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<NotificationResponse> addNotificationWithHttpInfo(String evApiKey, String evAccessToken, Body4 body) throws ApiException {
+    public ApiResponse<NotificationResponse> addNotificationWithHttpInfo(String evApiKey, String evAccessToken, AddNotificationRequestBody body) throws ApiException {
         com.squareup.okhttp.Call call = addNotificationValidateBeforeCall(evApiKey, evAccessToken, body, null, null);
         Type localVarReturnType = new TypeToken<NotificationResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -171,7 +171,7 @@ public class NotificationsApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call addNotificationAsync(String evApiKey, String evAccessToken, Body4 body, final ApiCallback<NotificationResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call addNotificationAsync(String evApiKey, String evAccessToken, AddNotificationRequestBody body, final ApiCallback<NotificationResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -676,7 +676,7 @@ public class NotificationsApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateNotificationByIdCall(String evApiKey, String evAccessToken, Integer id, Body3 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateNotificationByIdCall(String evApiKey, String evAccessToken, Integer id, UpdateNotificationByIdRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -723,7 +723,7 @@ public class NotificationsApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateNotificationByIdValidateBeforeCall(String evApiKey, String evAccessToken, Integer id, Body3 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateNotificationByIdValidateBeforeCall(String evApiKey, String evAccessToken, Integer id, UpdateNotificationByIdRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling updateNotificationById(Async)");
@@ -756,7 +756,7 @@ public class NotificationsApi {
      * @return NotificationResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public NotificationResponse updateNotificationById(String evApiKey, String evAccessToken, Integer id, Body3 body) throws ApiException {
+    public NotificationResponse updateNotificationById(String evApiKey, String evAccessToken, Integer id, UpdateNotificationByIdRequestBody body) throws ApiException {
         ApiResponse<NotificationResponse> resp = updateNotificationByIdWithHttpInfo(evApiKey, evAccessToken, id, body);
         return resp.getData();
     }
@@ -771,7 +771,7 @@ public class NotificationsApi {
      * @return ApiResponse&lt;NotificationResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<NotificationResponse> updateNotificationByIdWithHttpInfo(String evApiKey, String evAccessToken, Integer id, Body3 body) throws ApiException {
+    public ApiResponse<NotificationResponse> updateNotificationByIdWithHttpInfo(String evApiKey, String evAccessToken, Integer id, UpdateNotificationByIdRequestBody body) throws ApiException {
         com.squareup.okhttp.Call call = updateNotificationByIdValidateBeforeCall(evApiKey, evAccessToken, id, body, null, null);
         Type localVarReturnType = new TypeToken<NotificationResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -788,7 +788,7 @@ public class NotificationsApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateNotificationByIdAsync(String evApiKey, String evAccessToken, Integer id, Body3 body, final ApiCallback<NotificationResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateNotificationByIdAsync(String evApiKey, String evAccessToken, Integer id, UpdateNotificationByIdRequestBody body, final ApiCallback<NotificationResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
