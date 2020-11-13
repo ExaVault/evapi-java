@@ -27,7 +27,7 @@ import java.io.IOException;
 
 
 import com.exavault.client.model.AccountResponse;
-import com.exavault.client.model.UpdateAccountRequestBody;
+import com.exavault.client.model.UpdateAccountBody;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -206,7 +206,7 @@ public class AccountApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateAccountCall(String evApiKey, String evAccessToken, UpdateAccountRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateAccountCall(String evApiKey, String evAccessToken, UpdateAccountBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -252,7 +252,7 @@ public class AccountApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateAccountValidateBeforeCall(String evApiKey, String evAccessToken, UpdateAccountRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateAccountValidateBeforeCall(String evApiKey, String evAccessToken, UpdateAccountBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling updateAccount(Async)");
@@ -280,7 +280,7 @@ public class AccountApi {
      * @return AccountResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public AccountResponse updateAccount(String evApiKey, String evAccessToken, UpdateAccountRequestBody body) throws ApiException {
+    public AccountResponse updateAccount(String evApiKey, String evAccessToken, UpdateAccountBody body) throws ApiException {
         ApiResponse<AccountResponse> resp = updateAccountWithHttpInfo(evApiKey, evAccessToken, body);
         return resp.getData();
     }
@@ -294,7 +294,7 @@ public class AccountApi {
      * @return ApiResponse&lt;AccountResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<AccountResponse> updateAccountWithHttpInfo(String evApiKey, String evAccessToken, UpdateAccountRequestBody body) throws ApiException {
+    public ApiResponse<AccountResponse> updateAccountWithHttpInfo(String evApiKey, String evAccessToken, UpdateAccountBody body) throws ApiException {
         com.squareup.okhttp.Call call = updateAccountValidateBeforeCall(evApiKey, evAccessToken, body, null, null);
         Type localVarReturnType = new TypeToken<AccountResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -310,7 +310,7 @@ public class AccountApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateAccountAsync(String evApiKey, String evAccessToken, UpdateAccountRequestBody body, final ApiCallback<AccountResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateAccountAsync(String evApiKey, String evAccessToken, UpdateAccountBody body, final ApiCallback<AccountResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

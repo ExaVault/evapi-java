@@ -28,7 +28,7 @@ import java.io.IOException;
 
 public class ResourceDelete {
   @SerializedName("id")
-  private Long id = null;
+  private Integer id = null;
 
   /**
    * Type of item. \&quot;resource\&quot;
@@ -76,7 +76,7 @@ public class ResourceDelete {
   @SerializedName("meta")
   private Object meta = null;
 
-  public ResourceDelete id(Long id) {
+  public ResourceDelete id(Integer id) {
     this.id = id;
     return this;
   }
@@ -86,11 +86,11 @@ public class ResourceDelete {
    * @return id
   **/
   @Schema(example = "1", description = "")
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

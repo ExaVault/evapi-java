@@ -27,28 +27,28 @@ import java.io.IOException;
 @Schema(description = "Object contains infromation about ongoing arhivation of files for download.")
 
 public class DownloadPolling {
-  @SerializedName("pollingArchiveName")
-  private String pollingArchiveName = null;
+  @SerializedName("zip")
+  private String zip = null;
 
   @SerializedName("percent")
   private Integer percent = null;
 
-  public DownloadPolling pollingArchiveName(String pollingArchiveName) {
-    this.pollingArchiveName = pollingArchiveName;
+  public DownloadPolling zip(String zip) {
+    this.zip = zip;
     return this;
   }
 
    /**
    * Name of the zip file.
-   * @return pollingArchiveName
+   * @return zip
   **/
   @Schema(example = "/zipname.zip", description = "Name of the zip file.")
-  public String getPollingArchiveName() {
-    return pollingArchiveName;
+  public String getZip() {
+    return zip;
   }
 
-  public void setPollingArchiveName(String pollingArchiveName) {
-    this.pollingArchiveName = pollingArchiveName;
+  public void setZip(String zip) {
+    this.zip = zip;
   }
 
   public DownloadPolling percent(Integer percent) {
@@ -79,13 +79,13 @@ public class DownloadPolling {
       return false;
     }
     DownloadPolling downloadPolling = (DownloadPolling) o;
-    return Objects.equals(this.pollingArchiveName, downloadPolling.pollingArchiveName) &&
+    return Objects.equals(this.zip, downloadPolling.zip) &&
         Objects.equals(this.percent, downloadPolling.percent);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pollingArchiveName, percent);
+    return Objects.hash(zip, percent);
   }
 
 
@@ -94,7 +94,7 @@ public class DownloadPolling {
     StringBuilder sb = new StringBuilder();
     sb.append("class DownloadPolling {\n");
     
-    sb.append("    pollingArchiveName: ").append(toIndentedString(pollingArchiveName)).append("\n");
+    sb.append("    zip: ").append(toIndentedString(zip)).append("\n");
     sb.append("    percent: ").append(toIndentedString(percent)).append("\n");
     sb.append("}");
     return sb.toString();

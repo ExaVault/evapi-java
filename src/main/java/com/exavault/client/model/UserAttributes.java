@@ -157,9 +157,6 @@ public class UserAttributes {
   @SerializedName("firstLogin")
   private Boolean firstLogin = null;
 
-  @SerializedName("locked")
-  private Boolean locked = null;
-
   public UserAttributes status(StatusEnum status) {
     this.status = status;
     return this;
@@ -430,24 +427,6 @@ public class UserAttributes {
     this.firstLogin = firstLogin;
   }
 
-  public UserAttributes locked(Boolean locked) {
-    this.locked = locked;
-    return this;
-  }
-
-   /**
-   * &#x60;true&#x60; if the user is locked and cannot log in.
-   * @return locked
-  **/
-  @Schema(example = "false", description = "`true` if the user is locked and cannot log in.")
-  public Boolean isLocked() {
-    return locked;
-  }
-
-  public void setLocked(Boolean locked) {
-    this.locked = locked;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -472,13 +451,12 @@ public class UserAttributes {
         Objects.equals(this.role, userAttributes.role) &&
         Objects.equals(this.timeZone, userAttributes.timeZone) &&
         Objects.equals(this.onboarding, userAttributes.onboarding) &&
-        Objects.equals(this.firstLogin, userAttributes.firstLogin) &&
-        Objects.equals(this.locked, userAttributes.locked);
+        Objects.equals(this.firstLogin, userAttributes.firstLogin);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status, expiration, created, modified, accessTimestamp, accountName, username, nickname, email, homeDir, permissions, role, timeZone, onboarding, firstLogin, locked);
+    return Objects.hash(status, expiration, created, modified, accessTimestamp, accountName, username, nickname, email, homeDir, permissions, role, timeZone, onboarding, firstLogin);
   }
 
 
@@ -502,7 +480,6 @@ public class UserAttributes {
     sb.append("    timeZone: ").append(toIndentedString(timeZone)).append("\n");
     sb.append("    onboarding: ").append(toIndentedString(onboarding)).append("\n");
     sb.append("    firstLogin: ").append(toIndentedString(firstLogin)).append("\n");
-    sb.append("    locked: ").append(toIndentedString(locked)).append("\n");
     sb.append("}");
     return sb.toString();
   }

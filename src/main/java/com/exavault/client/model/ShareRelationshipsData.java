@@ -28,11 +28,11 @@ import java.io.IOException;
 
 public class ShareRelationshipsData {
   /**
-   * Type is notification. 
+   * Type is message. 
    */
   @JsonAdapter(TypeEnum.Adapter.class)
   public enum TypeEnum {
-    NOTIFICATION("notification");
+    MESSAGE("message");
 
     private String value;
 
@@ -79,10 +79,10 @@ public class ShareRelationshipsData {
   }
 
    /**
-   * Type is notification. 
+   * Type is message. 
    * @return type
   **/
-  @Schema(example = "notification", description = "Type is notification. ")
+  @Schema(example = "message", description = "Type is message. ")
   public TypeEnum getType() {
     return type;
   }
@@ -97,10 +97,10 @@ public class ShareRelationshipsData {
   }
 
    /**
-   * ID of the notification. 
+   * ID of the message.
    * @return id
   **/
-  @Schema(example = "9", description = "ID of the notification. ")
+  @Schema(example = "21", description = "ID of the message.")
   public Integer getId() {
     return id;
   }

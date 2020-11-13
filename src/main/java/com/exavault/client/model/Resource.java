@@ -30,7 +30,7 @@ import java.io.IOException;
 
 public class Resource {
   @SerializedName("id")
-  private Long id = null;
+  private Integer id = null;
 
   /**
    * Type of item. \&quot;resource\&quot;
@@ -81,7 +81,7 @@ public class Resource {
   @SerializedName("relationships")
   private ResourceRelationships relationships = null;
 
-  public Resource id(Long id) {
+  public Resource id(Integer id) {
     this.id = id;
     return this;
   }
@@ -91,11 +91,11 @@ public class Resource {
    * @return id
   **/
   @Schema(example = "1", description = "")
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

@@ -28,7 +28,7 @@ import java.io.IOException;
 
 public class SessionActivityEntryAttributes {
   @SerializedName("bytesTransferred")
-  private Long bytesTransferred = null;
+  private Integer bytesTransferred = null;
 
   @SerializedName("created")
   private String created = null;
@@ -60,7 +60,7 @@ public class SessionActivityEntryAttributes {
   @SerializedName("username")
   private String username = null;
 
-  public SessionActivityEntryAttributes bytesTransferred(Long bytesTransferred) {
+  public SessionActivityEntryAttributes bytesTransferred(Integer bytesTransferred) {
     this.bytesTransferred = bytesTransferred;
     return this;
   }
@@ -70,11 +70,11 @@ public class SessionActivityEntryAttributes {
    * @return bytesTransferred
   **/
   @Schema(example = "10815676", description = "")
-  public Long getBytesTransferred() {
+  public Integer getBytesTransferred() {
     return bytesTransferred;
   }
 
-  public void setBytesTransferred(Long bytesTransferred) {
+  public void setBytesTransferred(Integer bytesTransferred) {
     this.bytesTransferred = bytesTransferred;
   }
 

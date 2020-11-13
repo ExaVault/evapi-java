@@ -28,12 +28,12 @@ import java.io.IOException;
 
 public class ResourceRelationshipsParentResourceData {
   @SerializedName("id")
-  private Long id = null;
+  private Integer id = null;
 
   @SerializedName("type")
   private String type = null;
 
-  public ResourceRelationshipsParentResourceData id(Long id) {
+  public ResourceRelationshipsParentResourceData id(Integer id) {
     this.id = id;
     return this;
   }
@@ -43,11 +43,11 @@ public class ResourceRelationshipsParentResourceData {
    * @return id
   **/
   @Schema(example = "2", description = "")
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

@@ -26,8 +26,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import com.exavault.client.model.Body15;
 import com.exavault.client.model.EmptyResponse;
-import com.exavault.client.model.SendReferralEmailRequestBody;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class EmailApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call sendReferralEmailCall(String evApiKey, String evAccessToken, SendReferralEmailRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call sendReferralEmailCall(String evApiKey, String evAccessToken, Body15 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -110,7 +110,7 @@ public class EmailApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call sendReferralEmailValidateBeforeCall(String evApiKey, String evAccessToken, SendReferralEmailRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call sendReferralEmailValidateBeforeCall(String evApiKey, String evAccessToken, Body15 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling sendReferralEmail(Async)");
@@ -138,7 +138,7 @@ public class EmailApi {
      * @return EmptyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public EmptyResponse sendReferralEmail(String evApiKey, String evAccessToken, SendReferralEmailRequestBody body) throws ApiException {
+    public EmptyResponse sendReferralEmail(String evApiKey, String evAccessToken, Body15 body) throws ApiException {
         ApiResponse<EmptyResponse> resp = sendReferralEmailWithHttpInfo(evApiKey, evAccessToken, body);
         return resp.getData();
     }
@@ -152,7 +152,7 @@ public class EmailApi {
      * @return ApiResponse&lt;EmptyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<EmptyResponse> sendReferralEmailWithHttpInfo(String evApiKey, String evAccessToken, SendReferralEmailRequestBody body) throws ApiException {
+    public ApiResponse<EmptyResponse> sendReferralEmailWithHttpInfo(String evApiKey, String evAccessToken, Body15 body) throws ApiException {
         com.squareup.okhttp.Call call = sendReferralEmailValidateBeforeCall(evApiKey, evAccessToken, body, null, null);
         Type localVarReturnType = new TypeToken<EmptyResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -168,7 +168,7 @@ public class EmailApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call sendReferralEmailAsync(String evApiKey, String evAccessToken, SendReferralEmailRequestBody body, final ApiCallback<EmptyResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call sendReferralEmailAsync(String evApiKey, String evAccessToken, Body15 body, final ApiCallback<EmptyResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

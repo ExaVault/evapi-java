@@ -26,11 +26,11 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.exavault.client.model.AddShareRequestBody;
+import com.exavault.client.model.Body16;
+import com.exavault.client.model.Body17;
 import com.exavault.client.model.EmptyResponse;
 import com.exavault.client.model.ShareCollectionResponse;
 import com.exavault.client.model.ShareResponse;
-import com.exavault.client.model.UpdateShareRequestBody;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public class SharesApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call addShareCall(String evApiKey, String evAccessToken, AddShareRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call addShareCall(String evApiKey, String evAccessToken, Body16 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -113,7 +113,7 @@ public class SharesApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call addShareValidateBeforeCall(String evApiKey, String evAccessToken, AddShareRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call addShareValidateBeforeCall(String evApiKey, String evAccessToken, Body16 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling addShare(Async)");
@@ -141,7 +141,7 @@ public class SharesApi {
      * @return ShareResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ShareResponse addShare(String evApiKey, String evAccessToken, AddShareRequestBody body) throws ApiException {
+    public ShareResponse addShare(String evApiKey, String evAccessToken, Body16 body) throws ApiException {
         ApiResponse<ShareResponse> resp = addShareWithHttpInfo(evApiKey, evAccessToken, body);
         return resp.getData();
     }
@@ -155,7 +155,7 @@ public class SharesApi {
      * @return ApiResponse&lt;ShareResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ShareResponse> addShareWithHttpInfo(String evApiKey, String evAccessToken, AddShareRequestBody body) throws ApiException {
+    public ApiResponse<ShareResponse> addShareWithHttpInfo(String evApiKey, String evAccessToken, Body16 body) throws ApiException {
         com.squareup.okhttp.Call call = addShareValidateBeforeCall(evApiKey, evAccessToken, body, null, null);
         Type localVarReturnType = new TypeToken<ShareResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -171,7 +171,7 @@ public class SharesApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call addShareAsync(String evApiKey, String evAccessToken, AddShareRequestBody body, final ApiCallback<ShareResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call addShareAsync(String evApiKey, String evAccessToken, Body16 body, final ApiCallback<ShareResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -851,7 +851,7 @@ public class SharesApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateShareByIdCall(UpdateShareRequestBody body, String evApiKey, String evAccessToken, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateShareByIdCall(Body17 body, String evApiKey, String evAccessToken, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -898,7 +898,7 @@ public class SharesApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateShareByIdValidateBeforeCall(UpdateShareRequestBody body, String evApiKey, String evAccessToken, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateShareByIdValidateBeforeCall(Body17 body, String evApiKey, String evAccessToken, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'body' is set
         if (body == null) {
             throw new ApiException("Missing the required parameter 'body' when calling updateShareById(Async)");
@@ -935,7 +935,7 @@ public class SharesApi {
      * @return ShareResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ShareResponse updateShareById(UpdateShareRequestBody body, String evApiKey, String evAccessToken, Integer id) throws ApiException {
+    public ShareResponse updateShareById(Body17 body, String evApiKey, String evAccessToken, Integer id) throws ApiException {
         ApiResponse<ShareResponse> resp = updateShareByIdWithHttpInfo(body, evApiKey, evAccessToken, id);
         return resp.getData();
     }
@@ -950,7 +950,7 @@ public class SharesApi {
      * @return ApiResponse&lt;ShareResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ShareResponse> updateShareByIdWithHttpInfo(UpdateShareRequestBody body, String evApiKey, String evAccessToken, Integer id) throws ApiException {
+    public ApiResponse<ShareResponse> updateShareByIdWithHttpInfo(Body17 body, String evApiKey, String evAccessToken, Integer id) throws ApiException {
         com.squareup.okhttp.Call call = updateShareByIdValidateBeforeCall(body, evApiKey, evAccessToken, id, null, null);
         Type localVarReturnType = new TypeToken<ShareResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -967,7 +967,7 @@ public class SharesApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateShareByIdAsync(UpdateShareRequestBody body, String evApiKey, String evAccessToken, Integer id, final ApiCallback<ShareResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateShareByIdAsync(Body17 body, String evApiKey, String evAccessToken, Integer id, final ApiCallback<ShareResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

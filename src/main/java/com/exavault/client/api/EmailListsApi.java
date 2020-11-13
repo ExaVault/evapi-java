@@ -26,11 +26,11 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.exavault.client.model.AddEmailListRequestBody;
+import com.exavault.client.model.Body;
+import com.exavault.client.model.Body1;
 import com.exavault.client.model.EmailListCollectionResponse;
 import com.exavault.client.model.EmailListResponse;
 import com.exavault.client.model.EmptyResponse;
-import com.exavault.client.model.UpdateEmailListRequestBody;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public class EmailListsApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call addEmailListCall(String evApiKey, String evAccessToken, AddEmailListRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call addEmailListCall(String evApiKey, String evAccessToken, Body body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -113,7 +113,7 @@ public class EmailListsApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call addEmailListValidateBeforeCall(String evApiKey, String evAccessToken, AddEmailListRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call addEmailListValidateBeforeCall(String evApiKey, String evAccessToken, Body body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling addEmailList(Async)");
@@ -141,7 +141,7 @@ public class EmailListsApi {
      * @return EmailListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public EmailListResponse addEmailList(String evApiKey, String evAccessToken, AddEmailListRequestBody body) throws ApiException {
+    public EmailListResponse addEmailList(String evApiKey, String evAccessToken, Body body) throws ApiException {
         ApiResponse<EmailListResponse> resp = addEmailListWithHttpInfo(evApiKey, evAccessToken, body);
         return resp.getData();
     }
@@ -155,7 +155,7 @@ public class EmailListsApi {
      * @return ApiResponse&lt;EmailListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<EmailListResponse> addEmailListWithHttpInfo(String evApiKey, String evAccessToken, AddEmailListRequestBody body) throws ApiException {
+    public ApiResponse<EmailListResponse> addEmailListWithHttpInfo(String evApiKey, String evAccessToken, Body body) throws ApiException {
         com.squareup.okhttp.Call call = addEmailListValidateBeforeCall(evApiKey, evAccessToken, body, null, null);
         Type localVarReturnType = new TypeToken<EmailListResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -171,7 +171,7 @@ public class EmailListsApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call addEmailListAsync(String evApiKey, String evAccessToken, AddEmailListRequestBody body, final ApiCallback<EmailListResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call addEmailListAsync(String evApiKey, String evAccessToken, Body body, final ApiCallback<EmailListResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -572,7 +572,7 @@ public class EmailListsApi {
 
     /**
      * Get all email groups
-     * List all email groups for authenticated user
+     * 
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param include Related record types to include in the response. Valid option is &#x60;ownerUser&#x60; (optional)
@@ -586,7 +586,7 @@ public class EmailListsApi {
 
     /**
      * Get all email groups
-     * List all email groups for authenticated user
+     * 
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param include Related record types to include in the response. Valid option is &#x60;ownerUser&#x60; (optional)
@@ -601,7 +601,7 @@ public class EmailListsApi {
 
     /**
      * Get all email groups (asynchronously)
-     * List all email groups for authenticated user
+     * 
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param include Related record types to include in the response. Valid option is &#x60;ownerUser&#x60; (optional)
@@ -646,7 +646,7 @@ public class EmailListsApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateEmailListByIdCall(String evApiKey, String evAccessToken, Integer id, UpdateEmailListRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateEmailListByIdCall(String evApiKey, String evAccessToken, Integer id, Body1 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -693,7 +693,7 @@ public class EmailListsApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateEmailListByIdValidateBeforeCall(String evApiKey, String evAccessToken, Integer id, UpdateEmailListRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateEmailListByIdValidateBeforeCall(String evApiKey, String evAccessToken, Integer id, Body1 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling updateEmailListById(Async)");
@@ -726,7 +726,7 @@ public class EmailListsApi {
      * @return EmailListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public EmailListResponse updateEmailListById(String evApiKey, String evAccessToken, Integer id, UpdateEmailListRequestBody body) throws ApiException {
+    public EmailListResponse updateEmailListById(String evApiKey, String evAccessToken, Integer id, Body1 body) throws ApiException {
         ApiResponse<EmailListResponse> resp = updateEmailListByIdWithHttpInfo(evApiKey, evAccessToken, id, body);
         return resp.getData();
     }
@@ -741,7 +741,7 @@ public class EmailListsApi {
      * @return ApiResponse&lt;EmailListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<EmailListResponse> updateEmailListByIdWithHttpInfo(String evApiKey, String evAccessToken, Integer id, UpdateEmailListRequestBody body) throws ApiException {
+    public ApiResponse<EmailListResponse> updateEmailListByIdWithHttpInfo(String evApiKey, String evAccessToken, Integer id, Body1 body) throws ApiException {
         com.squareup.okhttp.Call call = updateEmailListByIdValidateBeforeCall(evApiKey, evAccessToken, id, body, null, null);
         Type localVarReturnType = new TypeToken<EmailListResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -758,7 +758,7 @@ public class EmailListsApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateEmailListByIdAsync(String evApiKey, String evAccessToken, Integer id, UpdateEmailListRequestBody body, final ApiCallback<EmailListResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateEmailListByIdAsync(String evApiKey, String evAccessToken, Integer id, Body1 body, final ApiCallback<EmailListResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

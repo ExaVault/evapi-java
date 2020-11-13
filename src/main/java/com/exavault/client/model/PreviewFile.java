@@ -29,7 +29,7 @@ import java.io.IOException;
 
 public class PreviewFile {
   @SerializedName("id")
-  private Long id = null;
+  private Integer id = null;
 
   @SerializedName("type")
   private String type = null;
@@ -37,7 +37,7 @@ public class PreviewFile {
   @SerializedName("attributes")
   private PreviewFileAttributes attributes = null;
 
-  public PreviewFile id(Long id) {
+  public PreviewFile id(Integer id) {
     this.id = id;
     return this;
   }
@@ -47,11 +47,11 @@ public class PreviewFile {
    * @return id
   **/
   @Schema(example = "1", description = "")
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

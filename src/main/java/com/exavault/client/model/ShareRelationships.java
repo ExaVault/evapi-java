@@ -14,10 +14,10 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.ShareRelationshipsNotification;
+import com.exavault.client.model.ShareRelationshipsMessages;
+import com.exavault.client.model.ShareRelationshipsNotifications;
 import com.exavault.client.model.ShareRelationshipsOwner;
-import com.exavault.client.model.ShareRelationshipsResource;
-import com.exavault.client.model.ShareRelationshpsMessage;
+import com.exavault.client.model.ShareRelationshipsResources;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -34,25 +34,25 @@ import java.util.List;
 
 public class ShareRelationships {
   @SerializedName("messages")
-  private List<ShareRelationshpsMessage> messages = null;
+  private List<ShareRelationshipsMessages> messages = null;
 
   @SerializedName("owner")
   private ShareRelationshipsOwner owner = null;
 
   @SerializedName("resources")
-  private List<ShareRelationshipsResource> resources = null;
+  private List<ShareRelationshipsResources> resources = null;
 
   @SerializedName("notifications")
-  private List<ShareRelationshipsNotification> notifications = null;
+  private List<ShareRelationshipsNotifications> notifications = null;
 
-  public ShareRelationships messages(List<ShareRelationshpsMessage> messages) {
+  public ShareRelationships messages(List<ShareRelationshipsMessages> messages) {
     this.messages = messages;
     return this;
   }
 
-  public ShareRelationships addMessagesItem(ShareRelationshpsMessage messagesItem) {
+  public ShareRelationships addMessagesItem(ShareRelationshipsMessages messagesItem) {
     if (this.messages == null) {
-      this.messages = new ArrayList<ShareRelationshpsMessage>();
+      this.messages = new ArrayList<ShareRelationshipsMessages>();
     }
     this.messages.add(messagesItem);
     return this;
@@ -63,11 +63,11 @@ public class ShareRelationships {
    * @return messages
   **/
   @Schema(description = "null")
-  public List<ShareRelationshpsMessage> getMessages() {
+  public List<ShareRelationshipsMessages> getMessages() {
     return messages;
   }
 
-  public void setMessages(List<ShareRelationshpsMessage> messages) {
+  public void setMessages(List<ShareRelationshipsMessages> messages) {
     this.messages = messages;
   }
 
@@ -89,14 +89,14 @@ public class ShareRelationships {
     this.owner = owner;
   }
 
-  public ShareRelationships resources(List<ShareRelationshipsResource> resources) {
+  public ShareRelationships resources(List<ShareRelationshipsResources> resources) {
     this.resources = resources;
     return this;
   }
 
-  public ShareRelationships addResourcesItem(ShareRelationshipsResource resourcesItem) {
+  public ShareRelationships addResourcesItem(ShareRelationshipsResources resourcesItem) {
     if (this.resources == null) {
-      this.resources = new ArrayList<ShareRelationshipsResource>();
+      this.resources = new ArrayList<ShareRelationshipsResources>();
     }
     this.resources.add(resourcesItem);
     return this;
@@ -107,22 +107,22 @@ public class ShareRelationships {
    * @return resources
   **/
   @Schema(description = "")
-  public List<ShareRelationshipsResource> getResources() {
+  public List<ShareRelationshipsResources> getResources() {
     return resources;
   }
 
-  public void setResources(List<ShareRelationshipsResource> resources) {
+  public void setResources(List<ShareRelationshipsResources> resources) {
     this.resources = resources;
   }
 
-  public ShareRelationships notifications(List<ShareRelationshipsNotification> notifications) {
+  public ShareRelationships notifications(List<ShareRelationshipsNotifications> notifications) {
     this.notifications = notifications;
     return this;
   }
 
-  public ShareRelationships addNotificationsItem(ShareRelationshipsNotification notificationsItem) {
+  public ShareRelationships addNotificationsItem(ShareRelationshipsNotifications notificationsItem) {
     if (this.notifications == null) {
-      this.notifications = new ArrayList<ShareRelationshipsNotification>();
+      this.notifications = new ArrayList<ShareRelationshipsNotifications>();
     }
     this.notifications.add(notificationsItem);
     return this;
@@ -133,11 +133,11 @@ public class ShareRelationships {
    * @return notifications
   **/
   @Schema(description = "null")
-  public List<ShareRelationshipsNotification> getNotifications() {
+  public List<ShareRelationshipsNotifications> getNotifications() {
     return notifications;
   }
 
-  public void setNotifications(List<ShareRelationshipsNotification> notifications) {
+  public void setNotifications(List<ShareRelationshipsNotifications> notifications) {
     this.notifications = notifications;
   }
 

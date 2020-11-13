@@ -26,10 +26,10 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import com.exavault.client.model.Body2;
 import com.exavault.client.model.EmptyResponse;
 import com.exavault.client.model.FormEntryResponse;
 import com.exavault.client.model.FormResponse;
-import com.exavault.client.model.UpdateFormByIdRequestBody;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -672,7 +672,7 @@ public class FormApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateFormByIdCall(String evApiKey, String evAccessToken, Integer id, UpdateFormByIdRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateFormByIdCall(String evApiKey, String evAccessToken, Integer id, Body2 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -719,7 +719,7 @@ public class FormApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateFormByIdValidateBeforeCall(String evApiKey, String evAccessToken, Integer id, UpdateFormByIdRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateFormByIdValidateBeforeCall(String evApiKey, String evAccessToken, Integer id, Body2 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling updateFormById(Async)");
@@ -752,7 +752,7 @@ public class FormApi {
      * @return FormResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public FormResponse updateFormById(String evApiKey, String evAccessToken, Integer id, UpdateFormByIdRequestBody body) throws ApiException {
+    public FormResponse updateFormById(String evApiKey, String evAccessToken, Integer id, Body2 body) throws ApiException {
         ApiResponse<FormResponse> resp = updateFormByIdWithHttpInfo(evApiKey, evAccessToken, id, body);
         return resp.getData();
     }
@@ -767,7 +767,7 @@ public class FormApi {
      * @return ApiResponse&lt;FormResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<FormResponse> updateFormByIdWithHttpInfo(String evApiKey, String evAccessToken, Integer id, UpdateFormByIdRequestBody body) throws ApiException {
+    public ApiResponse<FormResponse> updateFormByIdWithHttpInfo(String evApiKey, String evAccessToken, Integer id, Body2 body) throws ApiException {
         com.squareup.okhttp.Call call = updateFormByIdValidateBeforeCall(evApiKey, evAccessToken, id, body, null, null);
         Type localVarReturnType = new TypeToken<FormResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -784,7 +784,7 @@ public class FormApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateFormByIdAsync(String evApiKey, String evAccessToken, Integer id, UpdateFormByIdRequestBody body, final ApiCallback<FormResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateFormByIdAsync(String evApiKey, String evAccessToken, Integer id, Body2 body, final ApiCallback<FormResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

@@ -26,7 +26,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.exavault.client.model.ResendInvitationsRequestBody;
+import com.exavault.client.model.Body18;
 import com.exavault.client.model.ShareRecipientsResponse;
 
 import java.lang.reflect.Type;
@@ -65,7 +65,7 @@ public class RecipientsApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call resendInvitationsForShareCall(String evApiKey, String evAccessToken, Integer shareId, ResendInvitationsRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call resendInvitationsForShareCall(String evApiKey, String evAccessToken, Integer shareId, Body18 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -112,7 +112,7 @@ public class RecipientsApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call resendInvitationsForShareValidateBeforeCall(String evApiKey, String evAccessToken, Integer shareId, ResendInvitationsRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call resendInvitationsForShareValidateBeforeCall(String evApiKey, String evAccessToken, Integer shareId, Body18 body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling resendInvitationsForShare(Async)");
@@ -145,7 +145,7 @@ public class RecipientsApi {
      * @return ShareRecipientsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ShareRecipientsResponse resendInvitationsForShare(String evApiKey, String evAccessToken, Integer shareId, ResendInvitationsRequestBody body) throws ApiException {
+    public ShareRecipientsResponse resendInvitationsForShare(String evApiKey, String evAccessToken, Integer shareId, Body18 body) throws ApiException {
         ApiResponse<ShareRecipientsResponse> resp = resendInvitationsForShareWithHttpInfo(evApiKey, evAccessToken, shareId, body);
         return resp.getData();
     }
@@ -160,7 +160,7 @@ public class RecipientsApi {
      * @return ApiResponse&lt;ShareRecipientsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ShareRecipientsResponse> resendInvitationsForShareWithHttpInfo(String evApiKey, String evAccessToken, Integer shareId, ResendInvitationsRequestBody body) throws ApiException {
+    public ApiResponse<ShareRecipientsResponse> resendInvitationsForShareWithHttpInfo(String evApiKey, String evAccessToken, Integer shareId, Body18 body) throws ApiException {
         com.squareup.okhttp.Call call = resendInvitationsForShareValidateBeforeCall(evApiKey, evAccessToken, shareId, body, null, null);
         Type localVarReturnType = new TypeToken<ShareRecipientsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -177,7 +177,7 @@ public class RecipientsApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call resendInvitationsForShareAsync(String evApiKey, String evAccessToken, Integer shareId, ResendInvitationsRequestBody body, final ApiCallback<ShareRecipientsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call resendInvitationsForShareAsync(String evApiKey, String evAccessToken, Integer shareId, Body18 body, final ApiCallback<ShareRecipientsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

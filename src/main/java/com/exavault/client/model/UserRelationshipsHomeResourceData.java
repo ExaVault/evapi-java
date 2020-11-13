@@ -71,7 +71,7 @@ public class UserRelationshipsHomeResourceData {
   private TypeEnum type = null;
 
   @SerializedName("id")
-  private Long id = null;
+  private Integer id = null;
 
   public UserRelationshipsHomeResourceData type(TypeEnum type) {
     this.type = type;
@@ -91,7 +91,7 @@ public class UserRelationshipsHomeResourceData {
     this.type = type;
   }
 
-  public UserRelationshipsHomeResourceData id(Long id) {
+  public UserRelationshipsHomeResourceData id(Integer id) {
     this.id = id;
     return this;
   }
@@ -101,11 +101,11 @@ public class UserRelationshipsHomeResourceData {
    * @return id
   **/
   @Schema(description = "ID of home directory resource.")
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
