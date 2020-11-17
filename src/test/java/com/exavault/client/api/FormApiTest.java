@@ -45,7 +45,7 @@ public class FormApiTest {
     public void deleteFormMessageByIdTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        String id = null;
+        Integer id = null;
         EmptyResponse response = api.deleteFormMessageById(evApiKey, evAccessToken, id);
 
         // TODO: test validations
@@ -98,7 +98,7 @@ public class FormApiTest {
     public void getFormEntriesTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        String id = null;
+        Integer id = null;
         Integer limit = null;
         Integer offset = null;
         FormEntryResponse response = api.getFormEntries(evApiKey, evAccessToken, id, limit, offset);
