@@ -143,8 +143,8 @@ public class AddShareRequestBody {
   @SerializedName("isPublic")
   private Boolean isPublic = null;
 
-  @SerializedName("message")
-  private String message = null;
+  @SerializedName("messageBody")
+  private String messageBody = null;
 
   @SerializedName("notificationEmails")
   private List<String> notificationEmails = null;
@@ -347,22 +347,22 @@ public class AddShareRequestBody {
     this.isPublic = isPublic;
   }
 
-  public AddShareRequestBody message(String message) {
-    this.message = message;
+  public AddShareRequestBody messageBody(String messageBody) {
+    this.messageBody = messageBody;
     return this;
   }
 
    /**
-   * The message to be included in email invitations for your recipients. Ignored if you have not also provided &#x60;recipients&#x60; and &#x60;subject&#x60;
-   * @return message
+   * The message to be included in email invitations for your recipients. Ignored if you have not also provided &#x60;recipients&#x60; and &#x60;messageSubject&#x60;
+   * @return messageBody
   **/
-  @Schema(description = "The message to be included in email invitations for your recipients. Ignored if you have not also provided `recipients` and `subject`")
-  public String getMessage() {
-    return message;
+  @Schema(description = "The message to be included in email invitations for your recipients. Ignored if you have not also provided `recipients` and `messageSubject`")
+  public String getMessageBody() {
+    return messageBody;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
+  public void setMessageBody(String messageBody) {
+    this.messageBody = messageBody;
   }
 
   public AddShareRequestBody notificationEmails(List<String> notificationEmails) {
@@ -433,10 +433,10 @@ public class AddShareRequestBody {
   }
 
    /**
-   * Subject to use on emails inviting recipients to the share. Ignored if you have not also provided &#x60;recipients&#x60; and a &#x60;message&#x60;
+   * Subject to use on emails inviting recipients to the share. Ignored if you have not also provided &#x60;recipients&#x60; and a &#x60;messageBody&#x60;
    * @return messageSubject
   **/
-  @Schema(example = "Invitation to a shared folder", description = "Subject to use on emails inviting recipients to the share. Ignored if you have not also provided `recipients` and a `message`")
+  @Schema(example = "Invitation to a shared folder", description = "Subject to use on emails inviting recipients to the share. Ignored if you have not also provided `recipients` and a `messageBody`")
   public String getMessageSubject() {
     return messageSubject;
   }
@@ -500,7 +500,7 @@ public class AddShareRequestBody {
         Objects.equals(this.expiration, addShareRequestBody.expiration) &&
         Objects.equals(this.hasNotification, addShareRequestBody.hasNotification) &&
         Objects.equals(this.isPublic, addShareRequestBody.isPublic) &&
-        Objects.equals(this.message, addShareRequestBody.message) &&
+        Objects.equals(this.messageBody, addShareRequestBody.messageBody) &&
         Objects.equals(this.notificationEmails, addShareRequestBody.notificationEmails) &&
         Objects.equals(this.password, addShareRequestBody.password) &&
         Objects.equals(this.requireEmail, addShareRequestBody.requireEmail) &&
@@ -511,7 +511,7 @@ public class AddShareRequestBody {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, name, resources, accessMode, embed, recipients, expiration, hasNotification, isPublic, message, notificationEmails, password, requireEmail, messageSubject, fileDropCreateFolders, sendingLocalFiles);
+    return Objects.hash(type, name, resources, accessMode, embed, recipients, expiration, hasNotification, isPublic, messageBody, notificationEmails, password, requireEmail, messageSubject, fileDropCreateFolders, sendingLocalFiles);
   }
 
 
@@ -529,7 +529,7 @@ public class AddShareRequestBody {
     sb.append("    expiration: ").append(toIndentedString(expiration)).append("\n");
     sb.append("    hasNotification: ").append(toIndentedString(hasNotification)).append("\n");
     sb.append("    isPublic: ").append(toIndentedString(isPublic)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    messageBody: ").append(toIndentedString(messageBody)).append("\n");
     sb.append("    notificationEmails: ").append(toIndentedString(notificationEmails)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    requireEmail: ").append(toIndentedString(requireEmail)).append("\n");

@@ -73,6 +73,9 @@ public class UserAttributes {
   }  @SerializedName("status")
   private StatusEnum status = null;
 
+  @SerializedName("locked")
+  private Boolean locked = null;
+
   @SerializedName("expiration")
   private String expiration = null;
 
@@ -97,8 +100,8 @@ public class UserAttributes {
   @SerializedName("email")
   private String email = null;
 
-  @SerializedName("homeDir")
-  private String homeDir = null;
+  @SerializedName("homePath")
+  private String homePath = null;
 
   @SerializedName("permissions")
   private UserPermissions permissions = null;
@@ -157,9 +160,6 @@ public class UserAttributes {
   @SerializedName("firstLogin")
   private Boolean firstLogin = null;
 
-  @SerializedName("locked")
-  private Boolean locked = null;
-
   public UserAttributes status(StatusEnum status) {
     this.status = status;
     return this;
@@ -176,6 +176,24 @@ public class UserAttributes {
 
   public void setStatus(StatusEnum status) {
     this.status = status;
+  }
+
+  public UserAttributes locked(Boolean locked) {
+    this.locked = locked;
+    return this;
+  }
+
+   /**
+   * &#x60;true&#x60; if the user is locked and cannot log in.
+   * @return locked
+  **/
+  @Schema(example = "false", description = "`true` if the user is locked and cannot log in.")
+  public Boolean isLocked() {
+    return locked;
+  }
+
+  public void setLocked(Boolean locked) {
+    this.locked = locked;
   }
 
   public UserAttributes expiration(String expiration) {
@@ -322,22 +340,22 @@ public class UserAttributes {
     this.email = email;
   }
 
-  public UserAttributes homeDir(String homeDir) {
-    this.homeDir = homeDir;
+  public UserAttributes homePath(String homePath) {
+    this.homePath = homePath;
     return this;
   }
 
    /**
    * Path to the user&#x27;s home folder.
-   * @return homeDir
+   * @return homePath
   **/
-  @Schema(example = "/", required = true, description = "Path to the user's home folder.")
-  public String getHomeDir() {
-    return homeDir;
+  @Schema(example = "/", description = "Path to the user's home folder.")
+  public String getHomePath() {
+    return homePath;
   }
 
-  public void setHomeDir(String homeDir) {
-    this.homeDir = homeDir;
+  public void setHomePath(String homePath) {
+    this.homePath = homePath;
   }
 
   public UserAttributes permissions(UserPermissions permissions) {
@@ -430,24 +448,6 @@ public class UserAttributes {
     this.firstLogin = firstLogin;
   }
 
-  public UserAttributes locked(Boolean locked) {
-    this.locked = locked;
-    return this;
-  }
-
-   /**
-   * &#x60;true&#x60; if the user is locked and cannot log in.
-   * @return locked
-  **/
-  @Schema(example = "false", description = "`true` if the user is locked and cannot log in.")
-  public Boolean isLocked() {
-    return locked;
-  }
-
-  public void setLocked(Boolean locked) {
-    this.locked = locked;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -459,6 +459,7 @@ public class UserAttributes {
     }
     UserAttributes userAttributes = (UserAttributes) o;
     return Objects.equals(this.status, userAttributes.status) &&
+        Objects.equals(this.locked, userAttributes.locked) &&
         Objects.equals(this.expiration, userAttributes.expiration) &&
         Objects.equals(this.created, userAttributes.created) &&
         Objects.equals(this.modified, userAttributes.modified) &&
@@ -467,18 +468,17 @@ public class UserAttributes {
         Objects.equals(this.username, userAttributes.username) &&
         Objects.equals(this.nickname, userAttributes.nickname) &&
         Objects.equals(this.email, userAttributes.email) &&
-        Objects.equals(this.homeDir, userAttributes.homeDir) &&
+        Objects.equals(this.homePath, userAttributes.homePath) &&
         Objects.equals(this.permissions, userAttributes.permissions) &&
         Objects.equals(this.role, userAttributes.role) &&
         Objects.equals(this.timeZone, userAttributes.timeZone) &&
         Objects.equals(this.onboarding, userAttributes.onboarding) &&
-        Objects.equals(this.firstLogin, userAttributes.firstLogin) &&
-        Objects.equals(this.locked, userAttributes.locked);
+        Objects.equals(this.firstLogin, userAttributes.firstLogin);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status, expiration, created, modified, accessTimestamp, accountName, username, nickname, email, homeDir, permissions, role, timeZone, onboarding, firstLogin, locked);
+    return Objects.hash(status, locked, expiration, created, modified, accessTimestamp, accountName, username, nickname, email, homePath, permissions, role, timeZone, onboarding, firstLogin);
   }
 
 
@@ -488,6 +488,7 @@ public class UserAttributes {
     sb.append("class UserAttributes {\n");
     
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    locked: ").append(toIndentedString(locked)).append("\n");
     sb.append("    expiration: ").append(toIndentedString(expiration)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
     sb.append("    modified: ").append(toIndentedString(modified)).append("\n");
@@ -496,13 +497,12 @@ public class UserAttributes {
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
     sb.append("    nickname: ").append(toIndentedString(nickname)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
-    sb.append("    homeDir: ").append(toIndentedString(homeDir)).append("\n");
+    sb.append("    homePath: ").append(toIndentedString(homePath)).append("\n");
     sb.append("    permissions: ").append(toIndentedString(permissions)).append("\n");
     sb.append("    role: ").append(toIndentedString(role)).append("\n");
     sb.append("    timeZone: ").append(toIndentedString(timeZone)).append("\n");
     sb.append("    onboarding: ").append(toIndentedString(onboarding)).append("\n");
     sb.append("    firstLogin: ").append(toIndentedString(firstLogin)).append("\n");
-    sb.append("    locked: ").append(toIndentedString(locked)).append("\n");
     sb.append("}");
     return sb.toString();
   }

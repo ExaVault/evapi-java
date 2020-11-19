@@ -67,10 +67,10 @@ public class UpdateEmailListRequestBody {
   }
 
    /**
-   * Array of email addresses to add to the email list.
+   * Email addresses that replace existing list.
    * @return emails
   **/
-  @Schema(example = "[\"ykravchuk@exavault.com\",\"jdoe@exavault.com\"]", description = "Array of email addresses to add to the email list.")
+  @Schema(example = "[\"ykravchuk@exavault.com\",\"jdoe@exavault.com\"]", description = "Email addresses that replace existing list.")
   public List<String> getEmails() {
     return emails;
   }
