@@ -14,6 +14,7 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.exavault.client.model.AccessMode;
 import com.exavault.client.model.SharesRecipients;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -82,51 +83,8 @@ public class AddShareRequestBody {
   @SerializedName("resources")
   private List<String> resources = null;
 
-  /**
-   * Gets or Sets accessMode
-   */
-  @JsonAdapter(AccessModeEnum.Adapter.class)
-  public enum AccessModeEnum {
-    UPLOAD("upload"),
-    DOWNLOAD("download"),
-    DELETE("delete"),
-    MODIFY("modify");
-
-    private String value;
-
-    AccessModeEnum(String value) {
-      this.value = value;
-    }
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-    public static AccessModeEnum fromValue(String text) {
-      for (AccessModeEnum b : AccessModeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-    public static class Adapter extends TypeAdapter<AccessModeEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final AccessModeEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public AccessModeEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return AccessModeEnum.fromValue(String.valueOf(value));
-      }
-    }
-  }  @SerializedName("accessMode")
-  private List<AccessModeEnum> accessMode = new ArrayList<AccessModeEnum>();
+  @SerializedName("accessMode")
+  private AccessMode accessMode = null;
 
   @SerializedName("embed")
   private Boolean embed = null;
@@ -226,26 +184,21 @@ public class AddShareRequestBody {
     this.resources = resources;
   }
 
-  public AddShareRequestBody accessMode(List<AccessModeEnum> accessMode) {
+  public AddShareRequestBody accessMode(AccessMode accessMode) {
     this.accessMode = accessMode;
     return this;
   }
 
-  public AddShareRequestBody addAccessModeItem(AccessModeEnum accessModeItem) {
-    this.accessMode.add(accessModeItem);
-    return this;
-  }
-
    /**
-   * Array of permissions that describes what people can do when they visit the share. Valid options are &#x60;upload&#x60; &#x60;download&#x60; &#x60;modify&#x60; and &#x60;delete&#x60;  Not all permissions work with all shares - **receive** shares must always have the permission to **upload** and never provide a method for visitors to **download**.  If you are creating a share of type **send** and plan to upload files from your own computer before completing the send with [POST /shares/complete-send/{id}](#operation/completeDirectSend), use the access mode **upload**
+   * Get accessMode
    * @return accessMode
   **/
-  @Schema(required = true, description = "Array of permissions that describes what people can do when they visit the share. Valid options are `upload` `download` `modify` and `delete`  Not all permissions work with all shares - **receive** shares must always have the permission to **upload** and never provide a method for visitors to **download**.  If you are creating a share of type **send** and plan to upload files from your own computer before completing the send with [POST /shares/complete-send/{id}](#operation/completeDirectSend), use the access mode **upload**")
-  public List<AccessModeEnum> getAccessMode() {
+  @Schema(description = "")
+  public AccessMode getAccessMode() {
     return accessMode;
   }
 
-  public void setAccessMode(List<AccessModeEnum> accessMode) {
+  public void setAccessMode(AccessMode accessMode) {
     this.accessMode = accessMode;
   }
 

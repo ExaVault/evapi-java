@@ -14,6 +14,7 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.exavault.client.model.AccessMode;
 import com.exavault.client.model.SharesRecipients;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -38,7 +39,7 @@ public class UpdateShareRequestBody {
   private List<String> resources = null;
 
   @SerializedName("accessMode")
-  private List<String> accessMode = null;
+  private AccessMode accessMode = null;
 
   @SerializedName("embed")
   private Boolean embed = null;
@@ -120,29 +121,21 @@ public class UpdateShareRequestBody {
     this.resources = resources;
   }
 
-  public UpdateShareRequestBody accessMode(List<String> accessMode) {
+  public UpdateShareRequestBody accessMode(AccessMode accessMode) {
     this.accessMode = accessMode;
     return this;
   }
 
-  public UpdateShareRequestBody addAccessModeItem(String accessModeItem) {
-    if (this.accessMode == null) {
-      this.accessMode = new ArrayList<String>();
-    }
-    this.accessMode.add(accessModeItem);
-    return this;
-  }
-
    /**
-   * What visitors who view this share can do. Valid options include **download**, **upload**, **delete**, **modify**
+   * Get accessMode
    * @return accessMode
   **/
-  @Schema(example = "[\"download\",\"upload\"]", description = "What visitors who view this share can do. Valid options include **download**, **upload**, **delete**, **modify**")
-  public List<String> getAccessMode() {
+  @Schema(description = "")
+  public AccessMode getAccessMode() {
     return accessMode;
   }
 
-  public void setAccessMode(List<String> accessMode) {
+  public void setAccessMode(AccessMode accessMode) {
     this.accessMode = accessMode;
   }
 
