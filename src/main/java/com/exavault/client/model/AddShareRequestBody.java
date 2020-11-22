@@ -14,6 +14,7 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.exavault.client.model.AccessMode;
 import com.exavault.client.model.SharesRecipients;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -26,11 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.threeten.bp.OffsetDateTime;
 /**
- * Body16
+ * AddShareRequestBody
  */
 
 
-public class Body16 {
+public class AddShareRequestBody {
   /**
    * The type of share to create. See above for a description of each.
    */
@@ -83,7 +84,7 @@ public class Body16 {
   private List<String> resources = null;
 
   @SerializedName("accessMode")
-  private List<String> accessMode = new ArrayList<String>();
+  private AccessMode accessMode = null;
 
   @SerializedName("embed")
   private Boolean embed = null;
@@ -100,8 +101,8 @@ public class Body16 {
   @SerializedName("isPublic")
   private Boolean isPublic = null;
 
-  @SerializedName("message")
-  private String message = null;
+  @SerializedName("messageBody")
+  private String messageBody = null;
 
   @SerializedName("notificationEmails")
   private List<String> notificationEmails = null;
@@ -112,8 +113,8 @@ public class Body16 {
   @SerializedName("requireEmail")
   private Boolean requireEmail = null;
 
-  @SerializedName("subject")
-  private String subject = null;
+  @SerializedName("messageSubject")
+  private String messageSubject = null;
 
   @SerializedName("fileDropCreateFolders")
   private Boolean fileDropCreateFolders = null;
@@ -121,7 +122,7 @@ public class Body16 {
   @SerializedName("sendingLocalFiles")
   private Boolean sendingLocalFiles = null;
 
-  public Body16 type(TypeEnum type) {
+  public AddShareRequestBody type(TypeEnum type) {
     this.type = type;
     return this;
   }
@@ -139,7 +140,7 @@ public class Body16 {
     this.type = type;
   }
 
-  public Body16 name(String name) {
+  public AddShareRequestBody name(String name) {
     this.name = name;
     return this;
   }
@@ -157,12 +158,12 @@ public class Body16 {
     this.name = name;
   }
 
-  public Body16 resources(List<String> resources) {
+  public AddShareRequestBody resources(List<String> resources) {
     this.resources = resources;
     return this;
   }
 
-  public Body16 addResourcesItem(String resourcesItem) {
+  public AddShareRequestBody addResourcesItem(String resourcesItem) {
     if (this.resources == null) {
       this.resources = new ArrayList<String>();
     }
@@ -183,30 +184,25 @@ public class Body16 {
     this.resources = resources;
   }
 
-  public Body16 accessMode(List<String> accessMode) {
+  public AddShareRequestBody accessMode(AccessMode accessMode) {
     this.accessMode = accessMode;
-    return this;
-  }
-
-  public Body16 addAccessModeItem(String accessModeItem) {
-    this.accessMode.add(accessModeItem);
     return this;
   }
 
    /**
-   * Array of permissions that describes what people can do when they visit the share. Valid options are &#x60;upload&#x60; &#x60;download&#x60; &#x60;modify&#x60; and &#x60;delete&#x60;  Not all permissions work with all shares - **receive** shares must always have the permission to **upload** and never provide a method for visitors to **download**.  If you are creating a share of type **send** and plan to upload files from your own computer before completing the send with [POST /shares/complete-send/{id}](#operation/completeDirectSend), use the access mode **upload**
+   * Get accessMode
    * @return accessMode
   **/
-  @Schema(required = true, description = "Array of permissions that describes what people can do when they visit the share. Valid options are `upload` `download` `modify` and `delete`  Not all permissions work with all shares - **receive** shares must always have the permission to **upload** and never provide a method for visitors to **download**.  If you are creating a share of type **send** and plan to upload files from your own computer before completing the send with [POST /shares/complete-send/{id}](#operation/completeDirectSend), use the access mode **upload**")
-  public List<String> getAccessMode() {
+  @Schema(description = "")
+  public AccessMode getAccessMode() {
     return accessMode;
   }
 
-  public void setAccessMode(List<String> accessMode) {
+  public void setAccessMode(AccessMode accessMode) {
     this.accessMode = accessMode;
   }
 
-  public Body16 embed(Boolean embed) {
+  public AddShareRequestBody embed(Boolean embed) {
     this.embed = embed;
     return this;
   }
@@ -224,12 +220,12 @@ public class Body16 {
     this.embed = embed;
   }
 
-  public Body16 recipients(List<SharesRecipients> recipients) {
+  public AddShareRequestBody recipients(List<SharesRecipients> recipients) {
     this.recipients = recipients;
     return this;
   }
 
-  public Body16 addRecipientsItem(SharesRecipients recipientsItem) {
+  public AddShareRequestBody addRecipientsItem(SharesRecipients recipientsItem) {
     if (this.recipients == null) {
       this.recipients = new ArrayList<SharesRecipients>();
     }
@@ -238,10 +234,10 @@ public class Body16 {
   }
 
    /**
-   * People you want to invite to the share. **Note**: unless you also set the &#x60;subject&#x60; and &#x60;message&#x60; for the new share, invitation emails will not be sent to these recipients.
+   * People you want to invite to the share. **Note**: unless you also set the &#x60;messageSubject&#x60; and &#x60;messageBody&#x60; for the new share, invitation emails will not be sent to these recipients.
    * @return recipients
   **/
-  @Schema(description = "People you want to invite to the share. **Note**: unless you also set the `subject` and `message` for the new share, invitation emails will not be sent to these recipients.")
+  @Schema(description = "People you want to invite to the share. **Note**: unless you also set the `messageSubject` and `messageBody` for the new share, invitation emails will not be sent to these recipients.")
   public List<SharesRecipients> getRecipients() {
     return recipients;
   }
@@ -250,7 +246,7 @@ public class Body16 {
     this.recipients = recipients;
   }
 
-  public Body16 expiration(OffsetDateTime expiration) {
+  public AddShareRequestBody expiration(OffsetDateTime expiration) {
     this.expiration = expiration;
     return this;
   }
@@ -268,7 +264,7 @@ public class Body16 {
     this.expiration = expiration;
   }
 
-  public Body16 hasNotification(Boolean hasNotification) {
+  public AddShareRequestBody hasNotification(Boolean hasNotification) {
     this.hasNotification = hasNotification;
     return this;
   }
@@ -286,7 +282,7 @@ public class Body16 {
     this.hasNotification = hasNotification;
   }
 
-  public Body16 isPublic(Boolean isPublic) {
+  public AddShareRequestBody isPublic(Boolean isPublic) {
     this.isPublic = isPublic;
     return this;
   }
@@ -304,30 +300,30 @@ public class Body16 {
     this.isPublic = isPublic;
   }
 
-  public Body16 message(String message) {
-    this.message = message;
+  public AddShareRequestBody messageBody(String messageBody) {
+    this.messageBody = messageBody;
     return this;
   }
 
    /**
-   * The message to be included in email invitations for your recipients. Ignored if you have not also provided &#x60;recipients&#x60; and &#x60;subject&#x60;
-   * @return message
+   * The message to be included in email invitations for your recipients. Ignored if you have not also provided &#x60;recipients&#x60; and &#x60;messageSubject&#x60;
+   * @return messageBody
   **/
-  @Schema(description = "The message to be included in email invitations for your recipients. Ignored if you have not also provided `recipients` and `subject`")
-  public String getMessage() {
-    return message;
+  @Schema(description = "The message to be included in email invitations for your recipients. Ignored if you have not also provided `recipients` and `messageSubject`")
+  public String getMessageBody() {
+    return messageBody;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
+  public void setMessageBody(String messageBody) {
+    this.messageBody = messageBody;
   }
 
-  public Body16 notificationEmails(List<String> notificationEmails) {
+  public AddShareRequestBody notificationEmails(List<String> notificationEmails) {
     this.notificationEmails = notificationEmails;
     return this;
   }
 
-  public Body16 addNotificationEmailsItem(String notificationEmailsItem) {
+  public AddShareRequestBody addNotificationEmailsItem(String notificationEmailsItem) {
     if (this.notificationEmails == null) {
       this.notificationEmails = new ArrayList<String>();
     }
@@ -348,7 +344,7 @@ public class Body16 {
     this.notificationEmails = notificationEmails;
   }
 
-  public Body16 password(String password) {
+  public AddShareRequestBody password(String password) {
     this.password = password;
     return this;
   }
@@ -366,7 +362,7 @@ public class Body16 {
     this.password = password;
   }
 
-  public Body16 requireEmail(Boolean requireEmail) {
+  public AddShareRequestBody requireEmail(Boolean requireEmail) {
     this.requireEmail = requireEmail;
     return this;
   }
@@ -384,25 +380,25 @@ public class Body16 {
     this.requireEmail = requireEmail;
   }
 
-  public Body16 subject(String subject) {
-    this.subject = subject;
+  public AddShareRequestBody messageSubject(String messageSubject) {
+    this.messageSubject = messageSubject;
     return this;
   }
 
    /**
-   * Subject to use on emails inviting recipients to the share. Ignored if you have not also provided &#x60;recipients&#x60; and a &#x60;message&#x60;
-   * @return subject
+   * Subject to use on emails inviting recipients to the share. Ignored if you have not also provided &#x60;recipients&#x60; and a &#x60;messageBody&#x60;
+   * @return messageSubject
   **/
-  @Schema(example = "Invitation to a shared folder", description = "Subject to use on emails inviting recipients to the share. Ignored if you have not also provided `recipients` and a `message`")
-  public String getSubject() {
-    return subject;
+  @Schema(example = "Invitation to a shared folder", description = "Subject to use on emails inviting recipients to the share. Ignored if you have not also provided `recipients` and a `messageBody`")
+  public String getMessageSubject() {
+    return messageSubject;
   }
 
-  public void setSubject(String subject) {
-    this.subject = subject;
+  public void setMessageSubject(String messageSubject) {
+    this.messageSubject = messageSubject;
   }
 
-  public Body16 fileDropCreateFolders(Boolean fileDropCreateFolders) {
+  public AddShareRequestBody fileDropCreateFolders(Boolean fileDropCreateFolders) {
     this.fileDropCreateFolders = fileDropCreateFolders;
     return this;
   }
@@ -420,7 +416,7 @@ public class Body16 {
     this.fileDropCreateFolders = fileDropCreateFolders;
   }
 
-  public Body16 sendingLocalFiles(Boolean sendingLocalFiles) {
+  public AddShareRequestBody sendingLocalFiles(Boolean sendingLocalFiles) {
     this.sendingLocalFiles = sendingLocalFiles;
     return this;
   }
@@ -447,35 +443,35 @@ public class Body16 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body16 body16 = (Body16) o;
-    return Objects.equals(this.type, body16.type) &&
-        Objects.equals(this.name, body16.name) &&
-        Objects.equals(this.resources, body16.resources) &&
-        Objects.equals(this.accessMode, body16.accessMode) &&
-        Objects.equals(this.embed, body16.embed) &&
-        Objects.equals(this.recipients, body16.recipients) &&
-        Objects.equals(this.expiration, body16.expiration) &&
-        Objects.equals(this.hasNotification, body16.hasNotification) &&
-        Objects.equals(this.isPublic, body16.isPublic) &&
-        Objects.equals(this.message, body16.message) &&
-        Objects.equals(this.notificationEmails, body16.notificationEmails) &&
-        Objects.equals(this.password, body16.password) &&
-        Objects.equals(this.requireEmail, body16.requireEmail) &&
-        Objects.equals(this.subject, body16.subject) &&
-        Objects.equals(this.fileDropCreateFolders, body16.fileDropCreateFolders) &&
-        Objects.equals(this.sendingLocalFiles, body16.sendingLocalFiles);
+    AddShareRequestBody addShareRequestBody = (AddShareRequestBody) o;
+    return Objects.equals(this.type, addShareRequestBody.type) &&
+        Objects.equals(this.name, addShareRequestBody.name) &&
+        Objects.equals(this.resources, addShareRequestBody.resources) &&
+        Objects.equals(this.accessMode, addShareRequestBody.accessMode) &&
+        Objects.equals(this.embed, addShareRequestBody.embed) &&
+        Objects.equals(this.recipients, addShareRequestBody.recipients) &&
+        Objects.equals(this.expiration, addShareRequestBody.expiration) &&
+        Objects.equals(this.hasNotification, addShareRequestBody.hasNotification) &&
+        Objects.equals(this.isPublic, addShareRequestBody.isPublic) &&
+        Objects.equals(this.messageBody, addShareRequestBody.messageBody) &&
+        Objects.equals(this.notificationEmails, addShareRequestBody.notificationEmails) &&
+        Objects.equals(this.password, addShareRequestBody.password) &&
+        Objects.equals(this.requireEmail, addShareRequestBody.requireEmail) &&
+        Objects.equals(this.messageSubject, addShareRequestBody.messageSubject) &&
+        Objects.equals(this.fileDropCreateFolders, addShareRequestBody.fileDropCreateFolders) &&
+        Objects.equals(this.sendingLocalFiles, addShareRequestBody.sendingLocalFiles);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, name, resources, accessMode, embed, recipients, expiration, hasNotification, isPublic, message, notificationEmails, password, requireEmail, subject, fileDropCreateFolders, sendingLocalFiles);
+    return Objects.hash(type, name, resources, accessMode, embed, recipients, expiration, hasNotification, isPublic, messageBody, notificationEmails, password, requireEmail, messageSubject, fileDropCreateFolders, sendingLocalFiles);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body16 {\n");
+    sb.append("class AddShareRequestBody {\n");
     
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
@@ -486,11 +482,11 @@ public class Body16 {
     sb.append("    expiration: ").append(toIndentedString(expiration)).append("\n");
     sb.append("    hasNotification: ").append(toIndentedString(hasNotification)).append("\n");
     sb.append("    isPublic: ").append(toIndentedString(isPublic)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    messageBody: ").append(toIndentedString(messageBody)).append("\n");
     sb.append("    notificationEmails: ").append(toIndentedString(notificationEmails)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    requireEmail: ").append(toIndentedString(requireEmail)).append("\n");
-    sb.append("    subject: ").append(toIndentedString(subject)).append("\n");
+    sb.append("    messageSubject: ").append(toIndentedString(messageSubject)).append("\n");
     sb.append("    fileDropCreateFolders: ").append(toIndentedString(fileDropCreateFolders)).append("\n");
     sb.append("    sendingLocalFiles: ").append(toIndentedString(sendingLocalFiles)).append("\n");
     sb.append("}");

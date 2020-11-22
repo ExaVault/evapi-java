@@ -13,10 +13,10 @@
 package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
+import com.exavault.client.model.AddUserRequestBody;
 import java.math.BigDecimal;
-import com.exavault.client.model.Body5;
-import com.exavault.client.model.Body6;
 import com.exavault.client.model.EmptyResponse;
+import com.exavault.client.model.UpdateUserRequestBody;
 import com.exavault.client.model.UserCollectionResponse;
 import com.exavault.client.model.UserResponse;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class UsersApiTest {
     public void addUserTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Body5 body = null;
+        AddUserRequestBody body = null;
         UserResponse response = api.addUser(evApiKey, evAccessToken, body);
 
         // TODO: test validations
@@ -127,7 +127,7 @@ public class UsersApiTest {
         String evApiKey = null;
         String evAccessToken = null;
         BigDecimal id = null;
-        Body6 body = null;
+        UpdateUserRequestBody body = null;
         UserResponse response = api.updateUser(evApiKey, evAccessToken, id, body);
 
         // TODO: test validations

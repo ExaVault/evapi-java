@@ -14,6 +14,7 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.exavault.client.model.AccessMode;
 import com.exavault.client.model.SharesRecipients;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -26,11 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.threeten.bp.OffsetDateTime;
 /**
- * Body17
+ * UpdateShareRequestBody
  */
 
 
-public class Body17 {
+public class UpdateShareRequestBody {
   @SerializedName("name")
   private String name = null;
 
@@ -38,7 +39,7 @@ public class Body17 {
   private List<String> resources = null;
 
   @SerializedName("accessMode")
-  private List<String> accessMode = null;
+  private AccessMode accessMode = null;
 
   @SerializedName("embed")
   private Boolean embed = null;
@@ -55,8 +56,8 @@ public class Body17 {
   @SerializedName("isPublic")
   private Boolean isPublic = null;
 
-  @SerializedName("message")
-  private String message = null;
+  @SerializedName("messageBody")
+  private String messageBody = null;
 
   @SerializedName("notificationEmails")
   private List<String> notificationEmails = null;
@@ -67,8 +68,8 @@ public class Body17 {
   @SerializedName("requireEmail")
   private Boolean requireEmail = null;
 
-  @SerializedName("subject")
-  private String subject = null;
+  @SerializedName("messageSubject")
+  private String messageSubject = null;
 
   @SerializedName("fileDropCreateFolders")
   private Boolean fileDropCreateFolders = null;
@@ -76,7 +77,7 @@ public class Body17 {
   @SerializedName("status")
   private Integer status = null;
 
-  public Body17 name(String name) {
+  public UpdateShareRequestBody name(String name) {
     this.name = name;
     return this;
   }
@@ -94,12 +95,12 @@ public class Body17 {
     this.name = name;
   }
 
-  public Body17 resources(List<String> resources) {
+  public UpdateShareRequestBody resources(List<String> resources) {
     this.resources = resources;
     return this;
   }
 
-  public Body17 addResourcesItem(String resourcesItem) {
+  public UpdateShareRequestBody addResourcesItem(String resourcesItem) {
     if (this.resources == null) {
       this.resources = new ArrayList<String>();
     }
@@ -120,33 +121,25 @@ public class Body17 {
     this.resources = resources;
   }
 
-  public Body17 accessMode(List<String> accessMode) {
+  public UpdateShareRequestBody accessMode(AccessMode accessMode) {
     this.accessMode = accessMode;
-    return this;
-  }
-
-  public Body17 addAccessModeItem(String accessModeItem) {
-    if (this.accessMode == null) {
-      this.accessMode = new ArrayList<String>();
-    }
-    this.accessMode.add(accessModeItem);
     return this;
   }
 
    /**
-   * What visitors who view this share can do. Valid options include **download**, **upload**, **delete**, **modify**
+   * Get accessMode
    * @return accessMode
   **/
-  @Schema(example = "[\"download\",\"upload\"]", description = "What visitors who view this share can do. Valid options include **download**, **upload**, **delete**, **modify**")
-  public List<String> getAccessMode() {
+  @Schema(description = "")
+  public AccessMode getAccessMode() {
     return accessMode;
   }
 
-  public void setAccessMode(List<String> accessMode) {
+  public void setAccessMode(AccessMode accessMode) {
     this.accessMode = accessMode;
   }
 
-  public Body17 embed(Boolean embed) {
+  public UpdateShareRequestBody embed(Boolean embed) {
     this.embed = embed;
     return this;
   }
@@ -164,12 +157,12 @@ public class Body17 {
     this.embed = embed;
   }
 
-  public Body17 recipients(List<SharesRecipients> recipients) {
+  public UpdateShareRequestBody recipients(List<SharesRecipients> recipients) {
     this.recipients = recipients;
     return this;
   }
 
-  public Body17 addRecipientsItem(SharesRecipients recipientsItem) {
+  public UpdateShareRequestBody addRecipientsItem(SharesRecipients recipientsItem) {
     if (this.recipients == null) {
       this.recipients = new ArrayList<SharesRecipients>();
     }
@@ -190,7 +183,7 @@ public class Body17 {
     this.recipients = recipients;
   }
 
-  public Body17 expiration(OffsetDateTime expiration) {
+  public UpdateShareRequestBody expiration(OffsetDateTime expiration) {
     this.expiration = expiration;
     return this;
   }
@@ -208,7 +201,7 @@ public class Body17 {
     this.expiration = expiration;
   }
 
-  public Body17 hasNotification(Boolean hasNotification) {
+  public UpdateShareRequestBody hasNotification(Boolean hasNotification) {
     this.hasNotification = hasNotification;
     return this;
   }
@@ -226,7 +219,7 @@ public class Body17 {
     this.hasNotification = hasNotification;
   }
 
-  public Body17 isPublic(Boolean isPublic) {
+  public UpdateShareRequestBody isPublic(Boolean isPublic) {
     this.isPublic = isPublic;
     return this;
   }
@@ -244,30 +237,30 @@ public class Body17 {
     this.isPublic = isPublic;
   }
 
-  public Body17 message(String message) {
-    this.message = message;
+  public UpdateShareRequestBody messageBody(String messageBody) {
+    this.messageBody = messageBody;
     return this;
   }
 
    /**
    * Message content to use for emails inviting recipients to the share. Ignored if you have not also provided &#x60;recipients&#x60; and a &#x60;subject&#x60;
-   * @return message
+   * @return messageBody
   **/
   @Schema(description = "Message content to use for emails inviting recipients to the share. Ignored if you have not also provided `recipients` and a `subject`")
-  public String getMessage() {
-    return message;
+  public String getMessageBody() {
+    return messageBody;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
+  public void setMessageBody(String messageBody) {
+    this.messageBody = messageBody;
   }
 
-  public Body17 notificationEmails(List<String> notificationEmails) {
+  public UpdateShareRequestBody notificationEmails(List<String> notificationEmails) {
     this.notificationEmails = notificationEmails;
     return this;
   }
 
-  public Body17 addNotificationEmailsItem(String notificationEmailsItem) {
+  public UpdateShareRequestBody addNotificationEmailsItem(String notificationEmailsItem) {
     if (this.notificationEmails == null) {
       this.notificationEmails = new ArrayList<String>();
     }
@@ -288,7 +281,7 @@ public class Body17 {
     this.notificationEmails = notificationEmails;
   }
 
-  public Body17 password(String password) {
+  public UpdateShareRequestBody password(String password) {
     this.password = password;
     return this;
   }
@@ -306,7 +299,7 @@ public class Body17 {
     this.password = password;
   }
 
-  public Body17 requireEmail(Boolean requireEmail) {
+  public UpdateShareRequestBody requireEmail(Boolean requireEmail) {
     this.requireEmail = requireEmail;
     return this;
   }
@@ -324,25 +317,25 @@ public class Body17 {
     this.requireEmail = requireEmail;
   }
 
-  public Body17 subject(String subject) {
-    this.subject = subject;
+  public UpdateShareRequestBody messageSubject(String messageSubject) {
+    this.messageSubject = messageSubject;
     return this;
   }
 
    /**
    * Subject to use on emails inviting recipients to the share. Ignored if you have not also provided &#x60;recipients&#x60; and a &#x60;message&#x60;
-   * @return subject
+   * @return messageSubject
   **/
   @Schema(example = "Invitation to a shared folder", description = "Subject to use on emails inviting recipients to the share. Ignored if you have not also provided `recipients` and a `message`")
-  public String getSubject() {
-    return subject;
+  public String getMessageSubject() {
+    return messageSubject;
   }
 
-  public void setSubject(String subject) {
-    this.subject = subject;
+  public void setMessageSubject(String messageSubject) {
+    this.messageSubject = messageSubject;
   }
 
-  public Body17 fileDropCreateFolders(Boolean fileDropCreateFolders) {
+  public UpdateShareRequestBody fileDropCreateFolders(Boolean fileDropCreateFolders) {
     this.fileDropCreateFolders = fileDropCreateFolders;
     return this;
   }
@@ -360,7 +353,7 @@ public class Body17 {
     this.fileDropCreateFolders = fileDropCreateFolders;
   }
 
-  public Body17 status(Integer status) {
+  public UpdateShareRequestBody status(Integer status) {
     this.status = status;
     return this;
   }
@@ -387,34 +380,34 @@ public class Body17 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body17 body17 = (Body17) o;
-    return Objects.equals(this.name, body17.name) &&
-        Objects.equals(this.resources, body17.resources) &&
-        Objects.equals(this.accessMode, body17.accessMode) &&
-        Objects.equals(this.embed, body17.embed) &&
-        Objects.equals(this.recipients, body17.recipients) &&
-        Objects.equals(this.expiration, body17.expiration) &&
-        Objects.equals(this.hasNotification, body17.hasNotification) &&
-        Objects.equals(this.isPublic, body17.isPublic) &&
-        Objects.equals(this.message, body17.message) &&
-        Objects.equals(this.notificationEmails, body17.notificationEmails) &&
-        Objects.equals(this.password, body17.password) &&
-        Objects.equals(this.requireEmail, body17.requireEmail) &&
-        Objects.equals(this.subject, body17.subject) &&
-        Objects.equals(this.fileDropCreateFolders, body17.fileDropCreateFolders) &&
-        Objects.equals(this.status, body17.status);
+    UpdateShareRequestBody updateShareRequestBody = (UpdateShareRequestBody) o;
+    return Objects.equals(this.name, updateShareRequestBody.name) &&
+        Objects.equals(this.resources, updateShareRequestBody.resources) &&
+        Objects.equals(this.accessMode, updateShareRequestBody.accessMode) &&
+        Objects.equals(this.embed, updateShareRequestBody.embed) &&
+        Objects.equals(this.recipients, updateShareRequestBody.recipients) &&
+        Objects.equals(this.expiration, updateShareRequestBody.expiration) &&
+        Objects.equals(this.hasNotification, updateShareRequestBody.hasNotification) &&
+        Objects.equals(this.isPublic, updateShareRequestBody.isPublic) &&
+        Objects.equals(this.messageBody, updateShareRequestBody.messageBody) &&
+        Objects.equals(this.notificationEmails, updateShareRequestBody.notificationEmails) &&
+        Objects.equals(this.password, updateShareRequestBody.password) &&
+        Objects.equals(this.requireEmail, updateShareRequestBody.requireEmail) &&
+        Objects.equals(this.messageSubject, updateShareRequestBody.messageSubject) &&
+        Objects.equals(this.fileDropCreateFolders, updateShareRequestBody.fileDropCreateFolders) &&
+        Objects.equals(this.status, updateShareRequestBody.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, resources, accessMode, embed, recipients, expiration, hasNotification, isPublic, message, notificationEmails, password, requireEmail, subject, fileDropCreateFolders, status);
+    return Objects.hash(name, resources, accessMode, embed, recipients, expiration, hasNotification, isPublic, messageBody, notificationEmails, password, requireEmail, messageSubject, fileDropCreateFolders, status);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body17 {\n");
+    sb.append("class UpdateShareRequestBody {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    resources: ").append(toIndentedString(resources)).append("\n");
@@ -424,11 +417,11 @@ public class Body17 {
     sb.append("    expiration: ").append(toIndentedString(expiration)).append("\n");
     sb.append("    hasNotification: ").append(toIndentedString(hasNotification)).append("\n");
     sb.append("    isPublic: ").append(toIndentedString(isPublic)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    messageBody: ").append(toIndentedString(messageBody)).append("\n");
     sb.append("    notificationEmails: ").append(toIndentedString(notificationEmails)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    requireEmail: ").append(toIndentedString(requireEmail)).append("\n");
-    sb.append("    subject: ").append(toIndentedString(subject)).append("\n");
+    sb.append("    messageSubject: ").append(toIndentedString(messageSubject)).append("\n");
     sb.append("    fileDropCreateFolders: ").append(toIndentedString(fileDropCreateFolders)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");

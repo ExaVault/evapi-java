@@ -14,6 +14,7 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.exavault.client.model.AccessMode;
 import com.exavault.client.model.ShareMessage;
 import com.exavault.client.model.ShareRecipient1;
 import com.google.gson.TypeAdapter;
@@ -41,51 +42,8 @@ public class ShareAttributes {
   @SerializedName("public")
   private Boolean _public = null;
 
-  /**
-   * Access rights for the share.
-   */
-  @JsonAdapter(AccessModeEnum.Adapter.class)
-  public enum AccessModeEnum {
-    UPLOAD("upload"),
-    DOWNLOAD("download"),
-    DOWNLOAD_UPLOAD("download_upload"),
-    DOWNLOAD_UPLOAD_MODIFY_DELETE("download_upload_modify_delete");
-
-    private String value;
-
-    AccessModeEnum(String value) {
-      this.value = value;
-    }
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-    public static AccessModeEnum fromValue(String text) {
-      for (AccessModeEnum b : AccessModeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-    public static class Adapter extends TypeAdapter<AccessModeEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final AccessModeEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public AccessModeEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return AccessModeEnum.fromValue(String.valueOf(value));
-      }
-    }
-  }  @SerializedName("accessMode")
-  private AccessModeEnum accessMode = null;
+  @SerializedName("accessMode")
+  private AccessMode accessMode = null;
 
   @SerializedName("accessDescription")
   private String accessDescription = null;
@@ -326,21 +284,21 @@ public class ShareAttributes {
     this._public = _public;
   }
 
-  public ShareAttributes accessMode(AccessModeEnum accessMode) {
+  public ShareAttributes accessMode(AccessMode accessMode) {
     this.accessMode = accessMode;
     return this;
   }
 
    /**
-   * Access rights for the share.
+   * Get accessMode
    * @return accessMode
   **/
-  @Schema(example = "upload", description = "Access rights for the share.")
-  public AccessModeEnum getAccessMode() {
+  @Schema(description = "")
+  public AccessMode getAccessMode() {
     return accessMode;
   }
 
-  public void setAccessMode(AccessModeEnum accessMode) {
+  public void setAccessMode(AccessMode accessMode) {
     this.accessMode = accessMode;
   }
 

@@ -13,7 +13,7 @@
 package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
-import com.exavault.client.model.Body18;
+import com.exavault.client.model.ResendInvitationsRequestBody;
 import com.exavault.client.model.ShareRecipientsResponse;
 import org.junit.Test;
 import org.junit.Ignore;
@@ -44,7 +44,7 @@ public class RecipientsApiTest {
         String evApiKey = null;
         String evAccessToken = null;
         Integer shareId = null;
-        Body18 body = null;
+        ResendInvitationsRequestBody body = null;
         ShareRecipientsResponse response = api.resendInvitationsForShare(evApiKey, evAccessToken, shareId, body);
 
         // TODO: test validations

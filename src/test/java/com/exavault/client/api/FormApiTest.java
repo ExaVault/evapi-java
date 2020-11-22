@@ -13,10 +13,10 @@
 package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
-import com.exavault.client.model.Body2;
 import com.exavault.client.model.EmptyResponse;
 import com.exavault.client.model.FormEntryResponse;
 import com.exavault.client.model.FormResponse;
+import com.exavault.client.model.UpdateFormByIdRequestBody;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -45,7 +45,7 @@ public class FormApiTest {
     public void deleteFormMessageByIdTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        String id = null;
+        Integer id = null;
         EmptyResponse response = api.deleteFormMessageById(evApiKey, evAccessToken, id);
 
         // TODO: test validations
@@ -98,7 +98,7 @@ public class FormApiTest {
     public void getFormEntriesTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        String id = null;
+        Integer id = null;
         Integer limit = null;
         Integer offset = null;
         FormEntryResponse response = api.getFormEntries(evApiKey, evAccessToken, id, limit, offset);
@@ -118,7 +118,7 @@ public class FormApiTest {
         String evApiKey = null;
         String evAccessToken = null;
         Integer id = null;
-        Body2 body = null;
+        UpdateFormByIdRequestBody body = null;
         FormResponse response = api.updateFormById(evApiKey, evAccessToken, id, body);
 
         // TODO: test validations

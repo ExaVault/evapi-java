@@ -24,56 +24,59 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Body15
+ * UpdateEmailListRequestBody
  */
 
 
-public class Body15 {
+public class UpdateEmailListRequestBody {
+  @SerializedName("name")
+  private String name = null;
+
   @SerializedName("emails")
-  private List<String> emails = new ArrayList<String>();
+  private List<String> emails = null;
 
-  @SerializedName("message")
-  private String message = null;
+  public UpdateEmailListRequestBody name(String name) {
+    this.name = name;
+    return this;
+  }
 
-  public Body15 emails(List<String> emails) {
+   /**
+   * Name of the email list.
+   * @return name
+  **/
+  @Schema(example = "My friends list", description = "Name of the email list.")
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public UpdateEmailListRequestBody emails(List<String> emails) {
     this.emails = emails;
     return this;
   }
 
-  public Body15 addEmailsItem(String emailsItem) {
+  public UpdateEmailListRequestBody addEmailsItem(String emailsItem) {
+    if (this.emails == null) {
+      this.emails = new ArrayList<String>();
+    }
     this.emails.add(emailsItem);
     return this;
   }
 
    /**
-   * Get emails
+   * Email addresses that replace existing list.
    * @return emails
   **/
-  @Schema(required = true, description = "")
+  @Schema(example = "[\"ykravchuk@exavault.com\",\"jdoe@exavault.com\"]", description = "Email addresses that replace existing list.")
   public List<String> getEmails() {
     return emails;
   }
 
   public void setEmails(List<String> emails) {
     this.emails = emails;
-  }
-
-  public Body15 message(String message) {
-    this.message = message;
-    return this;
-  }
-
-   /**
-   * Get message
-   * @return message
-  **/
-  @Schema(required = true, description = "")
-  public String getMessage() {
-    return message;
-  }
-
-  public void setMessage(String message) {
-    this.message = message;
   }
 
 
@@ -85,24 +88,24 @@ public class Body15 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Body15 body15 = (Body15) o;
-    return Objects.equals(this.emails, body15.emails) &&
-        Objects.equals(this.message, body15.message);
+    UpdateEmailListRequestBody updateEmailListRequestBody = (UpdateEmailListRequestBody) o;
+    return Objects.equals(this.name, updateEmailListRequestBody.name) &&
+        Objects.equals(this.emails, updateEmailListRequestBody.emails);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(emails, message);
+    return Objects.hash(name, emails);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Body15 {\n");
+    sb.append("class UpdateEmailListRequestBody {\n");
     
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    emails: ").append(toIndentedString(emails)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("}");
     return sb.toString();
   }
