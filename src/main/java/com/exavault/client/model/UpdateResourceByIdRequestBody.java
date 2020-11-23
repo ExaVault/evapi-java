@@ -14,7 +14,6 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.ShareRelationshipsData1;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,30 +22,30 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * ShareRelationshipsResources
+ * UpdateResourceByIdRequestBody
  */
 
 
-public class ShareRelationshipsResources {
-  @SerializedName("data")
-  private ShareRelationshipsData1 data = null;
+public class UpdateResourceByIdRequestBody {
+  @SerializedName("name")
+  private String name = null;
 
-  public ShareRelationshipsResources data(ShareRelationshipsData1 data) {
-    this.data = data;
+  public UpdateResourceByIdRequestBody name(String name) {
+    this.name = name;
     return this;
   }
 
    /**
-   * Get data
-   * @return data
+   * The new name for the resource (file or folder).
+   * @return name
   **/
-  @Schema(description = "")
-  public ShareRelationshipsData1 getData() {
-    return data;
+  @Schema(example = "my-renamed-file.txt", description = "The new name for the resource (file or folder).")
+  public String getName() {
+    return name;
   }
 
-  public void setData(ShareRelationshipsData1 data) {
-    this.data = data;
+  public void setName(String name) {
+    this.name = name;
   }
 
 
@@ -58,22 +57,22 @@ public class ShareRelationshipsResources {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ShareRelationshipsResources shareRelationshipsResources = (ShareRelationshipsResources) o;
-    return Objects.equals(this.data, shareRelationshipsResources.data);
+    UpdateResourceByIdRequestBody updateResourceByIdRequestBody = (UpdateResourceByIdRequestBody) o;
+    return Objects.equals(this.name, updateResourceByIdRequestBody.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(data);
+    return Objects.hash(name);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ShareRelationshipsResources {\n");
+    sb.append("class UpdateResourceByIdRequestBody {\n");
     
-    sb.append("    data: ").append(toIndentedString(data)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");
     return sb.toString();
   }

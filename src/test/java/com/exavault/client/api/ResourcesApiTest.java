@@ -27,7 +27,7 @@ import com.exavault.client.model.ResourceCollectionResponse;
 import com.exavault.client.model.ResourceCopyMove;
 import com.exavault.client.model.ResourceMultiResponse;
 import com.exavault.client.model.ResourceResponse;
-import com.exavault.client.model.UpdateReourceByIdRequestBody;
+import com.exavault.client.model.UpdateResourceByIdRequestBody;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -298,7 +298,7 @@ public class ResourcesApiTest {
         String evAccessToken = null;
         String evApiKey = null;
         Integer id = null;
-        UpdateReourceByIdRequestBody body = null;
+        UpdateResourceByIdRequestBody body = null;
         ResourceResponse response = api.updateResourceById(evAccessToken, evApiKey, id, body);
 
         // TODO: test validations
