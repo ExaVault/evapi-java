@@ -31,7 +31,7 @@ public class NotificationRelationshipsResourceData {
   private String type = null;
 
   @SerializedName("id")
-  private Integer id = null;
+  private Long id = null;
 
   public NotificationRelationshipsResourceData type(String type) {
     this.type = type;
@@ -51,7 +51,7 @@ public class NotificationRelationshipsResourceData {
     this.type = type;
   }
 
-  public NotificationRelationshipsResourceData id(Integer id) {
+  public NotificationRelationshipsResourceData id(Long id) {
     this.id = id;
     return this;
   }
@@ -61,11 +61,11 @@ public class NotificationRelationshipsResourceData {
    * @return id
   **/
   @Schema(example = "2345", description = "")
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

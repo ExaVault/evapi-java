@@ -22,51 +22,30 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * ResourceRelationshipsParentResourceData
+ * ResendInvitationsRequestBody
  */
 
 
-public class ResourceRelationshipsParentResourceData {
-  @SerializedName("id")
-  private Long id = null;
+public class ResendInvitationsRequestBody {
+  @SerializedName("recipientId")
+  private Integer recipientId = null;
 
-  @SerializedName("type")
-  private String type = null;
-
-  public ResourceRelationshipsParentResourceData id(Long id) {
-    this.id = id;
+  public ResendInvitationsRequestBody recipientId(Integer recipientId) {
+    this.recipientId = recipientId;
     return this;
   }
 
    /**
-   * Get id
-   * @return id
+   * ID number of recipient to send a new invitation to.
+   * @return recipientId
   **/
-  @Schema(example = "2", description = "")
-  public Long getId() {
-    return id;
+  @Schema(description = "ID number of recipient to send a new invitation to.")
+  public Integer getRecipientId() {
+    return recipientId;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public ResourceRelationshipsParentResourceData type(String type) {
-    this.type = type;
-    return this;
-  }
-
-   /**
-   * Get type
-   * @return type
-  **/
-  @Schema(example = "resource", description = "")
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
+  public void setRecipientId(Integer recipientId) {
+    this.recipientId = recipientId;
   }
 
 
@@ -78,24 +57,22 @@ public class ResourceRelationshipsParentResourceData {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ResourceRelationshipsParentResourceData resourceRelationshipsParentResourceData = (ResourceRelationshipsParentResourceData) o;
-    return Objects.equals(this.id, resourceRelationshipsParentResourceData.id) &&
-        Objects.equals(this.type, resourceRelationshipsParentResourceData.type);
+    ResendInvitationsRequestBody resendInvitationsRequestBody = (ResendInvitationsRequestBody) o;
+    return Objects.equals(this.recipientId, resendInvitationsRequestBody.recipientId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type);
+    return Objects.hash(recipientId);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ResourceRelationshipsParentResourceData {\n");
+    sb.append("class ResendInvitationsRequestBody {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    recipientId: ").append(toIndentedString(recipientId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

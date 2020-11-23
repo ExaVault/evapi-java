@@ -22,17 +22,17 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * UserRelationshipsHomeResourceData
+ * ShareMessageData
  */
 
 
-public class UserRelationshipsHomeResourceData {
+public class ShareMessageData {
   /**
-   * Type is resource.
+   * Type is message. 
    */
   @JsonAdapter(TypeEnum.Adapter.class)
   public enum TypeEnum {
-    RESOURCE("resource");
+    MESSAGE("message");
 
     private String value;
 
@@ -71,18 +71,18 @@ public class UserRelationshipsHomeResourceData {
   private TypeEnum type = null;
 
   @SerializedName("id")
-  private Long id = null;
+  private Integer id = null;
 
-  public UserRelationshipsHomeResourceData type(TypeEnum type) {
+  public ShareMessageData type(TypeEnum type) {
     this.type = type;
     return this;
   }
 
    /**
-   * Type is resource.
+   * Type is message. 
    * @return type
   **/
-  @Schema(example = "resource", description = "Type is resource.")
+  @Schema(example = "message", description = "Type is message. ")
   public TypeEnum getType() {
     return type;
   }
@@ -91,21 +91,21 @@ public class UserRelationshipsHomeResourceData {
     this.type = type;
   }
 
-  public UserRelationshipsHomeResourceData id(Long id) {
+  public ShareMessageData id(Integer id) {
     this.id = id;
     return this;
   }
 
    /**
-   * ID of home directory resource.
+   * ID of the message.
    * @return id
   **/
-  @Schema(description = "ID of home directory resource.")
-  public Long getId() {
+  @Schema(example = "21", description = "ID of the message.")
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
@@ -118,9 +118,9 @@ public class UserRelationshipsHomeResourceData {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserRelationshipsHomeResourceData userRelationshipsHomeResourceData = (UserRelationshipsHomeResourceData) o;
-    return Objects.equals(this.type, userRelationshipsHomeResourceData.type) &&
-        Objects.equals(this.id, userRelationshipsHomeResourceData.id);
+    ShareMessageData shareMessageData = (ShareMessageData) o;
+    return Objects.equals(this.type, shareMessageData.type) &&
+        Objects.equals(this.id, shareMessageData.id);
   }
 
   @Override
@@ -132,7 +132,7 @@ public class UserRelationshipsHomeResourceData {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UserRelationshipsHomeResourceData {\n");
+    sb.append("class ShareMessageData {\n");
     
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");

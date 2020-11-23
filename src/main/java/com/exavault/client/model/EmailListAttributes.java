@@ -33,8 +33,8 @@ public class EmailListAttributes {
   @SerializedName("name")
   private String name = null;
 
-  @SerializedName("members")
-  private List<String> members = null;
+  @SerializedName("emails")
+  private List<String> emails = null;
 
   @SerializedName("created")
   private OffsetDateTime created = null;
@@ -60,30 +60,30 @@ public class EmailListAttributes {
     this.name = name;
   }
 
-  public EmailListAttributes members(List<String> members) {
-    this.members = members;
+  public EmailListAttributes emails(List<String> emails) {
+    this.emails = emails;
     return this;
   }
 
-  public EmailListAttributes addMembersItem(String membersItem) {
-    if (this.members == null) {
-      this.members = new ArrayList<String>();
+  public EmailListAttributes addEmailsItem(String emailsItem) {
+    if (this.emails == null) {
+      this.emails = new ArrayList<String>();
     }
-    this.members.add(membersItem);
+    this.emails.add(emailsItem);
     return this;
   }
 
    /**
    * Recipient emails in the email list
-   * @return members
+   * @return emails
   **/
   @Schema(description = "Recipient emails in the email list")
-  public List<String> getMembers() {
-    return members;
+  public List<String> getEmails() {
+    return emails;
   }
 
-  public void setMembers(List<String> members) {
-    this.members = members;
+  public void setEmails(List<String> emails) {
+    this.emails = emails;
   }
 
   public EmailListAttributes created(OffsetDateTime created) {
@@ -133,14 +133,14 @@ public class EmailListAttributes {
     }
     EmailListAttributes emailListAttributes = (EmailListAttributes) o;
     return Objects.equals(this.name, emailListAttributes.name) &&
-        Objects.equals(this.members, emailListAttributes.members) &&
+        Objects.equals(this.emails, emailListAttributes.emails) &&
         Objects.equals(this.created, emailListAttributes.created) &&
         Objects.equals(this.modified, emailListAttributes.modified);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, members, created, modified);
+    return Objects.hash(name, emails, created, modified);
   }
 
 
@@ -150,7 +150,7 @@ public class EmailListAttributes {
     sb.append("class EmailListAttributes {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    members: ").append(toIndentedString(members)).append("\n");
+    sb.append("    emails: ").append(toIndentedString(emails)).append("\n");
     sb.append("    created: ").append(toIndentedString(created)).append("\n");
     sb.append("    modified: ").append(toIndentedString(modified)).append("\n");
     sb.append("}");

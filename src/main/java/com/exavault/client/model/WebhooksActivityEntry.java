@@ -29,7 +29,7 @@ import java.io.IOException;
 
 public class WebhooksActivityEntry {
   @SerializedName("id")
-  private Integer id = null;
+  private Long id = null;
 
   /**
    * Gets or Sets type
@@ -77,7 +77,7 @@ public class WebhooksActivityEntry {
   @SerializedName("attributes")
   private WebhooksActivityEntryAttributes attributes = null;
 
-  public WebhooksActivityEntry id(Integer id) {
+  public WebhooksActivityEntry id(Long id) {
     this.id = id;
     return this;
   }
@@ -87,11 +87,11 @@ public class WebhooksActivityEntry {
    * @return id
   **/
   @Schema(example = "12345", description = "")
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

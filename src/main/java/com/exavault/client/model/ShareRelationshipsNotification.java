@@ -14,6 +14,7 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.exavault.client.model.ShareRelationshipsData;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,51 +23,30 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * ResourceRelationshipsParentResourceData
+ * ShareRelationshipsNotification
  */
 
 
-public class ResourceRelationshipsParentResourceData {
-  @SerializedName("id")
-  private Long id = null;
+public class ShareRelationshipsNotification {
+  @SerializedName("data")
+  private ShareRelationshipsData data = null;
 
-  @SerializedName("type")
-  private String type = null;
-
-  public ResourceRelationshipsParentResourceData id(Long id) {
-    this.id = id;
+  public ShareRelationshipsNotification data(ShareRelationshipsData data) {
+    this.data = data;
     return this;
   }
 
    /**
-   * Get id
-   * @return id
+   * Get data
+   * @return data
   **/
-  @Schema(example = "2", description = "")
-  public Long getId() {
-    return id;
+  @Schema(description = "")
+  public ShareRelationshipsData getData() {
+    return data;
   }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public ResourceRelationshipsParentResourceData type(String type) {
-    this.type = type;
-    return this;
-  }
-
-   /**
-   * Get type
-   * @return type
-  **/
-  @Schema(example = "resource", description = "")
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
+  public void setData(ShareRelationshipsData data) {
+    this.data = data;
   }
 
 
@@ -78,24 +58,22 @@ public class ResourceRelationshipsParentResourceData {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ResourceRelationshipsParentResourceData resourceRelationshipsParentResourceData = (ResourceRelationshipsParentResourceData) o;
-    return Objects.equals(this.id, resourceRelationshipsParentResourceData.id) &&
-        Objects.equals(this.type, resourceRelationshipsParentResourceData.type);
+    ShareRelationshipsNotification shareRelationshipsNotification = (ShareRelationshipsNotification) o;
+    return Objects.equals(this.data, shareRelationshipsNotification.data);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type);
+    return Objects.hash(data);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ResourceRelationshipsParentResourceData {\n");
+    sb.append("class ShareRelationshipsNotification {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("}");
     return sb.toString();
   }
