@@ -52,7 +52,7 @@ public class FormApiTest {
     public void deleteFormMessageByIdTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Integer id = null;
+        Long id = null;
         EmptyResponse response = api.deleteFormMessageById(evApiKey, evAccessToken, id);
 
         // TODO: test validations

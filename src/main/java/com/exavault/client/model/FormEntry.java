@@ -29,7 +29,7 @@ import java.io.IOException;
 
 public class FormEntry {
   @SerializedName("id")
-  private Integer id = null;
+  private Long id = null;
 
   @SerializedName("type")
   private String type = null;
@@ -37,7 +37,7 @@ public class FormEntry {
   @SerializedName("attributes")
   private FormEntryAttributes attributes = null;
 
-  public FormEntry id(Integer id) {
+  public FormEntry id(Long id) {
     this.id = id;
     return this;
   }
@@ -47,11 +47,11 @@ public class FormEntry {
    * @return id
   **/
   @Schema(example = "12345", description = "Form entry id")
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

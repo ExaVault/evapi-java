@@ -266,11 +266,11 @@ public class ResourcesApiTest {
 
 	@Test
 	public void deleteResourceByIdTest() throws ApiException {
-		Integer id = null;
-		EmptyResponse response = api.deleteResourceById(id, EV_API_KEY, EV_ACCESS_TOKEN);
+        Long id = null;
+        EmptyResponse response = api.deleteResourceById(id, EV_API_KEY, EV_ACCESS_TOKEN);
 
-		// TODO: test validations
-	}
+        // TODO: test validations
+    }
 
 	@Test
 	public void deleteResourcesTest() throws ApiException {
@@ -322,25 +322,25 @@ public class ResourcesApiTest {
 
 	@Test
 	public void getResourceInfoByIdTest() throws ApiException {
-		Integer id = null;
-		String include = null;
-		ResourceResponse response = api.getResourceInfoById(id, EV_API_KEY, EV_ACCESS_TOKEN, include);
+        Long id = null;
+        String include = null;
+        ResourceResponse response = api.getResourceInfoById(id, EV_API_KEY, EV_ACCESS_TOKEN, include);
 
-		// TODO: test validations
-	}
+        // TODO: test validations
+    }
 
 	@Test
 	public void listResourceContentsTest() throws ApiException {
-		Integer id = null;
-		String sort = null;
-		Integer offset = null;
-		Integer limit = null;
-		String type = null;
-		String include = null;
-		ResourceCollectionResponse response = api.listResourceContents(EV_API_KEY, EV_ACCESS_TOKEN, id, sort, offset, limit, type, include);
+        Long id = null;
+        String sort = null;
+        Integer offset = null;
+        Integer limit = null;
+        String type = null;
+        String include = null;
+        ResourceCollectionResponse response = api.listResourceContents(EV_API_KEY, EV_ACCESS_TOKEN, id, sort, offset, limit, type, include);
 
-		// TODO: test validations
-	}
+        // TODO: test validations
+    }
 
 	@Test
 	public void listResourcesTest() throws ApiException {
@@ -368,12 +368,12 @@ public class ResourcesApiTest {
 
 	@Test
 	public void updateResourceByIdTest() throws ApiException {
-		Integer id = null;
-		UpdateReourceByIdRequestBody body = null;
-		ResourceResponse response = api.updateResourceById(EV_ACCESS_TOKEN, EV_API_KEY, id, body);
+        Long id = null;
+        UpdateResourceByIdRequestBody body = null;
+        ResourceResponse response = api.updateResourceById(EV_ACCESS_TOKEN, EV_API_KEY, id, body);
 
-		// TODO: test validations
-	}
+        // TODO: test validations
+    }
 
 	@Test
 	public void uploadFileTest() throws ApiException {

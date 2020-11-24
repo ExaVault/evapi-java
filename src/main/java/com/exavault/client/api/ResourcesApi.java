@@ -40,7 +40,7 @@ import com.exavault.client.model.ResourceCollectionResponse;
 import com.exavault.client.model.ResourceCopyMove;
 import com.exavault.client.model.ResourceMultiResponse;
 import com.exavault.client.model.ResourceResponse;
-import com.exavault.client.model.UpdateReourceByIdRequestBody;
+import com.exavault.client.model.UpdateResourceByIdRequestBody;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -497,7 +497,7 @@ public class ResourcesApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteResourceByIdCall(Integer id, String evApiKey, String evAccessToken, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call deleteResourceByIdCall(Long id, String evApiKey, String evAccessToken, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -544,7 +544,7 @@ public class ResourcesApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteResourceByIdValidateBeforeCall(Integer id, String evApiKey, String evAccessToken, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteResourceByIdValidateBeforeCall(Long id, String evApiKey, String evAccessToken, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new ApiException("Missing the required parameter 'id' when calling deleteResourceById(Async)");
@@ -576,7 +576,7 @@ public class ResourcesApi {
      * @return EmptyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public EmptyResponse deleteResourceById(Integer id, String evApiKey, String evAccessToken) throws ApiException {
+    public EmptyResponse deleteResourceById(Long id, String evApiKey, String evAccessToken) throws ApiException {
         ApiResponse<EmptyResponse> resp = deleteResourceByIdWithHttpInfo(id, evApiKey, evAccessToken);
         return resp.getData();
     }
@@ -590,7 +590,7 @@ public class ResourcesApi {
      * @return ApiResponse&lt;EmptyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<EmptyResponse> deleteResourceByIdWithHttpInfo(Integer id, String evApiKey, String evAccessToken) throws ApiException {
+    public ApiResponse<EmptyResponse> deleteResourceByIdWithHttpInfo(Long id, String evApiKey, String evAccessToken) throws ApiException {
         com.squareup.okhttp.Call call = deleteResourceByIdValidateBeforeCall(id, evApiKey, evAccessToken, null, null);
         Type localVarReturnType = new TypeToken<EmptyResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -606,7 +606,7 @@ public class ResourcesApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteResourceByIdAsync(Integer id, String evApiKey, String evAccessToken, final ApiCallback<EmptyResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteResourceByIdAsync(Long id, String evApiKey, String evAccessToken, final ApiCallback<EmptyResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1413,7 +1413,7 @@ public class ResourcesApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getResourceInfoByIdCall(Integer id, String evApiKey, String evAccessToken, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getResourceInfoByIdCall(Long id, String evApiKey, String evAccessToken, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -1462,7 +1462,7 @@ public class ResourcesApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getResourceInfoByIdValidateBeforeCall(Integer id, String evApiKey, String evAccessToken, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getResourceInfoByIdValidateBeforeCall(Long id, String evApiKey, String evAccessToken, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new ApiException("Missing the required parameter 'id' when calling getResourceInfoById(Async)");
@@ -1495,7 +1495,7 @@ public class ResourcesApi {
      * @return ResourceResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ResourceResponse getResourceInfoById(Integer id, String evApiKey, String evAccessToken, String include) throws ApiException {
+    public ResourceResponse getResourceInfoById(Long id, String evApiKey, String evAccessToken, String include) throws ApiException {
         ApiResponse<ResourceResponse> resp = getResourceInfoByIdWithHttpInfo(id, evApiKey, evAccessToken, include);
         return resp.getData();
     }
@@ -1510,7 +1510,7 @@ public class ResourcesApi {
      * @return ApiResponse&lt;ResourceResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ResourceResponse> getResourceInfoByIdWithHttpInfo(Integer id, String evApiKey, String evAccessToken, String include) throws ApiException {
+    public ApiResponse<ResourceResponse> getResourceInfoByIdWithHttpInfo(Long id, String evApiKey, String evAccessToken, String include) throws ApiException {
         com.squareup.okhttp.Call call = getResourceInfoByIdValidateBeforeCall(id, evApiKey, evAccessToken, include, null, null);
         Type localVarReturnType = new TypeToken<ResourceResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -1527,7 +1527,7 @@ public class ResourcesApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getResourceInfoByIdAsync(Integer id, String evApiKey, String evAccessToken, String include, final ApiCallback<ResourceResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getResourceInfoByIdAsync(Long id, String evApiKey, String evAccessToken, String include, final ApiCallback<ResourceResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1568,7 +1568,7 @@ public class ResourcesApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listResourceContentsCall(String evApiKey, String evAccessToken, Integer id, String sort, Integer offset, Integer limit, String type, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listResourceContentsCall(String evApiKey, String evAccessToken, Long id, String sort, Integer offset, Integer limit, String type, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -1625,7 +1625,7 @@ public class ResourcesApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listResourceContentsValidateBeforeCall(String evApiKey, String evAccessToken, Integer id, String sort, Integer offset, Integer limit, String type, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listResourceContentsValidateBeforeCall(String evApiKey, String evAccessToken, Long id, String sort, Integer offset, Integer limit, String type, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling listResourceContents(Async)");
@@ -1662,7 +1662,7 @@ public class ResourcesApi {
      * @return ResourceCollectionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ResourceCollectionResponse listResourceContents(String evApiKey, String evAccessToken, Integer id, String sort, Integer offset, Integer limit, String type, String include) throws ApiException {
+    public ResourceCollectionResponse listResourceContents(String evApiKey, String evAccessToken, Long id, String sort, Integer offset, Integer limit, String type, String include) throws ApiException {
         ApiResponse<ResourceCollectionResponse> resp = listResourceContentsWithHttpInfo(evApiKey, evAccessToken, id, sort, offset, limit, type, include);
         return resp.getData();
     }
@@ -1681,7 +1681,7 @@ public class ResourcesApi {
      * @return ApiResponse&lt;ResourceCollectionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ResourceCollectionResponse> listResourceContentsWithHttpInfo(String evApiKey, String evAccessToken, Integer id, String sort, Integer offset, Integer limit, String type, String include) throws ApiException {
+    public ApiResponse<ResourceCollectionResponse> listResourceContentsWithHttpInfo(String evApiKey, String evAccessToken, Long id, String sort, Integer offset, Integer limit, String type, String include) throws ApiException {
         com.squareup.okhttp.Call call = listResourceContentsValidateBeforeCall(evApiKey, evAccessToken, id, sort, offset, limit, type, include, null, null);
         Type localVarReturnType = new TypeToken<ResourceCollectionResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -1702,7 +1702,7 @@ public class ResourcesApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listResourceContentsAsync(String evApiKey, String evAccessToken, Integer id, String sort, Integer offset, Integer limit, String type, String include, final ApiCallback<ResourceCollectionResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listResourceContentsAsync(String evApiKey, String evAccessToken, Long id, String sort, Integer offset, Integer limit, String type, String include, final ApiCallback<ResourceCollectionResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2061,7 +2061,7 @@ public class ResourcesApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateResourceByIdCall(String evAccessToken, String evApiKey, Integer id, UpdateReourceByIdRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateResourceByIdCall(String evAccessToken, String evApiKey, Long id, UpdateResourceByIdRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -2108,7 +2108,7 @@ public class ResourcesApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateResourceByIdValidateBeforeCall(String evAccessToken, String evApiKey, Integer id, UpdateReourceByIdRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateResourceByIdValidateBeforeCall(String evAccessToken, String evApiKey, Long id, UpdateResourceByIdRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evAccessToken' is set
         if (evAccessToken == null) {
             throw new ApiException("Missing the required parameter 'evAccessToken' when calling updateResourceById(Async)");
@@ -2141,7 +2141,7 @@ public class ResourcesApi {
      * @return ResourceResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ResourceResponse updateResourceById(String evAccessToken, String evApiKey, Integer id, UpdateReourceByIdRequestBody body) throws ApiException {
+    public ResourceResponse updateResourceById(String evAccessToken, String evApiKey, Long id, UpdateResourceByIdRequestBody body) throws ApiException {
         ApiResponse<ResourceResponse> resp = updateResourceByIdWithHttpInfo(evAccessToken, evApiKey, id, body);
         return resp.getData();
     }
@@ -2156,7 +2156,7 @@ public class ResourcesApi {
      * @return ApiResponse&lt;ResourceResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<ResourceResponse> updateResourceByIdWithHttpInfo(String evAccessToken, String evApiKey, Integer id, UpdateReourceByIdRequestBody body) throws ApiException {
+    public ApiResponse<ResourceResponse> updateResourceByIdWithHttpInfo(String evAccessToken, String evApiKey, Long id, UpdateResourceByIdRequestBody body) throws ApiException {
         com.squareup.okhttp.Call call = updateResourceByIdValidateBeforeCall(evAccessToken, evApiKey, id, body, null, null);
         Type localVarReturnType = new TypeToken<ResourceResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -2173,7 +2173,7 @@ public class ResourcesApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateResourceByIdAsync(String evAccessToken, String evApiKey, Integer id, UpdateReourceByIdRequestBody body, final ApiCallback<ResourceResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateResourceByIdAsync(String evAccessToken, String evApiKey, Long id, UpdateResourceByIdRequestBody body, final ApiCallback<ResourceResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

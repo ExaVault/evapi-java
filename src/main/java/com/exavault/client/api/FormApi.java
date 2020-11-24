@@ -66,7 +66,7 @@ public class FormApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteFormMessageByIdCall(String evApiKey, String evAccessToken, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call deleteFormMessageByIdCall(String evApiKey, String evAccessToken, Long id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -113,7 +113,7 @@ public class FormApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteFormMessageByIdValidateBeforeCall(String evApiKey, String evAccessToken, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteFormMessageByIdValidateBeforeCall(String evApiKey, String evAccessToken, Long id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling deleteFormMessageById(Async)");
@@ -145,7 +145,7 @@ public class FormApi {
      * @return EmptyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public EmptyResponse deleteFormMessageById(String evApiKey, String evAccessToken, Integer id) throws ApiException {
+    public EmptyResponse deleteFormMessageById(String evApiKey, String evAccessToken, Long id) throws ApiException {
         ApiResponse<EmptyResponse> resp = deleteFormMessageByIdWithHttpInfo(evApiKey, evAccessToken, id);
         return resp.getData();
     }
@@ -159,7 +159,7 @@ public class FormApi {
      * @return ApiResponse&lt;EmptyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<EmptyResponse> deleteFormMessageByIdWithHttpInfo(String evApiKey, String evAccessToken, Integer id) throws ApiException {
+    public ApiResponse<EmptyResponse> deleteFormMessageByIdWithHttpInfo(String evApiKey, String evAccessToken, Long id) throws ApiException {
         com.squareup.okhttp.Call call = deleteFormMessageByIdValidateBeforeCall(evApiKey, evAccessToken, id, null, null);
         Type localVarReturnType = new TypeToken<EmptyResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -175,7 +175,7 @@ public class FormApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteFormMessageByIdAsync(String evApiKey, String evAccessToken, Integer id, final ApiCallback<EmptyResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteFormMessageByIdAsync(String evApiKey, String evAccessToken, Long id, final ApiCallback<EmptyResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
