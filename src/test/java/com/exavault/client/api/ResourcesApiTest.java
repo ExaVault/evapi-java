@@ -105,7 +105,7 @@ public class ResourcesApiTest {
      */
     @Test
     public void deleteResourceByIdTest() throws ApiException {
-        Integer id = null;
+        Long id = null;
         String evApiKey = null;
         String evAccessToken = null;
         EmptyResponse response = api.deleteResourceById(id, evApiKey, evAccessToken);
@@ -215,7 +215,7 @@ public class ResourcesApiTest {
      */
     @Test
     public void getResourceInfoByIdTest() throws ApiException {
-        Integer id = null;
+        Long id = null;
         String evApiKey = null;
         String evAccessToken = null;
         String include = null;
@@ -235,7 +235,7 @@ public class ResourcesApiTest {
     public void listResourceContentsTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        Integer id = null;
+        Long id = null;
         String sort = null;
         Integer offset = null;
         Integer limit = null;
@@ -297,7 +297,7 @@ public class ResourcesApiTest {
     public void updateResourceByIdTest() throws ApiException {
         String evAccessToken = null;
         String evApiKey = null;
-        Integer id = null;
+        Long id = null;
         UpdateResourceByIdRequestBody body = null;
         ResourceResponse response = api.updateResourceById(evAccessToken, evApiKey, id, body);
 
