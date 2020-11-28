@@ -9,10 +9,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import java.text.ParseException;
 import java.util.Date;
 
-import static com.exavault.client.api.testdata.ApiTestData.BASE_FOLDER_;
-import static com.exavault.client.api.testdata.ApiTestData.RESPONSE_CODE_201;
-import static com.exavault.client.api.testdata.ApiTestData.TEST_FOLDER;
-import static com.exavault.client.api.testdata.ApiTestData.dateTimeFormatter;
+import static com.exavault.client.api.testdata.ApiTestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ApiTestAssertionUtil {
@@ -20,6 +17,11 @@ public class ApiTestAssertionUtil {
 	public static void validateAddFolderResponse(ResourceResponse response) {
 		final String path = validateCommons(response);
 		assertThat(path).startsWith(TEST_FOLDER.substring(0, TEST_FOLDER.indexOf("%d")));
+	}
+
+	public static void validateAddFolderResponse2(ResourceResponse response) {
+		final String path = validateCommons(response);
+		assertThat(path).isEqualTo("/" + DUMMY_ADD_FOLDER_TEST);
 	}
 
 	public static void validateCompressFilesResponse(ResourceResponse response, String compressName) throws ParseException {

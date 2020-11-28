@@ -11,13 +11,14 @@ import java.util.Random;
 
 public class ApiTestData {
 
-	public static final String EV_API_KEY = "stagingtest-a9d85f0a24f178033b5805b90b4a6e";
+	public static final String EV_API_KEY = "evapi-docs-java-d3e28fc300621abc41b067a4b66cff";
 	public static final String EV_API_KEY_BAD = "stagingtest-bad";
-	public static final String EV_ACCESS_TOKEN = "9cfa52b6fae27c7e400d32fc4d214afb28d85d1f266329df9994c39af77cd810";
-	public static final String EV_API_URL = "https://stagingtest.exavault.com/api/v2";
+	public static final String EV_ACCESS_TOKEN = "eeb4512a4cddba9c13495979d6718283ae0c4dd77a6ff879b504d1952e12c369";
+	public static final String EV_API_URL = "https://evapi-docs-java.exavault.com/api/v2";
 	public static final String BASE_FOLDER_ = "/folder_for_test";
 	public static final String COPIED_FOLDER = "/copy/copied_%d";
 	public static final String TEST_FOLDER = BASE_FOLDER_ + "/test_%d";
+	public static final String DUMMY_ADD_FOLDER_TEST = "dummy_addFolder_Test";
 	private static final String FILES = "files";
 	public static final SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final String TEST_ARCHIVE = "test_archive";

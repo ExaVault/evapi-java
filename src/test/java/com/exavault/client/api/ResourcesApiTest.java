@@ -8,10 +8,12 @@ import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static com.exavault.client.api.ApiTestAssertionUtil.validateAddFolderResponse;
+import static com.exavault.client.api.ApiTestAssertionUtil.validateAddFolderResponse2;
 import static com.exavault.client.api.ApiTestAssertionUtil.validateCompressFilesResponse;
 import static com.exavault.client.api.ApiTestAssertionUtil.validateCopyResponse;
 import static com.exavault.client.api.testdata.ApiTestData.*;
@@ -23,7 +25,6 @@ import static org.assertj.core.api.Assertions.fail;
  * API tests for ResourcesApi
  */
 @DisplayName("Resource API Tests")
-@Tag("ResourceApi")
 public class ResourcesApiTest {
 
 	private ResourcesApi api;
@@ -34,8 +35,8 @@ public class ResourcesApiTest {
 	}
 
 	@Nested
-	@DisplayName("Add Folder Call Tests") //add api details.
-	@Tag("AddFolder")
+	@DisplayName("Create a new empty folder at the specified path. " +
+		             "New files can be uploaded via the [/resources/upload](#operation/uploadFile) endpoint.")
 	class AddFolder {
 		@Test
 		@DisplayName("Given good credentials, when add folder called with path, folder id is returned")
@@ -45,7 +46,24 @@ public class ResourcesApiTest {
 				ResourceResponse response = api.addFolder(EV_API_KEY, EV_ACCESS_TOKEN, requestBody);
 				assertThat(response).isNotNull();
 				validateAddFolderResponse(response);
-				cleanup();
+				cleanup(BASE_FOLDER_);
+			} catch (ApiException e) {
+				fail("Failed due to APIException", e);
+			}
+		}
+
+		@Test
+		@DisplayName("Given good credentials, when add folder called with name and parentResource, " +
+			             "folder id is returned")
+		public void addFolderTest2() {
+			try {
+				AddFolderRequestBody requestBody = new AddFolderRequestBody();
+				requestBody.setName(DUMMY_ADD_FOLDER_TEST);
+				requestBody.setParentResource("/");
+				ResourceResponse response = api.addFolder(EV_API_KEY, EV_ACCESS_TOKEN, requestBody);
+				assertThat(response).isNotNull();
+				validateAddFolderResponse2(response);
+				cleanup("/" + DUMMY_ADD_FOLDER_TEST);
 			} catch (ApiException e) {
 				fail("Failed due to APIException", e);
 			}
@@ -53,7 +71,7 @@ public class ResourcesApiTest {
 
 		@Test
 		@DisplayName("Given bad credentials, when add folder called with path, error thrown")
-		public void addFolderTest2() {
+		public void addFolderTest3() {
 			final AddFolderRequestBody requestBody = getAddFolderRequestBody();
 			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
 				@Override
@@ -72,22 +90,22 @@ public class ResourcesApiTest {
 	}
 
 	@Nested
-	@DisplayName("Compress Files Tests")
-	@Tag("CompressFiles")
+	@DisplayName("Create a zip archive containing the files from given set of paths. " +
+		             "Note that this can be a very slow operation if you have indicated many files should be included in the archive.")
 	class CompressFiles {
 		@Test
 		@DisplayName("Given good credentials and a new files uploaded before," +
-			             " when compress files is called, zip is created")
+			             " when compress files is called, zip with default name is created")
 		public void compressFilesTest() {
 			try {
-				//ApiTestData.uploadDummyFiles(api);
+				uploadDummyFiles(api);
 				CompressFilesRequestBody compress = new CompressFilesRequestBody();
 				compress.setResources(Collections.singletonList("empty-test"));
 				compress.setParentResource(BASE_FOLDER_);
 				ResourceResponse response = api.compressFiles(EV_API_KEY, EV_ACCESS_TOKEN, compress);
 				assertThat(response).isNotNull();
 				validateCompressFilesResponse(response, null);
-				cleanup();
+				cleanup(BASE_FOLDER_);
 			} catch (Exception e) {
 				fail("Failed due to :", e);
 			}
@@ -106,29 +124,15 @@ public class ResourcesApiTest {
 				ResourceResponse response = api.compressFiles(EV_API_KEY, EV_ACCESS_TOKEN, compress);
 				assertThat(response).isNotNull();
 				validateCompressFilesResponse(response, "/" + TEST_ARCHIVE + ".zip");
-				cleanup();
+				cleanup(BASE_FOLDER_);
 			} catch (ApiException | ParseException e) {
 				fail("Failed due to :", e);
 			}
 		}
 
 		@Test
-		@DisplayName("Given bad credentials, when compress files is called, error thrown")
-		public void compressFilesTest3() {
-			final CompressFilesRequestBody compress = new CompressFilesRequestBody();
-			compress.setResources(Collections.singletonList(BASE_FOLDER_));
-			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
-				@Override
-				public void call() throws ApiException {
-					api.compressFiles(EV_API_KEY_BAD, EV_ACCESS_TOKEN, compress);
-				}
-			}).isInstanceOf(ApiException.class)
-				.hasMessageContaining(UNAUTHORIZED);
-		}
-
-		@Test
 		@DisplayName("Given good credentials and an empty folder, when compress files is called, error thrown")
-		public void compressFilesTest4() {
+		public void compressFilesTest3() {
 			try {
 				AddFolderRequestBody requestBody = new AddFolderRequestBody();
 				final String folder = String.format(TEST_FOLDER, getRandomNumber());
@@ -143,7 +147,7 @@ public class ResourcesApiTest {
 					}
 				}).isInstanceOf(ApiException.class)
 					.hasMessageContaining(INTERNAL_SERVER_ERROR);
-				cleanup();
+				cleanup(BASE_FOLDER_);
 			} catch (ApiException e) {
 				fail("Failed due to :", e);
 			}
@@ -171,8 +175,7 @@ public class ResourcesApiTest {
 				ResourceCopyMove response = api.copyResources(EV_API_KEY, EV_ACCESS_TOKEN, requestBody);
 				assertThat(response).isNotNull();
 				validateCopyResponse(response, folder);
-				cleanup();
-				cleanupCopyFolder();
+				cleanup("/copy");
 			} catch (ApiException e) {
 				fail("Failed due to :", e);
 			}
@@ -228,8 +231,7 @@ public class ResourcesApiTest {
 				ResourceCopyMove response = api.copyResources(EV_API_KEY, EV_ACCESS_TOKEN, requestBody);
 				assertThat(response).isNotNull();
 				validateCopyResponse(response, folder);
-				cleanup();
-				cleanupCopyFolder();
+				cleanup("/copy");
 			} catch (ApiException e) {
 				fail("Failed due to :", e);
 			}
@@ -388,9 +390,9 @@ public class ResourcesApiTest {
 		// TODO: test validations
 	}
 
-	private void cleanup() throws ApiException {
+	private void cleanup(String... folderNames) throws ApiException {
 		DeleteResourcesRequestBody requestBody = new DeleteResourcesRequestBody();
-		requestBody.setResources(Collections.singletonList(BASE_FOLDER_));
+		requestBody.setResources(Arrays.asList(folderNames));
 		api.deleteResources(EV_API_KEY, EV_ACCESS_TOKEN, requestBody);
 		//TODO: Could have been an endpoint if a resource exists or deleteIfExists
 		//TODO: Better exception handling for not found and Internal Server Error or Bad Request
@@ -398,9 +400,15 @@ public class ResourcesApiTest {
 		//TODO: Copy resource from and to invalid
 	}
 
-	private void cleanupCopyFolder() throws ApiException {
+	/*private void cleanupCopyFolder() throws ApiException {
 		DeleteResourcesRequestBody requestBody = new DeleteResourcesRequestBody();
 		requestBody.setResources(Collections.singletonList("/copy"));
 		api.deleteResources(EV_API_KEY, EV_ACCESS_TOKEN, requestBody);
 	}
+
+	private void cleanupCopyFolder() throws ApiException {
+		DeleteResourcesRequestBody requestBody = new DeleteResourcesRequestBody();
+		requestBody.setResources(Collections.singletonList("/copy"));
+		api.deleteResources(EV_API_KEY, EV_ACCESS_TOKEN, requestBody);
+	}*/
 }
