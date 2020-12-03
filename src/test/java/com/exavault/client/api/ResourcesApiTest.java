@@ -17,7 +17,6 @@ import com.exavault.client.model.AddFolderRequestBody;
 import com.exavault.client.model.CompressFilesRequestBody;
 import com.exavault.client.model.CopyResourcesRequestBody;
 import com.exavault.client.model.DeleteResourcesRequestBody;
-import com.exavault.client.model.DownloadPollingResponse;
 import com.exavault.client.model.EmptyResponse;
 import com.exavault.client.model.ExtractFilesRequestBody;
 import java.io.File;
@@ -132,7 +131,7 @@ public class ResourcesApiTest {
     /**
      * Download a file
      *
-     * Downloads a file. If more than one path is supplied, the files will be zipped before downloading with the downloadArchiveName parameter if supplied. 
+     * Downloads a file from the server. Whenever more than one file is being downloaded, the file are first zipped into  a single file before the download starts, and the resulting zip file is named to match the &#x60;downloadArchiveName&#x60; parameter.  **NOTE**: Downloading many files at once  may result in a long delay before the API will return a response. You may need to override default timeout values in your API client, or download files individually.
      *
      * @throws ApiException
      *          if the Api call fails
@@ -143,9 +142,7 @@ public class ResourcesApiTest {
         String evAccessToken = null;
         List<String> resources = null;
         String downloadArchiveName = null;
-        Boolean polling = null;
-        String pollingArchiveName = null;
-        File response = api.download(evApiKey, evAccessToken, resources, downloadArchiveName, polling, pollingArchiveName);
+        File response = api.download(evApiKey, evAccessToken, resources, downloadArchiveName);
 
         // TODO: test validations
     }
@@ -248,7 +245,7 @@ public class ResourcesApiTest {
     /**
      * Get a list of all resources
      *
-     * Returns a list of files and folders in the account. Use the &#x60;resource&#x60; query parameter to indicate the folder you wish to search in (which can be /).   **Searching for Files and Folders**  Using the &#x60;name&#x60; parameter triggers search mode, which will search the entire directory structure under the provided &#x60;resource&#x60; for files or folders with names matching the provided &#x60;name&#x60;. This supports wildcard matching such as:  - \\*Report\\* would find any files or folders with \&quot;Report\&quot; in the name. - Data\\_202?-09-30.xlsx would match items such as \&quot;Data\\_2020-09-30.xlsx\&quot;, \&quot;DATA\\_2021-09-30.xlsx\&quot;, \&quot;data\\_2022-09-30.xlsx\&quot; etc. - sales\\* would find any files or folders starting with the word \&quot;Sales\&quot; - \\*.csv would locate any files ending in \&quot;.csv\&quot; - \\* matches everything within the directory tree starting at your given &#x60;resource&#x60;  The search is not case-sensitive. Searching for Clients\\* or clients\\* or CLIENTS\\*, etc. will provide identical results  You cannot use the &#x60;type&#x60; parameter if you are using the &#x60;name&#x60; parameter to run a search.
+     * Returns a list of files and folders in the account. Use the &#x60;resource&#x60; query parameter to indicate the folder you wish to search in (which can be /).   **Searching for Files and Folders**  Using the &#x60;name&#x60; parameter triggers search mode, which will search the entire directory structure under the provided &#x60;resource&#x60; for files or folders with names matching the provided &#x60;name&#x60;. This supports wildcard matching such as:  - \\*Report\\* would find any files or folders with \&quot;Report\&quot; in the name. - Data\\_202?-09-30.xlsx would match items such as \&quot;Data\\_2020-09-30.xlsx\&quot;, \&quot;DATA\\_2021-09-30.xlsx\&quot;, \&quot;data\\_2022-09-30.xlsx\&quot; etc. - sales\\* would find any files or folders starting with the word \&quot;Sales\&quot; - \\*.csv would locate any files ending in \&quot;.csv\&quot; - \\* matches everything within the directory tree starting at your given &#x60;resource&#x60;  The search is not case-sensitive. Searching for Clients\\* or clients\\* or CLIENTS\\*, etc. will provide identical results  If you are using the &#x60;name&#x60; parameter to run a search, the &#x60;type&#x60; parameter will be ignored by the server.
      *
      * @throws ApiException
      *          if the Api call fails

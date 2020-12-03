@@ -14,7 +14,7 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.DownloadPolling;
+import com.exavault.client.model.ShareMessageData;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,36 +23,15 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * DownloadPollingResponse
+ * ShareRelationshipsMessage
  */
 
 
-public class DownloadPollingResponse {
-  @SerializedName("responseStatus")
-  private Integer responseStatus = null;
-
+public class ShareRelationshipsMessage {
   @SerializedName("data")
-  private DownloadPolling data = null;
+  private ShareMessageData data = null;
 
-  public DownloadPollingResponse responseStatus(Integer responseStatus) {
-    this.responseStatus = responseStatus;
-    return this;
-  }
-
-   /**
-   * Http status code of the response. 
-   * @return responseStatus
-  **/
-  @Schema(example = "202", description = "Http status code of the response. ")
-  public Integer getResponseStatus() {
-    return responseStatus;
-  }
-
-  public void setResponseStatus(Integer responseStatus) {
-    this.responseStatus = responseStatus;
-  }
-
-  public DownloadPollingResponse data(DownloadPolling data) {
+  public ShareRelationshipsMessage data(ShareMessageData data) {
     this.data = data;
     return this;
   }
@@ -62,11 +41,11 @@ public class DownloadPollingResponse {
    * @return data
   **/
   @Schema(description = "")
-  public DownloadPolling getData() {
+  public ShareMessageData getData() {
     return data;
   }
 
-  public void setData(DownloadPolling data) {
+  public void setData(ShareMessageData data) {
     this.data = data;
   }
 
@@ -79,23 +58,21 @@ public class DownloadPollingResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DownloadPollingResponse downloadPollingResponse = (DownloadPollingResponse) o;
-    return Objects.equals(this.responseStatus, downloadPollingResponse.responseStatus) &&
-        Objects.equals(this.data, downloadPollingResponse.data);
+    ShareRelationshipsMessage shareRelationshipsMessage = (ShareRelationshipsMessage) o;
+    return Objects.equals(this.data, shareRelationshipsMessage.data);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(responseStatus, data);
+    return Objects.hash(data);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DownloadPollingResponse {\n");
+    sb.append("class ShareRelationshipsMessage {\n");
     
-    sb.append("    responseStatus: ").append(toIndentedString(responseStatus)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("}");
     return sb.toString();

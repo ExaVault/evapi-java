@@ -42,10 +42,10 @@ public class AddFolderRequestBody {
   }
 
    /**
-   * Path to the newly created folder including new ame
+   * Fully-qualified path to the new folder including folder&#x27;s name
    * @return path
   **/
-  @Schema(description = "Path to the newly created folder including new ame")
+  @Schema(description = "Fully-qualified path to the new folder including folder's name")
   public String getPath() {
     return path;
   }

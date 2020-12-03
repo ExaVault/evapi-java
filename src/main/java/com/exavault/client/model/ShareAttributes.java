@@ -183,7 +183,7 @@ public class ShareAttributes {
   private OffsetDateTime modified = null;
 
   /**
-   * Checks recipient received status and returns whether it&#x27;s been recevied (&#x60;complete&#x60;,) partial recevied (&#x60;incomplete&#x60;,) or not received yet (&#x60;pending&#x60;.)
+   * Checks recipient received status and returns whether it&#x27;s been received (&#x60;complete&#x60;,) partial received (&#x60;incomplete&#x60;,) or not received yet (&#x60;pending&#x60;.)
    */
   @JsonAdapter(TrackingStatusEnum.Adapter.class)
   public enum TrackingStatusEnum {
@@ -656,10 +656,10 @@ public class ShareAttributes {
   }
 
    /**
-   * Checks recipient received status and returns whether it&#x27;s been recevied (&#x60;complete&#x60;,) partial recevied (&#x60;incomplete&#x60;,) or not received yet (&#x60;pending&#x60;.)
+   * Checks recipient received status and returns whether it&#x27;s been received (&#x60;complete&#x60;,) partial received (&#x60;incomplete&#x60;,) or not received yet (&#x60;pending&#x60;.)
    * @return trackingStatus
   **/
-  @Schema(description = "Checks recipient received status and returns whether it's been recevied (`complete`,) partial recevied (`incomplete`,) or not received yet (`pending`.)")
+  @Schema(description = "Checks recipient received status and returns whether it's been received (`complete`,) partial received (`incomplete`,) or not received yet (`pending`.)")
   public TrackingStatusEnum getTrackingStatus() {
     return trackingStatus;
   }

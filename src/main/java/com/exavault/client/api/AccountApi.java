@@ -133,7 +133,7 @@ public class AccountApi {
 
     /**
      * Get account settings
-     * Get setttings for your account, such as current space usage, webhooks settings, welcome email content and IP address restrictions.
+     * Get settings for your account, such as current space usage, webhooks settings, welcome email content and IP address restrictions.
      * @param evApiKey API Key required for the request (required)
      * @param evAccessToken Access Token for the request (required)
      * @param include Related records to include in the response. Valid option is **masterUser** (optional)
@@ -147,7 +147,7 @@ public class AccountApi {
 
     /**
      * Get account settings
-     * Get setttings for your account, such as current space usage, webhooks settings, welcome email content and IP address restrictions.
+     * Get settings for your account, such as current space usage, webhooks settings, welcome email content and IP address restrictions.
      * @param evApiKey API Key required for the request (required)
      * @param evAccessToken Access Token for the request (required)
      * @param include Related records to include in the response. Valid option is **masterUser** (optional)
@@ -162,7 +162,7 @@ public class AccountApi {
 
     /**
      * Get account settings (asynchronously)
-     * Get setttings for your account, such as current space usage, webhooks settings, welcome email content and IP address restrictions.
+     * Get settings for your account, such as current space usage, webhooks settings, welcome email content and IP address restrictions.
      * @param evApiKey API Key required for the request (required)
      * @param evAccessToken Access Token for the request (required)
      * @param include Related records to include in the response. Valid option is **masterUser** (optional)

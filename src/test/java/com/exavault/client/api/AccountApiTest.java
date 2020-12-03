@@ -34,7 +34,7 @@ public class AccountApiTest {
     /**
      * Get account settings
      *
-     * Get setttings for your account, such as current space usage, webhooks settings, welcome email content and IP address restrictions.
+     * Get settings for your account, such as current space usage, webhooks settings, welcome email content and IP address restrictions.
      *
      * @throws ApiException
      *          if the Api call fails

@@ -64,10 +64,10 @@ public class MoveResourcesRequestBody {
   }
 
    /**
-   * Remote destination path to move files/folders to.
+   * Resource identifier of folder to move files/folders to.
    * @return parentResource
   **/
-  @Schema(example = "/copyhere", required = true, description = "Remote destination path to move files/folders to.")
+  @Schema(example = "/copyhere", required = true, description = "Resource identifier of folder to move files/folders to.")
   public String getParentResource() {
     return parentResource;
   }

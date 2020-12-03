@@ -23,9 +23,9 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * All properties of the resource delete object
+ * Resource which was successfully copied or moved.
  */
-@Schema(description = "All properties of the resource delete object")
+@Schema(description = "Resource which was successfully copied or moved.")
 
 public class ResourceCopyMove {
   @SerializedName("data")
@@ -58,10 +58,10 @@ public class ResourceCopyMove {
   }
 
    /**
-   * Meta object containing non-standard meta-information about operation.
+   * Meta object containing non-standard meta-information about the operation.
    * @return meta
   **/
-  @Schema(example = "{\"id\":2321}", description = "Meta object containing non-standard meta-information about operation.")
+  @Schema(example = "{\"id\":2321}", description = "Meta object containing non-standard meta-information about the operation.")
   public Object getMeta() {
     return meta;
   }

@@ -382,7 +382,7 @@ public class AccountAttributes {
    * Range of IP addresses allowed to access this account.
    * @return allowedIp
   **/
-  @Schema(example = "[{\"ip_start\":\"192.30.23.2\",\"ip_end\":\"192.30.24.5\"}]", description = "Range of IP addresses allowed to access this account.")
+  @Schema(example = "[{\"ipStart\":\"192.30.23.2\",\"ipEnd\":\"192.30.24.5\"}]", description = "Range of IP addresses allowed to access this account.")
   public List<AccountAttributesAllowedIp> getAllowedIp() {
     return allowedIp;
   }

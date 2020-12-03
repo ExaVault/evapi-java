@@ -279,7 +279,7 @@ public class EmailListsApi {
 
     /**
      * Delete an email group with given id
-     * Permanently delete an email group. This action is not reversable. We recommend making a user confirm this action before sending the API call. 
+     * Permanently delete an email group. This action is not reversible. We recommend making a user confirm this action before sending the API call. 
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param id ID of the email list to delete (required)
@@ -293,7 +293,7 @@ public class EmailListsApi {
 
     /**
      * Delete an email group with given id
-     * Permanently delete an email group. This action is not reversable. We recommend making a user confirm this action before sending the API call. 
+     * Permanently delete an email group. This action is not reversible. We recommend making a user confirm this action before sending the API call. 
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param id ID of the email list to delete (required)
@@ -308,7 +308,7 @@ public class EmailListsApi {
 
     /**
      * Delete an email group with given id (asynchronously)
-     * Permanently delete an email group. This action is not reversable. We recommend making a user confirm this action before sending the API call. 
+     * Permanently delete an email group. This action is not reversible. We recommend making a user confirm this action before sending the API call. 
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param id ID of the email list to delete (required)
@@ -427,7 +427,7 @@ public class EmailListsApi {
 
     /**
      * Get individual email group
-     * Retrieve all the details of a specifc email list including it&#x27;s name, when it was created and all the email addresses that belong to the group.
+     * Retrieve all the details of a specific email list including it&#x27;s name, when it was created and all the email addresses that belong to the group.
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param id ID of the email list to return. (required)
@@ -442,7 +442,7 @@ public class EmailListsApi {
 
     /**
      * Get individual email group
-     * Retrieve all the details of a specifc email list including it&#x27;s name, when it was created and all the email addresses that belong to the group.
+     * Retrieve all the details of a specific email list including it&#x27;s name, when it was created and all the email addresses that belong to the group.
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param id ID of the email list to return. (required)
@@ -458,7 +458,7 @@ public class EmailListsApi {
 
     /**
      * Get individual email group (asynchronously)
-     * Retrieve all the details of a specifc email list including it&#x27;s name, when it was created and all the email addresses that belong to the group.
+     * Retrieve all the details of a specific email list including it&#x27;s name, when it was created and all the email addresses that belong to the group.
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param id ID of the email list to return. (required)

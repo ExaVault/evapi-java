@@ -129,10 +129,10 @@ public class FormsidElements {
   }
 
    /**
-   * The order the fields will be displayed to the receipient. Starts at 0. 
+   * The order the fields will be displayed to the recipient. Starts at 0. 
    * @return order
   **/
-  @Schema(example = "0", description = "The order the fields will be displayed to the receipient. Starts at 0. ")
+  @Schema(example = "0", description = "The order the fields will be displayed to the recipient. Starts at 0. ")
   public Integer getOrder() {
     return order;
   }

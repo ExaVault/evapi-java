@@ -27,10 +27,10 @@ import java.io.IOException;
 
 
 public class AccountAttributesAllowedIp {
-  @SerializedName("ip_start")
+  @SerializedName("ipStart")
   private String ipStart = null;
 
-  @SerializedName("ip_end")
+  @SerializedName("ipEnd")
   private String ipEnd = null;
 
   public AccountAttributesAllowedIp ipStart(String ipStart) {
