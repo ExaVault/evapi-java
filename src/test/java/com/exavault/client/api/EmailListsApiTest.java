@@ -60,7 +60,7 @@ public class EmailListsApiTest {
 /**
      * Delete an email group with given id
      *
-     * Permanently delete an email group. This action is not reversable. We recommend making a user confirm this action before sending the API call. 
+     * Permanently delete an email group. This action is not reversible. We recommend making a user confirm this action before sending the API call. 
      *
      * @throws ApiException
      *          if the Api call fails
@@ -79,7 +79,7 @@ public class EmailListsApiTest {
 /**
      * Get individual email group
      *
-     * Retrieve all the details of a specifc email list including it&#x27;s name, when it was created and all the email addresses that belong to the group.
+     * Retrieve all the details of a specific email list including it&#x27;s name, when it was created and all the email addresses that belong to the group.
      *
      * @throws ApiException
      *          if the Api call fails

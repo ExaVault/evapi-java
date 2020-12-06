@@ -67,10 +67,10 @@ public class CompressFilesRequestBody {
   }
 
    /**
-   * Full path to folder new archive will be created in. If left blank, \&quot;/\&quot; will be used.
+   * Resource identifier of the folder where zip archive should be created.
    * @return parentResource
   **/
-  @Schema(description = "Full path to folder new archive will be created in. If left blank, \"/\" will be used.")
+  @Schema(description = "Resource identifier of the folder where zip archive should be created.")
   public String getParentResource() {
     return parentResource;
   }

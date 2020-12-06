@@ -30,7 +30,6 @@ import com.exavault.client.model.AddFolderRequestBody;
 import com.exavault.client.model.CompressFilesRequestBody;
 import com.exavault.client.model.CopyResourcesRequestBody;
 import com.exavault.client.model.DeleteResourcesRequestBody;
-import com.exavault.client.model.DownloadPollingResponse;
 import com.exavault.client.model.EmptyResponse;
 import com.exavault.client.model.ExtractFilesRequestBody;
 import java.io.File;
@@ -777,15 +776,13 @@ public class ResourcesApi {
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param resources Path of file or folder to be downloaded, starting from the root. Can also be an array of paths. (required)
-     * @param downloadArchiveName If zipping multiple files, the name of the zip file to create and download. (optional)
-     * @param polling Used when downloading multiple files so url will be polled till zip file is created. (optional)
-     * @param pollingArchiveName Reference to the previously created zip for polling operation. (optional)
+     * @param downloadArchiveName When downloading multiple files, this will be used as the name of the zip file that is created. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call downloadCall(String evApiKey, String evAccessToken, List<String> resources, String downloadArchiveName, Boolean polling, String pollingArchiveName, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call downloadCall(String evApiKey, String evAccessToken, List<String> resources, String downloadArchiveName, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -797,10 +794,6 @@ public class ResourcesApi {
         localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "resources[]", resources));
         if (downloadArchiveName != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("downloadArchiveName", downloadArchiveName));
-        if (polling != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("polling", polling));
-        if (pollingArchiveName != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("pollingArchiveName", pollingArchiveName));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         if (evApiKey != null)
@@ -811,7 +804,7 @@ public class ResourcesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/octet-stream", "application/zip", "application/json"
+            "application/octet-stream", "application/zip"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
@@ -839,7 +832,7 @@ public class ResourcesApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call downloadValidateBeforeCall(String evApiKey, String evAccessToken, List<String> resources, String downloadArchiveName, Boolean polling, String pollingArchiveName, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call downloadValidateBeforeCall(String evApiKey, String evAccessToken, List<String> resources, String downloadArchiveName, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling download(Async)");
@@ -853,7 +846,7 @@ public class ResourcesApi {
             throw new ApiException("Missing the required parameter 'resources' when calling download(Async)");
         }
         
-        com.squareup.okhttp.Call call = downloadCall(evApiKey, evAccessToken, resources, downloadArchiveName, polling, pollingArchiveName, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = downloadCall(evApiKey, evAccessToken, resources, downloadArchiveName, progressListener, progressRequestListener);
         return call;
 
         
@@ -864,53 +857,47 @@ public class ResourcesApi {
 
     /**
      * Download a file
-     * Downloads a file. If more than one path is supplied, the files will be zipped before downloading with the downloadArchiveName parameter if supplied. 
+     * Downloads a file from the server. Whenever more than one file is being downloaded, the file are first zipped into  a single file before the download starts, and the resulting zip file is named to match the &#x60;downloadArchiveName&#x60; parameter.  **NOTE**: Downloading many files at once  may result in a long delay before the API will return a response. You may need to override default timeout values in your API client, or download files individually.
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param resources Path of file or folder to be downloaded, starting from the root. Can also be an array of paths. (required)
-     * @param downloadArchiveName If zipping multiple files, the name of the zip file to create and download. (optional)
-     * @param polling Used when downloading multiple files so url will be polled till zip file is created. (optional)
-     * @param pollingArchiveName Reference to the previously created zip for polling operation. (optional)
+     * @param downloadArchiveName When downloading multiple files, this will be used as the name of the zip file that is created. (optional)
      * @return File
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public File download(String evApiKey, String evAccessToken, List<String> resources, String downloadArchiveName, Boolean polling, String pollingArchiveName) throws ApiException {
-        ApiResponse<File> resp = downloadWithHttpInfo(evApiKey, evAccessToken, resources, downloadArchiveName, polling, pollingArchiveName);
+    public File download(String evApiKey, String evAccessToken, List<String> resources, String downloadArchiveName) throws ApiException {
+        ApiResponse<File> resp = downloadWithHttpInfo(evApiKey, evAccessToken, resources, downloadArchiveName);
         return resp.getData();
     }
 
     /**
      * Download a file
-     * Downloads a file. If more than one path is supplied, the files will be zipped before downloading with the downloadArchiveName parameter if supplied. 
+     * Downloads a file from the server. Whenever more than one file is being downloaded, the file are first zipped into  a single file before the download starts, and the resulting zip file is named to match the &#x60;downloadArchiveName&#x60; parameter.  **NOTE**: Downloading many files at once  may result in a long delay before the API will return a response. You may need to override default timeout values in your API client, or download files individually.
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param resources Path of file or folder to be downloaded, starting from the root. Can also be an array of paths. (required)
-     * @param downloadArchiveName If zipping multiple files, the name of the zip file to create and download. (optional)
-     * @param polling Used when downloading multiple files so url will be polled till zip file is created. (optional)
-     * @param pollingArchiveName Reference to the previously created zip for polling operation. (optional)
+     * @param downloadArchiveName When downloading multiple files, this will be used as the name of the zip file that is created. (optional)
      * @return ApiResponse&lt;File&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<File> downloadWithHttpInfo(String evApiKey, String evAccessToken, List<String> resources, String downloadArchiveName, Boolean polling, String pollingArchiveName) throws ApiException {
-        com.squareup.okhttp.Call call = downloadValidateBeforeCall(evApiKey, evAccessToken, resources, downloadArchiveName, polling, pollingArchiveName, null, null);
+    public ApiResponse<File> downloadWithHttpInfo(String evApiKey, String evAccessToken, List<String> resources, String downloadArchiveName) throws ApiException {
+        com.squareup.okhttp.Call call = downloadValidateBeforeCall(evApiKey, evAccessToken, resources, downloadArchiveName, null, null);
         Type localVarReturnType = new TypeToken<File>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
      * Download a file (asynchronously)
-     * Downloads a file. If more than one path is supplied, the files will be zipped before downloading with the downloadArchiveName parameter if supplied. 
+     * Downloads a file from the server. Whenever more than one file is being downloaded, the file are first zipped into  a single file before the download starts, and the resulting zip file is named to match the &#x60;downloadArchiveName&#x60; parameter.  **NOTE**: Downloading many files at once  may result in a long delay before the API will return a response. You may need to override default timeout values in your API client, or download files individually.
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param resources Path of file or folder to be downloaded, starting from the root. Can also be an array of paths. (required)
-     * @param downloadArchiveName If zipping multiple files, the name of the zip file to create and download. (optional)
-     * @param polling Used when downloading multiple files so url will be polled till zip file is created. (optional)
-     * @param pollingArchiveName Reference to the previously created zip for polling operation. (optional)
+     * @param downloadArchiveName When downloading multiple files, this will be used as the name of the zip file that is created. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call downloadAsync(String evApiKey, String evAccessToken, List<String> resources, String downloadArchiveName, Boolean polling, String pollingArchiveName, final ApiCallback<File> callback) throws ApiException {
+    public com.squareup.okhttp.Call downloadAsync(String evApiKey, String evAccessToken, List<String> resources, String downloadArchiveName, final ApiCallback<File> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -931,7 +918,7 @@ public class ResourcesApi {
             };
         }
 
-        com.squareup.okhttp.Call call = downloadValidateBeforeCall(evApiKey, evAccessToken, resources, downloadArchiveName, polling, pollingArchiveName, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = downloadValidateBeforeCall(evApiKey, evAccessToken, resources, downloadArchiveName, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<File>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -1734,9 +1721,9 @@ public class ResourcesApi {
      * @param evAccessToken Access token required to make the API call. (required)
      * @param resource Resource identifier to get resources for. Can be path/id/name. (required)
      * @param sort Endpoint support multiple sort fields by allowing array of sort params. Sort fields should be applied in the order specified. The sort order for each sort field is ascending unless it is prefixed with a minus (“-“), in which case it will be descending. (optional)
-     * @param offset Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. (optional, default to 0)
-     * @param limit The number of files to limit the result. Cannot be set higher than 100. If you have more than one hundred files in your directory, make multiple calls, incrementing the &#x60;offset&#x60; parameter, above. (optional)
-     * @param type Limit types of resources returned to \&quot;file\&quot; or \&quot;dir\&quot; only. This is ignored if you are using the name parameter to trigger a search. (optional)
+     * @param offset Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. e.g, setting &#x60;offset&#x3D;200&#x60; would trigger the server to skip the first 200 matching entries when returning the results. (optional, default to 0)
+     * @param limit The number of files to limit the result. If you have more files in your directory than this limit, make multiple calls, incrementing the &#x60;offset&#x60; parameter, above. (optional)
+     * @param type Limit types of resources returned to \&quot;file\&quot; or \&quot;dir\&quot; only. This is ignored if you are using the &#x60;name&#x60; parameter to trigger a search. (optional)
      * @param name Text to match resource names. This allows you to filter the results returned. For example, to locate only zip archive files, you can enter &#x60;*zip&#x60; and only resources ending in \&quot;zip\&quot; will be included in the list of results. (optional)
      * @param include Comma separated list of relationships to include in response. Possible values are **share**, **notifications**, **directFile**, **parentResource**, **ownerUser**, **ownerAccount**. (optional)
      * @param progressListener Progress listener
@@ -1829,14 +1816,14 @@ public class ResourcesApi {
 
     /**
      * Get a list of all resources
-     * Returns a list of files and folders in the account. Use the &#x60;resource&#x60; query parameter to indicate the folder you wish to search in (which can be /).   **Searching for Files and Folders**  Using the &#x60;name&#x60; parameter triggers search mode, which will search the entire directory structure under the provided &#x60;resource&#x60; for files or folders with names matching the provided &#x60;name&#x60;. This supports wildcard matching such as:  - \\*Report\\* would find any files or folders with \&quot;Report\&quot; in the name. - Data\\_202?-09-30.xlsx would match items such as \&quot;Data\\_2020-09-30.xlsx\&quot;, \&quot;DATA\\_2021-09-30.xlsx\&quot;, \&quot;data\\_2022-09-30.xlsx\&quot; etc. - sales\\* would find any files or folders starting with the word \&quot;Sales\&quot; - \\*.csv would locate any files ending in \&quot;.csv\&quot; - \\* matches everything within the directory tree starting at your given &#x60;resource&#x60;  The search is not case-sensitive. Searching for Clients\\* or clients\\* or CLIENTS\\*, etc. will provide identical results  You cannot use the &#x60;type&#x60; parameter if you are using the &#x60;name&#x60; parameter to run a search.
+     * Returns a list of files and folders in the account. Use the &#x60;resource&#x60; query parameter to indicate the folder you wish to search in (which can be /).   **Searching for Files and Folders**  Using the &#x60;name&#x60; parameter triggers search mode, which will search the entire directory structure under the provided &#x60;resource&#x60; for files or folders with names matching the provided &#x60;name&#x60;. This supports wildcard matching such as:  - \\*Report\\* would find any files or folders with \&quot;Report\&quot; in the name. - Data\\_202?-09-30.xlsx would match items such as \&quot;Data\\_2020-09-30.xlsx\&quot;, \&quot;DATA\\_2021-09-30.xlsx\&quot;, \&quot;data\\_2022-09-30.xlsx\&quot; etc. - sales\\* would find any files or folders starting with the word \&quot;Sales\&quot; - \\*.csv would locate any files ending in \&quot;.csv\&quot; - \\* matches everything within the directory tree starting at your given &#x60;resource&#x60;  The search is not case-sensitive. Searching for Clients\\* or clients\\* or CLIENTS\\*, etc. will provide identical results  If you are using the &#x60;name&#x60; parameter to run a search, the &#x60;type&#x60; parameter will be ignored by the server.
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param resource Resource identifier to get resources for. Can be path/id/name. (required)
      * @param sort Endpoint support multiple sort fields by allowing array of sort params. Sort fields should be applied in the order specified. The sort order for each sort field is ascending unless it is prefixed with a minus (“-“), in which case it will be descending. (optional)
-     * @param offset Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. (optional, default to 0)
-     * @param limit The number of files to limit the result. Cannot be set higher than 100. If you have more than one hundred files in your directory, make multiple calls, incrementing the &#x60;offset&#x60; parameter, above. (optional)
-     * @param type Limit types of resources returned to \&quot;file\&quot; or \&quot;dir\&quot; only. This is ignored if you are using the name parameter to trigger a search. (optional)
+     * @param offset Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. e.g, setting &#x60;offset&#x3D;200&#x60; would trigger the server to skip the first 200 matching entries when returning the results. (optional, default to 0)
+     * @param limit The number of files to limit the result. If you have more files in your directory than this limit, make multiple calls, incrementing the &#x60;offset&#x60; parameter, above. (optional)
+     * @param type Limit types of resources returned to \&quot;file\&quot; or \&quot;dir\&quot; only. This is ignored if you are using the &#x60;name&#x60; parameter to trigger a search. (optional)
      * @param name Text to match resource names. This allows you to filter the results returned. For example, to locate only zip archive files, you can enter &#x60;*zip&#x60; and only resources ending in \&quot;zip\&quot; will be included in the list of results. (optional)
      * @param include Comma separated list of relationships to include in response. Possible values are **share**, **notifications**, **directFile**, **parentResource**, **ownerUser**, **ownerAccount**. (optional)
      * @return ResourceCollectionResponse
@@ -1849,14 +1836,14 @@ public class ResourcesApi {
 
     /**
      * Get a list of all resources
-     * Returns a list of files and folders in the account. Use the &#x60;resource&#x60; query parameter to indicate the folder you wish to search in (which can be /).   **Searching for Files and Folders**  Using the &#x60;name&#x60; parameter triggers search mode, which will search the entire directory structure under the provided &#x60;resource&#x60; for files or folders with names matching the provided &#x60;name&#x60;. This supports wildcard matching such as:  - \\*Report\\* would find any files or folders with \&quot;Report\&quot; in the name. - Data\\_202?-09-30.xlsx would match items such as \&quot;Data\\_2020-09-30.xlsx\&quot;, \&quot;DATA\\_2021-09-30.xlsx\&quot;, \&quot;data\\_2022-09-30.xlsx\&quot; etc. - sales\\* would find any files or folders starting with the word \&quot;Sales\&quot; - \\*.csv would locate any files ending in \&quot;.csv\&quot; - \\* matches everything within the directory tree starting at your given &#x60;resource&#x60;  The search is not case-sensitive. Searching for Clients\\* or clients\\* or CLIENTS\\*, etc. will provide identical results  You cannot use the &#x60;type&#x60; parameter if you are using the &#x60;name&#x60; parameter to run a search.
+     * Returns a list of files and folders in the account. Use the &#x60;resource&#x60; query parameter to indicate the folder you wish to search in (which can be /).   **Searching for Files and Folders**  Using the &#x60;name&#x60; parameter triggers search mode, which will search the entire directory structure under the provided &#x60;resource&#x60; for files or folders with names matching the provided &#x60;name&#x60;. This supports wildcard matching such as:  - \\*Report\\* would find any files or folders with \&quot;Report\&quot; in the name. - Data\\_202?-09-30.xlsx would match items such as \&quot;Data\\_2020-09-30.xlsx\&quot;, \&quot;DATA\\_2021-09-30.xlsx\&quot;, \&quot;data\\_2022-09-30.xlsx\&quot; etc. - sales\\* would find any files or folders starting with the word \&quot;Sales\&quot; - \\*.csv would locate any files ending in \&quot;.csv\&quot; - \\* matches everything within the directory tree starting at your given &#x60;resource&#x60;  The search is not case-sensitive. Searching for Clients\\* or clients\\* or CLIENTS\\*, etc. will provide identical results  If you are using the &#x60;name&#x60; parameter to run a search, the &#x60;type&#x60; parameter will be ignored by the server.
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param resource Resource identifier to get resources for. Can be path/id/name. (required)
      * @param sort Endpoint support multiple sort fields by allowing array of sort params. Sort fields should be applied in the order specified. The sort order for each sort field is ascending unless it is prefixed with a minus (“-“), in which case it will be descending. (optional)
-     * @param offset Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. (optional, default to 0)
-     * @param limit The number of files to limit the result. Cannot be set higher than 100. If you have more than one hundred files in your directory, make multiple calls, incrementing the &#x60;offset&#x60; parameter, above. (optional)
-     * @param type Limit types of resources returned to \&quot;file\&quot; or \&quot;dir\&quot; only. This is ignored if you are using the name parameter to trigger a search. (optional)
+     * @param offset Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. e.g, setting &#x60;offset&#x3D;200&#x60; would trigger the server to skip the first 200 matching entries when returning the results. (optional, default to 0)
+     * @param limit The number of files to limit the result. If you have more files in your directory than this limit, make multiple calls, incrementing the &#x60;offset&#x60; parameter, above. (optional)
+     * @param type Limit types of resources returned to \&quot;file\&quot; or \&quot;dir\&quot; only. This is ignored if you are using the &#x60;name&#x60; parameter to trigger a search. (optional)
      * @param name Text to match resource names. This allows you to filter the results returned. For example, to locate only zip archive files, you can enter &#x60;*zip&#x60; and only resources ending in \&quot;zip\&quot; will be included in the list of results. (optional)
      * @param include Comma separated list of relationships to include in response. Possible values are **share**, **notifications**, **directFile**, **parentResource**, **ownerUser**, **ownerAccount**. (optional)
      * @return ApiResponse&lt;ResourceCollectionResponse&gt;
@@ -1870,14 +1857,14 @@ public class ResourcesApi {
 
     /**
      * Get a list of all resources (asynchronously)
-     * Returns a list of files and folders in the account. Use the &#x60;resource&#x60; query parameter to indicate the folder you wish to search in (which can be /).   **Searching for Files and Folders**  Using the &#x60;name&#x60; parameter triggers search mode, which will search the entire directory structure under the provided &#x60;resource&#x60; for files or folders with names matching the provided &#x60;name&#x60;. This supports wildcard matching such as:  - \\*Report\\* would find any files or folders with \&quot;Report\&quot; in the name. - Data\\_202?-09-30.xlsx would match items such as \&quot;Data\\_2020-09-30.xlsx\&quot;, \&quot;DATA\\_2021-09-30.xlsx\&quot;, \&quot;data\\_2022-09-30.xlsx\&quot; etc. - sales\\* would find any files or folders starting with the word \&quot;Sales\&quot; - \\*.csv would locate any files ending in \&quot;.csv\&quot; - \\* matches everything within the directory tree starting at your given &#x60;resource&#x60;  The search is not case-sensitive. Searching for Clients\\* or clients\\* or CLIENTS\\*, etc. will provide identical results  You cannot use the &#x60;type&#x60; parameter if you are using the &#x60;name&#x60; parameter to run a search.
+     * Returns a list of files and folders in the account. Use the &#x60;resource&#x60; query parameter to indicate the folder you wish to search in (which can be /).   **Searching for Files and Folders**  Using the &#x60;name&#x60; parameter triggers search mode, which will search the entire directory structure under the provided &#x60;resource&#x60; for files or folders with names matching the provided &#x60;name&#x60;. This supports wildcard matching such as:  - \\*Report\\* would find any files or folders with \&quot;Report\&quot; in the name. - Data\\_202?-09-30.xlsx would match items such as \&quot;Data\\_2020-09-30.xlsx\&quot;, \&quot;DATA\\_2021-09-30.xlsx\&quot;, \&quot;data\\_2022-09-30.xlsx\&quot; etc. - sales\\* would find any files or folders starting with the word \&quot;Sales\&quot; - \\*.csv would locate any files ending in \&quot;.csv\&quot; - \\* matches everything within the directory tree starting at your given &#x60;resource&#x60;  The search is not case-sensitive. Searching for Clients\\* or clients\\* or CLIENTS\\*, etc. will provide identical results  If you are using the &#x60;name&#x60; parameter to run a search, the &#x60;type&#x60; parameter will be ignored by the server.
      * @param evApiKey API Key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param resource Resource identifier to get resources for. Can be path/id/name. (required)
      * @param sort Endpoint support multiple sort fields by allowing array of sort params. Sort fields should be applied in the order specified. The sort order for each sort field is ascending unless it is prefixed with a minus (“-“), in which case it will be descending. (optional)
-     * @param offset Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. (optional, default to 0)
-     * @param limit The number of files to limit the result. Cannot be set higher than 100. If you have more than one hundred files in your directory, make multiple calls, incrementing the &#x60;offset&#x60; parameter, above. (optional)
-     * @param type Limit types of resources returned to \&quot;file\&quot; or \&quot;dir\&quot; only. This is ignored if you are using the name parameter to trigger a search. (optional)
+     * @param offset Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. e.g, setting &#x60;offset&#x3D;200&#x60; would trigger the server to skip the first 200 matching entries when returning the results. (optional, default to 0)
+     * @param limit The number of files to limit the result. If you have more files in your directory than this limit, make multiple calls, incrementing the &#x60;offset&#x60; parameter, above. (optional)
+     * @param type Limit types of resources returned to \&quot;file\&quot; or \&quot;dir\&quot; only. This is ignored if you are using the &#x60;name&#x60; parameter to trigger a search. (optional)
      * @param name Text to match resource names. This allows you to filter the results returned. For example, to locate only zip archive files, you can enter &#x60;*zip&#x60; and only resources ending in \&quot;zip\&quot; will be included in the list of results. (optional)
      * @param include Comma separated list of relationships to include in response. Possible values are **share**, **notifications**, **directFile**, **parentResource**, **ownerUser**, **ownerAccount**. (optional)
      * @param callback The callback to be executed when the API call finishes

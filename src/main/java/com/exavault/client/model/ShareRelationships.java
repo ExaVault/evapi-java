@@ -14,10 +14,10 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.exavault.client.model.ShareRelationshipsMessage;
 import com.exavault.client.model.ShareRelationshipsNotification;
 import com.exavault.client.model.ShareRelationshipsOwner;
 import com.exavault.client.model.ShareRelationshipsResource;
-import com.exavault.client.model.ShareRelationshpsMessage;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -34,7 +34,7 @@ import java.util.List;
 
 public class ShareRelationships {
   @SerializedName("messages")
-  private List<ShareRelationshpsMessage> messages = null;
+  private List<ShareRelationshipsMessage> messages = null;
 
   @SerializedName("owner")
   private ShareRelationshipsOwner owner = null;
@@ -45,14 +45,14 @@ public class ShareRelationships {
   @SerializedName("notifications")
   private List<ShareRelationshipsNotification> notifications = null;
 
-  public ShareRelationships messages(List<ShareRelationshpsMessage> messages) {
+  public ShareRelationships messages(List<ShareRelationshipsMessage> messages) {
     this.messages = messages;
     return this;
   }
 
-  public ShareRelationships addMessagesItem(ShareRelationshpsMessage messagesItem) {
+  public ShareRelationships addMessagesItem(ShareRelationshipsMessage messagesItem) {
     if (this.messages == null) {
-      this.messages = new ArrayList<ShareRelationshpsMessage>();
+      this.messages = new ArrayList<ShareRelationshipsMessage>();
     }
     this.messages.add(messagesItem);
     return this;
@@ -63,11 +63,11 @@ public class ShareRelationships {
    * @return messages
   **/
   @Schema(description = "null")
-  public List<ShareRelationshpsMessage> getMessages() {
+  public List<ShareRelationshipsMessage> getMessages() {
     return messages;
   }
 
-  public void setMessages(List<ShareRelationshpsMessage> messages) {
+  public void setMessages(List<ShareRelationshipsMessage> messages) {
     this.messages = messages;
   }
 

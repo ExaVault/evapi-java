@@ -35,7 +35,7 @@ public class NotificationAttributes {
   private String userId = null;
 
   /**
-   * Type of the resoucre the notification is attached to. 
+   * Type of the resource the notification is attached to. 
    */
   @JsonAdapter(TypeEnum.Adapter.class)
   public enum TypeEnum {
@@ -185,10 +185,10 @@ public class NotificationAttributes {
   }
 
    /**
-   * Type of the resoucre the notification is attached to. 
+   * Type of the resource the notification is attached to. 
    * @return type
   **/
-  @Schema(example = "folder", description = "Type of the resoucre the notification is attached to. ")
+  @Schema(example = "folder", description = "Type of the resource the notification is attached to. ")
   public TypeEnum getType() {
     return type;
   }
