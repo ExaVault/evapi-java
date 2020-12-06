@@ -61,6 +61,13 @@ public class ApiTestData {
 	public static final String _DOT = ".";
 	public static final String PATH = "path";
 	public static final String DESTINATION_PATH = "destinationPath";
+	public static final String SESSION_ACTIVITY = "sessionActivity";
+	public static final int _10 = 10;
+	public static final int _1000 = 1000;
+	public static final int _900 = 900;
+	public static final String VALID_USER_NAME = "evapi-docs-java";
+	public static final String DELETE_TYPE = "Delete";
+	public static final String USERNAME = "username";
 
 	private static ApiClient apiClient;
 	private static final Random random = new Random();

@@ -2,6 +2,7 @@ package com.exavault.client.api;
 
 import com.exavault.client.model.*;
 import com.google.gson.internal.LinkedTreeMap;
+import org.threeten.bp.OffsetDateTime;
 
 import java.io.File;
 import java.text.ParseException;
@@ -122,5 +123,59 @@ public class ApiTestAssertionUtil {
 		assertThat(attributes).isNotNull();
 		assertThat(meta.get(PATH)).isEqualTo(BASE_FOLDER_);
 		assertThat(meta.get(DESTINATION_PATH)).startsWith(copiedFolder);
+	}
+
+	public static void validateSessionLogs(final SessionActivityResponse response) {
+		validateCommonSessionLog(response);
+	}
+
+	public static void validateDates(final SessionActivityResponse response, final OffsetDateTime start, final OffsetDateTime end) {
+		final List<SessionActivityEntry> data = response.getData();
+		for (final SessionActivityEntry entry : data) {
+			final SessionActivityEntryAttributes attributes = entry.getAttributes();
+			final String created = attributes.getCreated();
+			final OffsetDateTime actual = OffsetDateTime.parse(created);
+			assertThat(actual).isBetween(start, end);
+		}
+	}
+
+	public static void validateUserName(final SessionActivityResponse response, final String username) {
+		final List<SessionActivityEntry> data = response.getData();
+		for (final SessionActivityEntry entry : data) {
+			final SessionActivityEntryAttributes attributes = entry.getAttributes();
+			final String real = attributes.getUsername();
+			assertThat(real).isEqualTo(username);
+		}
+	}
+
+	public static void validatePath(final SessionActivityResponse response) {
+		final List<SessionActivityEntry> data = response.getData();
+		for (final SessionActivityEntry entry : data) {
+			final SessionActivityEntryAttributes attributes = entry.getAttributes();
+			final String real = attributes.getFileName();
+			assertThat(real).startsWith(BASE_FOLDER_);
+		}
+	}
+
+	public static void validateType(final SessionActivityResponse response, final String type) {
+		final List<SessionActivityEntry> data = response.getData();
+		for (final SessionActivityEntry entry : data) {
+			final SessionActivityEntryAttributes attributes = entry.getAttributes();
+			final String real = attributes.getOperation();
+			assertThat(real).isEqualTo(type);
+		}
+	}
+
+	private static void validateCommonSessionLog(final SessionActivityResponse response) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(RESPONSE_CODE_200);
+		final List<SessionActivityEntry> data = response.getData();
+		for (final SessionActivityEntry entry : data) {
+			assertThat(entry.getId()).isInstanceOf(Long.class);
+			assertThat(entry.getType()).isInstanceOf(SessionActivityEntry.TypeEnum.class);
+			assertThat(entry.getType().getValue()).isEqualTo(SESSION_ACTIVITY);
+			final SessionActivityEntryAttributes attributes = entry.getAttributes();
+			assertThat(attributes).isNotNull();
+		}
 	}
 }
