@@ -269,7 +269,7 @@ public class ResourcesApiTest {
 			try {
 				uploadDummyFiles(api);
 				final File download = api.download(EV_API_KEY, EV_ACCESS_TOKEN, Collections.singletonList(BASE_FOLDER_),
-						DOWNLOAD_ARCHIVE, false, null);
+						DOWNLOAD_ARCHIVE);
 				assertThat(download).isNotNull();
 				validateDownloadedFile(download);
 			} catch (final ApiException e) {
