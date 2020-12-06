@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class ApiTestData {
 
-	public static final String EV_API_KEY_BAD = "stagingtest-bad";
+	public static final String EV_API_KEY_BAD = "stagingtest-bad-name";
 	public static final String EV_API_KEY = "KEY";
 	public static final String EV_ACCESS_TOKEN = "TOKEN";
 	public static final String EV_API_URL = "URL";
