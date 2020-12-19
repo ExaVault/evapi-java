@@ -125,6 +125,10 @@ public class ApiTestAssertionUtil {
 		assertThat(meta.get(DESTINATION_PATH)).startsWith(copiedFolder);
 	}
 
+	public static void validateWebhookLogs(final WebhooksActivityResponse response) {
+		validateCommonWebhookLog(response);
+	}
+
 	public static void validateSessionLogs(final SessionActivityResponse response) {
 		validateCommonSessionLog(response);
 	}
@@ -153,7 +157,7 @@ public class ApiTestAssertionUtil {
 		for (final SessionActivityEntry entry : data) {
 			final SessionActivityEntryAttributes attributes = entry.getAttributes();
 			final String real = attributes.getFileName();
-			assertThat(real).startsWith(BASE_FOLDER_);
+			assertThat(real).contains(BASE_FOLDER_);
 		}
 	}
 
@@ -177,5 +181,97 @@ public class ApiTestAssertionUtil {
 			final SessionActivityEntryAttributes attributes = entry.getAttributes();
 			assertThat(attributes).isNotNull();
 		}
+	}
+
+	private static void validateCommonWebhookLog(final WebhooksActivityResponse response) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(RESPONSE_CODE_200);
+		final List<WebhooksActivityEntry> data = response.getData();
+		for (final WebhooksActivityEntry entry : data) {
+			assertThat(entry.getId()).isInstanceOf(Long.class);
+			assertThat(entry.getType()).isInstanceOf(WebhooksActivityEntry.TypeEnum.class);
+			assertThat(entry.getType().getValue()).isEqualTo(WEBHOOK_ACTIVITY);
+			final WebhooksActivityEntryAttributes attributes = entry.getAttributes();
+			assertThat(attributes).isNotNull();
+		}
+	}
+
+	public static void validateEvent(final WebhooksActivityResponse response, final String event) {
+		final List<WebhooksActivityEntry> data = response.getData();
+		for (final WebhooksActivityEntry entry : data) {
+			final WebhooksActivityEntryAttributes attributes = entry.getAttributes();
+			final String real = attributes.getEvent();
+			assertThat(real).isEqualTo(event);
+		}
+	}
+
+	public static void validateStatusCode(final WebhooksActivityResponse response, final int statusCode) {
+		final List<WebhooksActivityEntry> data = response.getData();
+		for (final WebhooksActivityEntry entry : data) {
+			final WebhooksActivityEntryAttributes attributes = entry.getAttributes();
+			final int real = attributes.getStatus();
+			assertThat(real).isEqualTo(statusCode);
+		}
+	}
+
+	public static void validateUserName(final WebhooksActivityResponse response, final String username) {
+		final List<WebhooksActivityEntry> data = response.getData();
+		for (final WebhooksActivityEntry entry : data) {
+			final WebhooksActivityEntryAttributes attributes = entry.getAttributes();
+			final String real = attributes.getEndpointUrl();
+			assertThat(real).endsWith(username);
+		}
+	}
+
+	public static void validatePath(final WebhooksActivityResponse response, final String path) {
+		final List<WebhooksActivityEntry> data = response.getData();
+		for (final WebhooksActivityEntry entry : data) {
+			final WebhooksActivityEntryAttributes attributes = entry.getAttributes();
+			final String response1 = attributes.getResponse();
+			final int i = response1.indexOf(PATH_COLON);
+			final String path1 = response1.substring(i + _1);
+			assertThat(path1).contains(path);
+		}
+	}
+
+	public static UserAttributes validateUserAndGetAttributes(final UserResponse response, final int status) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(status);
+		final User data = response.getData();
+		assertThat(data.getId()).isInstanceOf(Integer.class);
+		assertThat(data.getType()).isEqualTo(USER);
+		final UserAttributes attributes = data.getAttributes();
+		assertThat(attributes).isNotNull();
+		return attributes;
+	}
+
+	public static void validateUserAttributes(final UserAttributes userAttributes,
+											  final AddUserRequestBody body, final boolean isAdmin) {
+		assertThat(userAttributes.getUsername()).isEqualTo(body.getUsername());
+		assertThat(userAttributes.getEmail()).isEqualTo(body.getEmail());
+		assertThat(userAttributes.getTimeZone()).isEqualTo(LA_TIMEZONE);
+		if (isAdmin) {
+			assertThat(userAttributes.getHomePath()).isEqualTo(SEPARATOR_PARENT);
+			assertThat(userAttributes.getRole().getValue()).isEqualTo(AddUserRequestBody.RoleEnum.ADMIN.getValue());
+			assertThat(userAttributes.getPermissions().isList()).isTrue();
+			assertThat(userAttributes.getPermissions().isChangePassword()).isTrue();
+			assertThat(userAttributes.getPermissions().isDeleteFormData()).isTrue();
+			assertThat(userAttributes.getPermissions().isShare()).isTrue();
+			assertThat(userAttributes.getPermissions().isViewFormData()).isTrue();
+
+		} else {
+			assertThat(userAttributes.getHomePath()).isEqualTo(BASE_FOLDER_);
+			assertThat(userAttributes.getRole().getValue()).isEqualTo(AddUserRequestBody.RoleEnum.USER.getValue());
+		}
+
+		assertThat(userAttributes.getPermissions().isDelete()).isTrue();
+		assertThat(userAttributes.getPermissions().isDownload()).isTrue();
+		assertThat(userAttributes.getPermissions().isUpload()).isTrue();
+		assertThat(userAttributes.getPermissions().isModify()).isTrue();
+	}
+
+	public static void validDeleteResponse(final EmptyResponse response) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(RESPONSE_CODE_200);
 	}
 }

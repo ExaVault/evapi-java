@@ -15,13 +15,13 @@ package com.exavault.client.api;
 import com.exavault.client.ApiException;
 import com.exavault.client.model.AccountResponse;
 import com.exavault.client.model.UpdateAccountRequestBody;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
  * API tests for AccountApi
  */
-@Ignore
+@Disabled
 public class AccountApiTest {
 
 	private final AccountApi api = new AccountApi();
