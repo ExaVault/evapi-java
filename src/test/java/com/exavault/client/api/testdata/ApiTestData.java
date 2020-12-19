@@ -6,7 +6,10 @@ import com.exavault.client.api.ResourcesApi;
 import com.exavault.client.model.AddUserRequestBody;
 import com.exavault.client.model.UsersPermissions;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Random;
@@ -84,7 +87,8 @@ public class ApiTestData {
 	public static final String LA_TIMEZONE = "America/Los_Angeles";
 	public static final String DENVER_TIMEZONE = "America/Denver";
 	public static final String HYPHEN_SEPARATOR = "-";
-	public static final String EMPTY = "";
+	public static final String EMPTY_STRING = "";
+	public static final String EMPTY = EMPTY_STRING;
 	public static final String TESTUSER = "testuser";
 	public static final String USER = "user";
 	public static final String NICKNAME = "Nickname";
@@ -93,6 +97,13 @@ public class ApiTestData {
 	public static final String VALID_NAME = "ValidName";
 	public static final String INVALID_USER = "invalid user with space in the name";
 	public static final int INVALID_USER_ID = 123;
+	public static final String OFFSET_DATE = "date";
+	public static final String USERNAME_ATTRIBUTE = "username";
+	public static final String FILENAME_ATTRIBUTE = "filename";
+	public static final String OPS_TYPE = "type";
+	public static final long INVALID_ID = 123L;
+	public static final String HTTP_CHECKIP_AMAZONAWS_COM = "http://checkip.amazonaws.com";
+	public static final String ATTRIBUTE_NAME_IP = "IP";
 
 	private static ApiClient apiClient;
 	private static final Random random = new Random();
@@ -173,6 +184,26 @@ public class ApiTestData {
 		final UUID uuid = UUID.randomUUID();
 		return TESTUSER + HYPHEN_SEPARATOR + uuid.toString().replaceAll(HYPHEN_SEPARATOR, EMPTY)
 				+ HYPHEN_SEPARATOR + Math.abs(getRandomNumber());
+	}
+
+	public static String getExternalIP() throws Exception {
+		final URL externalIP = new URL(HTTP_CHECKIP_AMAZONAWS_COM);
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new InputStreamReader(
+					externalIP.openStream()));
+			return in.readLine();
+		} catch (final IOException e) {
+			throw new IOException();
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (final IOException e) {
+					throw new IOException();
+				}
+			}
+		}
 	}
 
 }

@@ -219,7 +219,7 @@ public class ResourcesApiTest {
 			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
 				@Override
 				public void call() throws ApiException {
-					api.deleteResourceById(123L, EV_API_KEY, EV_ACCESS_TOKEN);
+					api.deleteResourceById(INVALID_ID, EV_API_KEY, EV_ACCESS_TOKEN);
 				}
 			}).isInstanceOf(ApiException.class)
 					.hasMessageContaining(NOT_FOUND);
@@ -677,7 +677,7 @@ public class ResourcesApiTest {
 		public void listResources() throws ApiException {
 			try {
 				final ResourceResponse folder = createFolder(BASE_FOLDER_);
-				final Long id = folder.getData().getId();
+				final long id = folder.getData().getId();
 				uploadDummyFiles(api);
 				final ResourceCollectionResponse response = api.listResourceContents(EV_API_KEY, EV_ACCESS_TOKEN,
 						id, null, null, null, null, PARENT_RESOURCE);
@@ -721,7 +721,7 @@ public class ResourcesApiTest {
 		public void renameResources() throws ApiException {
 			try {
 				final ResourceResponse folder = createFolder(BASE_FOLDER_);
-				final Long id = folder.getData().getId();
+				final long id = folder.getData().getId();
 				final UpdateResourceByIdRequestBody body = new UpdateResourceByIdRequestBody();
 				body.setName(NEW_NAME);
 				final ResourceResponse response = api.updateResourceById(EV_ACCESS_TOKEN, EV_API_KEY, id, body);

@@ -58,19 +58,13 @@ public class ActivityApiTest {
 
 		@Test
 		@DisplayName("Session logs with no matching dates")
-		public void getSessionLogsWithNoMatchingStartAndEndDates() {
-			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
-				@Override
-				public void call() throws ApiException {
-					api.getSessionLogs(EV_API_KEY, EV_ACCESS_TOKEN,
-							OffsetDateTime.now().minusDays(_1000), OffsetDateTime.now().minusDays(_900),
-							null, null, null,
-							null, null, null, null);
-					//TODO: should not it be given zero records? - Amy needs to check!
-					//TODO: check Java API
-				}
-			}).isInstanceOf(ApiException.class)
-					.hasMessageContaining(BAD_REQUEST);
+		public void getSessionLogsWithNoMatchingStartAndEndDates() throws ApiException {
+			final SessionActivityResponse response = api.getSessionLogs(EV_API_KEY, EV_ACCESS_TOKEN,
+					OffsetDateTime.now().minusDays(_1000), OffsetDateTime.now().minusDays(_900),
+					null, null, null,
+					null, null, null, null);
+			assertThat(response.getReturnedResults()).isZero();
+			//TODO: Error in API, if no records found, Invalid end data is returned, should be zero records, checked from webapp, postman as well
 		}
 
 		@Test
@@ -94,12 +88,11 @@ public class ActivityApiTest {
 			try {
 				final SessionActivityResponse response =
 						api.getSessionLogs(EV_API_KEY, EV_ACCESS_TOKEN,
-								null, null, INVALID, null, null,
+								null, null, getExternalIP(), null, null,
 								null, null, null, null);
 				validateSessionLogs(response);
-				//TODO: utility class to get the real ip and pass that. -> why does ISP IP logged in the session logs?
-				//not my local IP address?
-			} catch (final ApiException e) {
+				validateIp(response, getExternalIP());
+			} catch (final Exception e) {
 				fail(FAILED_DUE_TO, e);
 			}
 		}
@@ -128,8 +121,9 @@ public class ActivityApiTest {
 								null, null, null, INVALID, null,
 								null, null, null, null);
 				validateSessionLogs(response);
-				//assertThat(response.getReturnedResults()).isZero();
-				//TODO: should be zero, does not work - Amy to check?
+				assertThat(response.getReturnedResults()).isZero();
+				//TODO: should be zero, does not work - Amy to check? API itself is returning returned results as 50
+				//checked Postman, so its not Java API which is putting the result to 50.
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			}
@@ -145,6 +139,7 @@ public class ActivityApiTest {
 								null, null, null, null);
 				validateSessionLogs(response); //TODO: should fetch only logs with the given path, not working as expected
 				//TODO: Should be get session logs on the Documentation page as well
+				//TODO : checked from webapi, it also failed there.
 				validatePath(response);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
@@ -368,66 +363,6 @@ public class ActivityApiTest {
 			}
 		}
 
-		/*@Test
-		@DisplayName("Webhooks logs with valid username")
-		public void getWebhookLogsWithValidUserName() {
-			try {
-				final WebhooksActivityResponse response =
-						api.getWebhookLogs(EV_API_KEY, EV_ACCESS_TOKEN,
-								null, null, null, VALID_USER_NAME, null,
-								null, null);
-				validateWebhookLogs(response);
-				validateUserName(response, VALID_USER_NAME);
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			}
-		}
-*/
-		/*@Test
-		@DisplayName("Webhooks logs with an Invalid username")
-		public void getWebhookLogsWithInvalidUserName() {
-			try {
-				final WebhooksActivityResponse response =
-						api.getWebhookLogs(EV_API_KEY, EV_ACCESS_TOKEN,
-								null, null, null, INVALID, null,
-								null, null);
-				validateWebhookLogs(response);
-				assertThat(response.getReturnedResults()).isZero();
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			}
-		}*/
-
-		/*@Test
-		@DisplayName("Webhooks logs with valid path")
-		public void getWebhookLogsWithValidPath() {
-			try {
-				final WebhooksActivityResponse response =
-						api.getWebhookLogs(EV_API_KEY, EV_ACCESS_TOKEN,
-								null, null, UPLOAD_TREE, null, null,
-								null, null);
-				validateWebhookLogs(response);
-				validatePath(response, UPLOAD_TREE);
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			}
-		}*/
-
-		/*@Test
-		@DisplayName("Webhooks logs with an Invalid path")
-		public void getWebhookLogsWithInvalidValidPath() {
-			try {
-				final WebhooksActivityResponse response =
-						api.getWebhookLogs(EV_API_KEY, EV_ACCESS_TOKEN,
-								null, null, INVALID, null, null,
-								null, null);
-				validateWebhookLogs(response);
-				assertThat(response.getReturnedResults()).isZero();
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			}
-		}
-*/
 		@Test
 		@DisplayName("Webhooks logs with a valid offset")
 		public void getWebhookLogsWithValidOffset() {

@@ -15,17 +15,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ApiTestAssertionUtil {
 
 	public static void validateAddFolderResponse(final ResourceResponse response) {
-		final String path = validateCommons(response);
+		final String path = validateResourceAPICommons(response);
 		assertThat(path).startsWith(TEST_FOLDER.substring(0, TEST_FOLDER.indexOf("%d")));
 	}
 
 	public static void validateRenameResponse(final ResourceResponse response) {
-		final String path = validateCommons(response, RESPONSE_CODE_200);
+		final String path = validateResourceAPICommons(response, RESPONSE_CODE_200);
 		assertThat(path).endsWith(NEW_NAME);
 	}
 
 	public static void validateUploadResponse(final ResourceResponse response) {
-		final String path = validateCommons(response, RESPONSE_CODE_201);
+		final String path = validateResourceAPICommons(response, RESPONSE_CODE_201);
 		assertThat(path).contains(DUMMY);
 	}
 
@@ -44,7 +44,7 @@ public class ApiTestAssertionUtil {
 	}
 
 	public static void validateAddFolderResponse2(final ResourceResponse response) {
-		final String path = validateCommons(response);
+		final String path = validateResourceAPICommons(response);
 		assertThat(path).isEqualTo(SEPARATOR_PARENT + DUMMY_ADD_FOLDER_TEST);
 	}
 
@@ -86,7 +86,7 @@ public class ApiTestAssertionUtil {
 
 	public static void validateCompressFilesResponse(final ResourceResponse response,
 													 final String compressName) throws ParseException {
-		final String path = validateCommons(response);
+		final String path = validateResourceAPICommons(response);
 		assertThat(path).endsWith(ZIP);
 		if (compressName != null) {
 			assertThat(path).endsWith(compressName);
@@ -97,11 +97,11 @@ public class ApiTestAssertionUtil {
 		}
 	}
 
-	private static String validateCommons(final ResourceResponse response) {
-		return validateCommons(response, RESPONSE_CODE_201);
+	private static String validateResourceAPICommons(final ResourceResponse response) {
+		return validateResourceAPICommons(response, RESPONSE_CODE_201);
 	}
 
-	private static String validateCommons(final ResourceResponse response, final int responseCode) {
+	private static String validateResourceAPICommons(final ResourceResponse response, final int responseCode) {
 		final Resource data = response.getData();
 		assertThat(data).isNotNull();
 		assertThat(response.getResponseStatus()).isEqualTo(responseCode);
@@ -133,41 +133,56 @@ public class ApiTestAssertionUtil {
 		validateCommonSessionLog(response);
 	}
 
-	public static void validateDates(final SessionActivityResponse response, final OffsetDateTime start, final OffsetDateTime end) {
+	private static void validateAttribute(final SessionActivityResponse response,
+										  final String attributeName, final Object... args) {
 		final List<SessionActivityEntry> data = response.getData();
 		for (final SessionActivityEntry entry : data) {
 			final SessionActivityEntryAttributes attributes = entry.getAttributes();
-			final String created = attributes.getCreated();
-			final OffsetDateTime actual = OffsetDateTime.parse(created);
-			assertThat(actual).isBetween(start, end);
+			switch (attributeName) {
+				case OFFSET_DATE:
+					final String created = attributes.getCreated();
+					final OffsetDateTime actual = OffsetDateTime.parse(created);
+					assertThat(actual).isBetween((OffsetDateTime) args[_0], (OffsetDateTime) args[_1]);
+					break;
+				case USERNAME_ATTRIBUTE:
+					final String real = attributes.getUsername();
+					assertThat(real).isEqualTo((String) args[_0]);
+					break;
+				case FILENAME_ATTRIBUTE:
+					final String real2 = attributes.getFileName();
+					assertThat(real2).contains(BASE_FOLDER_);
+					break;
+				case OPS_TYPE:
+					final String real3 = attributes.getOperation();
+					assertThat(real3).isEqualTo((String) args[_0]);
+					break;
+				case ATTRIBUTE_NAME_IP:
+					final String ipAddress = attributes.getIpAddress();
+					assertThat(ipAddress).isEqualTo((String) args[_0]);
+					break;
+			}
 		}
+	}
+
+	public static void validateDates(final SessionActivityResponse response, final OffsetDateTime start,
+									 final OffsetDateTime end) {
+		validateAttribute(response, OFFSET_DATE, start, end);
+	}
+
+	public static void validateIp(final SessionActivityResponse response, final String ip) {
+		validateAttribute(response, ATTRIBUTE_NAME_IP, ip);
 	}
 
 	public static void validateUserName(final SessionActivityResponse response, final String username) {
-		final List<SessionActivityEntry> data = response.getData();
-		for (final SessionActivityEntry entry : data) {
-			final SessionActivityEntryAttributes attributes = entry.getAttributes();
-			final String real = attributes.getUsername();
-			assertThat(real).isEqualTo(username);
-		}
+		validateAttribute(response, USERNAME_ATTRIBUTE, username);
 	}
 
 	public static void validatePath(final SessionActivityResponse response) {
-		final List<SessionActivityEntry> data = response.getData();
-		for (final SessionActivityEntry entry : data) {
-			final SessionActivityEntryAttributes attributes = entry.getAttributes();
-			final String real = attributes.getFileName();
-			assertThat(real).contains(BASE_FOLDER_);
-		}
+		validateAttribute(response, FILENAME_ATTRIBUTE);
 	}
 
 	public static void validateType(final SessionActivityResponse response, final String type) {
-		final List<SessionActivityEntry> data = response.getData();
-		for (final SessionActivityEntry entry : data) {
-			final SessionActivityEntryAttributes attributes = entry.getAttributes();
-			final String real = attributes.getOperation();
-			assertThat(real).isEqualTo(type);
-		}
+		validateAttribute(response, OPS_TYPE, type);
 	}
 
 	private static void validateCommonSessionLog(final SessionActivityResponse response) {
@@ -214,26 +229,6 @@ public class ApiTestAssertionUtil {
 		}
 	}
 
-	public static void validateUserName(final WebhooksActivityResponse response, final String username) {
-		final List<WebhooksActivityEntry> data = response.getData();
-		for (final WebhooksActivityEntry entry : data) {
-			final WebhooksActivityEntryAttributes attributes = entry.getAttributes();
-			final String real = attributes.getEndpointUrl();
-			assertThat(real).endsWith(username);
-		}
-	}
-
-	public static void validatePath(final WebhooksActivityResponse response, final String path) {
-		final List<WebhooksActivityEntry> data = response.getData();
-		for (final WebhooksActivityEntry entry : data) {
-			final WebhooksActivityEntryAttributes attributes = entry.getAttributes();
-			final String response1 = attributes.getResponse();
-			final int i = response1.indexOf(PATH_COLON);
-			final String path1 = response1.substring(i + _1);
-			assertThat(path1).contains(path);
-		}
-	}
-
 	public static UserAttributes validateUserAndGetAttributes(final UserResponse response, final int status) {
 		assertThat(response).isNotNull();
 		assertThat(response.getResponseStatus()).isEqualTo(status);
@@ -250,24 +245,24 @@ public class ApiTestAssertionUtil {
 		assertThat(userAttributes.getUsername()).isEqualTo(body.getUsername());
 		assertThat(userAttributes.getEmail()).isEqualTo(body.getEmail());
 		assertThat(userAttributes.getTimeZone()).isEqualTo(LA_TIMEZONE);
+		final UserPermissions permissions = userAttributes.getPermissions();
 		if (isAdmin) {
 			assertThat(userAttributes.getHomePath()).isEqualTo(SEPARATOR_PARENT);
 			assertThat(userAttributes.getRole().getValue()).isEqualTo(AddUserRequestBody.RoleEnum.ADMIN.getValue());
-			assertThat(userAttributes.getPermissions().isList()).isTrue();
-			assertThat(userAttributes.getPermissions().isChangePassword()).isTrue();
-			assertThat(userAttributes.getPermissions().isDeleteFormData()).isTrue();
-			assertThat(userAttributes.getPermissions().isShare()).isTrue();
-			assertThat(userAttributes.getPermissions().isViewFormData()).isTrue();
-
+			validatePermissions(permissions.isList(), permissions.isChangePassword(), permissions.isDeleteFormData(),
+					permissions.isShare(), permissions.isViewFormData());
 		} else {
 			assertThat(userAttributes.getHomePath()).isEqualTo(BASE_FOLDER_);
 			assertThat(userAttributes.getRole().getValue()).isEqualTo(AddUserRequestBody.RoleEnum.USER.getValue());
 		}
+		validatePermissions(permissions.isDelete(), permissions.isDownload(),
+				permissions.isUpload(), permissions.isModify());
+	}
 
-		assertThat(userAttributes.getPermissions().isDelete()).isTrue();
-		assertThat(userAttributes.getPermissions().isDownload()).isTrue();
-		assertThat(userAttributes.getPermissions().isUpload()).isTrue();
-		assertThat(userAttributes.getPermissions().isModify()).isTrue();
+	private static void validatePermissions(final boolean... permissions) {
+		for (final boolean permission : permissions) {
+			assertThat(permission).isTrue();
+		}
 	}
 
 	public static void validDeleteResponse(final EmptyResponse response) {
