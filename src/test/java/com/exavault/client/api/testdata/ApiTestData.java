@@ -83,6 +83,7 @@ public class ApiTestData {
 	public static final String EVENT = "event";
 	public static final String TEST_EMAIL = "testuser@example.com";
 	public static final String TEST_EMAIL2 = "testuser2@example.com";
+	public static final String TEST_EMAIL3 = "testuser3@example.com";
 	public static final String TEST_PASSWORD = "testpaSsword8";
 	public static final String LA_TIMEZONE = "America/Los_Angeles";
 	public static final String DENVER_TIMEZONE = "America/Denver";
@@ -91,7 +92,14 @@ public class ApiTestData {
 	public static final String EMPTY = EMPTY_STRING;
 	public static final String TESTUSER = "testuser";
 	public static final String USER = "user";
+	public static final String USER_ROLE = "user";
 	public static final String NICKNAME = "Nickname";
+	public static final String NICKNAME_ATTR = "nicknameattr";
+	public static final String EMAIL_ATTR = "emailattr";
+	public static final String ROLE_ATTR = "roleattr";
+	public static final String STATUS_ATTR = "statusattr";
+	public static final String HOMEDIR_ATTR = "statusattr";
+	public static final String EMAIL_ATTR_FALSE = "emailattr_false";
 	public static final String EXPIRATION = "2020-12-12";
 	public static final String EXPIRATION2 = "2020-12-13";
 	public static final String VALID_NAME = "ValidName";
@@ -104,6 +112,7 @@ public class ApiTestData {
 	public static final long INVALID_ID = 123L;
 	public static final String HTTP_CHECKIP_AMAZONAWS_COM = "http://checkip.amazonaws.com";
 	public static final String ATTRIBUTE_NAME_IP = "IP";
+	public static final String WILDCARD = "*";
 
 	private static ApiClient apiClient;
 	private static final Random random = new Random();
@@ -180,7 +189,7 @@ public class ApiTestData {
 		return aDefault;
 	}
 
-	public static String generateRandomUserName() {
+	public static String generateRandomName() {
 		final UUID uuid = UUID.randomUUID();
 		return TESTUSER + HYPHEN_SEPARATOR + uuid.toString().replaceAll(HYPHEN_SEPARATOR, EMPTY)
 				+ HYPHEN_SEPARATOR + Math.abs(getRandomNumber());

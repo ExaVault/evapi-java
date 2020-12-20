@@ -269,4 +269,73 @@ public class ApiTestAssertionUtil {
 		assertThat(response).isNotNull();
 		assertThat(response.getResponseStatus()).isEqualTo(RESPONSE_CODE_200);
 	}
+
+	private static void validateUsersByAttribute(final UserCollectionResponse response, final String attributeName, final Object... args) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(RESPONSE_CODE_200);
+		final List<User> users = response.getData();
+		assertThat(users).isNotNull();
+		for (final User user : users) {
+			assertThat(user.getId()).isInstanceOf(Integer.class);
+			assertThat(user.getType()).isEqualTo(USER);
+			final UserAttributes attributes = user.getAttributes();
+			assertThat(attributes).isNotNull();
+			switch (attributeName) {
+				case USERNAME_ATTRIBUTE:
+					final String real = attributes.getUsername();
+					assertThat(real).isEqualTo((String) args[_0]);
+					break;
+				case NICKNAME_ATTR:
+					final String nickName = attributes.getNickname();
+					assertThat(nickName).isEqualTo((String) args[_0]);
+					break;
+				case EMAIL_ATTR:
+					final String email = attributes.getEmail();
+					assertThat(email).isEqualTo((String) args[_0]);
+					break;
+				case EMAIL_ATTR_FALSE:
+					final String email2 = attributes.getEmail();
+					assertThat(email2).isNotEqualTo(args[_0]);
+					break;
+				case ROLE_ATTR:
+					final UserAttributes.RoleEnum role = attributes.getRole();
+					assertThat(role.getValue()).isEqualTo((String) args[_0]);
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	public static void validateListOfUsersByUsername(final UserCollectionResponse response, final String username) {
+		validateUsersByAttribute(response, USERNAME, username);
+	}
+
+	public static void validateListOfUsersByNickname(final UserCollectionResponse response, final String nickname) {
+		validateUsersByAttribute(response, NICKNAME_ATTR, nickname);
+	}
+
+	public static void validateListOfUsersByEmail(final UserCollectionResponse response, final String email) {
+		validateUsersByAttribute(response, EMAIL_ATTR, email);
+	}
+
+	public static void validateListOfUsersByEmailFalse(final UserCollectionResponse response, final String email) {
+		validateUsersByAttribute(response, EMAIL_ATTR_FALSE, email);
+	}
+
+	public static void validateListOfUsersByRole(final UserCollectionResponse response, final String role) {
+		validateUsersByAttribute(response, ROLE_ATTR, role);
+	}
+
+	public static void validateListOfUsersByStatus(final UserCollectionResponse response, final int status) {
+		validateUsersByAttribute(response, STATUS_ATTR, status);
+	}
+
+	public static void validateListOfUsersByHomeDir(final UserCollectionResponse response, final String homeDir) {
+		validateUsersByAttribute(response, HOMEDIR_ATTR, homeDir);
+	}
+
+	public static void validateListOfUsersDefault(final UserCollectionResponse response) {
+		validateUsersByAttribute(response, EMPTY);
+	}
 }

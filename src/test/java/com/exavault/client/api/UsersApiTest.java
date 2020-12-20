@@ -36,7 +36,7 @@ public class UsersApiTest {
 			int id = _1;
 			try {
 				final AddUserRequestBody body = ApiTestData.createDefault();
-				final String userName = generateRandomUserName();
+				final String userName = generateRandomName();
 				body.setUsername(userName);
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -71,7 +71,7 @@ public class UsersApiTest {
 			int id = _1;
 			try {
 				final AddUserRequestBody body = ApiTestData.createDefault();
-				final String userName = generateRandomUserName();
+				final String userName = generateRandomName();
 				body.setUsername(userName);
 				body.setNickname(NICKNAME);
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
@@ -95,7 +95,7 @@ public class UsersApiTest {
 			int id = _1;
 			try {
 				final AddUserRequestBody body = ApiTestData.createAdmin();
-				final String userName = generateRandomUserName();
+				final String userName = generateRandomName();
 				body.setUsername(userName);
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -117,7 +117,7 @@ public class UsersApiTest {
 			int id = _1;
 			try {
 				final AddUserRequestBody body = ApiTestData.createDefault();
-				final String userName = generateRandomUserName();
+				final String userName = generateRandomName();
 				body.setUsername(userName);
 				body.setExpiration(EXPIRATION);
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
@@ -143,7 +143,7 @@ public class UsersApiTest {
 			int id = _1;
 			try {
 				final AddUserRequestBody body = ApiTestData.createDefault();
-				final String userName = generateRandomUserName();
+				final String userName = generateRandomName();
 				body.setUsername(userName);
 				body.setLocked(true);
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
@@ -167,7 +167,7 @@ public class UsersApiTest {
 			int id = _1;
 			try {
 				final AddUserRequestBody body = ApiTestData.createDefault();
-				final String userName = generateRandomUserName();
+				final String userName = generateRandomName();
 				body.setUsername(userName);
 				body.setOnboarding(true);
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
@@ -194,7 +194,7 @@ public class UsersApiTest {
 		public void deleteUserTest() throws ApiException {
 			try {
 				final AddUserRequestBody body = ApiTestData.createDefault();
-				final String userName = generateRandomUserName();
+				final String userName = generateRandomName();
 				body.setUsername(userName);
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				final int id = response.getData().getId();
@@ -230,7 +230,7 @@ public class UsersApiTest {
 			int id = _1;
 			try {
 				final AddUserRequestBody body = ApiTestData.createDefault();
-				final String userName = generateRandomUserName();
+				final String userName = generateRandomName();
 				body.setUsername(userName);
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -265,14 +265,6 @@ public class UsersApiTest {
 	@Nested
 	@DisplayName("Update a user, Method=PATCH, API=/users/{id} ")
 	class UpdateUser {
-		private int createUser() throws ApiException {
-			final AddUserRequestBody body = ApiTestData.createDefault();
-			final String userName = generateRandomUserName();
-			body.setUsername(userName);
-			final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
-			return response.getData().getId();
-		}
-
 		@Test
 		@DisplayName("Update username with a valid value")
 		public void updateUsernameTest() throws ApiException {
@@ -280,7 +272,7 @@ public class UsersApiTest {
 			try {
 				id = createUser();
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
-				final String randomUserName = generateRandomUserName();
+				final String randomUserName = generateRandomName();
 				body.setUsername(randomUserName);
 				//TODO: id type has to be updated.
 				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN,
@@ -374,7 +366,7 @@ public class UsersApiTest {
 			int id = _1;
 			try {
 				final AddUserRequestBody body2 = ApiTestData.createAdmin();
-				final String userName = generateRandomUserName();
+				final String userName = generateRandomName();
 				body2.setUsername(userName);
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body2);
 				id = response.getData().getId();
@@ -557,39 +549,451 @@ public class UsersApiTest {
 	class ListUsers {
 		@Test
 		@DisplayName("List Users by username only")
-		public void updateUsernameTest() throws ApiException {
+		public void listByUsername() throws ApiException {
+			int id = _1;
 			try {
-				//TODO: homeDir is homeResource - resource field
-				api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, USERNAME, null,
-						null, null, 0, null, null, 0, null, null,
+				final AddUserRequestBody body = ApiTestData.createDefault();
+				final String userName = generateRandomName();
+				body.setUsername(userName);
+				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response1.getData().getId();
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, userName, null,
+						null, null, null, null, null, null, null, null,
 						null);
+				assertThat(response.getTotalResults()).isEqualTo(_1);
+				validateListOfUsersByUsername(response, userName);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
-
+				if (id != _1) {
+					cleanup(id);
+				}
 			}
 		}
 
-	}
+		@Test
+		@DisplayName("List Users by nickname only")
+		public void listByNickname() throws ApiException {
+			int id = _1;
+			try {
+				final AddUserRequestBody body = ApiTestData.createDefault();
+				final String nickName = generateRandomName(); //random nickname
+				final String userName = generateRandomName();
+				body.setNickname(nickName);
+				body.setUsername(userName);
+				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response1.getData().getId();
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, nickName,
+						null, null, null, null, null, null, null, null,
+						null);
+				validateListOfUsersByNickname(response, nickName);
+				assertThat(response.getTotalResults()).isEqualTo(_1);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+			}
+		}
 
-	@Test
-	public void listUsersTest() throws ApiException {
-		final String evApiKey = null;
-		final String evAccessToken = null;
-		final String username = null;
-		final String nickname = null;
-		final String email = null;
-		final String role = null;
-		final Integer status = null;
-		final String homeDir = null;
-		final String search = null;
-		final Integer offset = null;
-		final String sort = null;
-		final Integer limit = null;
-		final String include = null;
-		//final UserCollectionResponse response = api.listUsers(evApiKey, evAccessToken, username, nickname, email, role, status, homeDir, search, offset, sort, limit, include);
+		@Test
+		@DisplayName("List Users by nickname wildcard")
+		public void listByNicknameWithWildcard() throws ApiException {
+			int id = _1;
+			try {
+				final AddUserRequestBody body = ApiTestData.createDefault();
+				final String nickName = generateRandomName(); //random nickname
+				final String userName = generateRandomName();
+				body.setNickname(nickName);
+				body.setUsername(userName);
+				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response1.getData().getId();
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, nickName.substring(_0, _10) + WILDCARD,
+						null, null, null, null, null, null, null, null,
+						null);
+				validateListOfUsersByNickname(response, nickName);
+				assertThat(response.getTotalResults()).isEqualTo(_1);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+			}
+		}
 
-		// TODO: test validations
+		@Test
+		@DisplayName("List Users by an invalid nickname")
+		public void listByInvalidNickname() {
+			try {
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, INVALID,
+						null, null, null, null, null, null, null, null,
+						null);
+				assertThat(response.getTotalResults()).isZero();
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by email only")
+		public void listByEmail() throws ApiException {
+			int id = _1;
+			try {
+				final AddUserRequestBody body = ApiTestData.createDefault();
+				final String userName = generateRandomName();
+				body.setEmail(TEST_EMAIL2);
+				body.setUsername(userName);
+				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response1.getData().getId();
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						TEST_EMAIL2, null, null, null, null, null, null, null,
+						null);
+				validateListOfUsersByEmail(response, TEST_EMAIL2);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by an invalid email")
+		public void listByInvalidEmail() {
+			try {
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						INVALID, null, null, null, null, null, null, null,
+						null);
+				assertThat(response.getTotalResults()).isZero();
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by email and username, email should be ignored")
+		public void listByEmailAndUsername() throws ApiException {
+			int id = _1;
+			try {
+				final AddUserRequestBody body = ApiTestData.createDefault();
+				final String userName = generateRandomName();
+				body.setEmail(TEST_EMAIL2);
+				body.setUsername(userName);
+				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response1.getData().getId();
+
+				//TODO: wrong error when we try to create a user with the same name already exist.
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, userName, null,
+						TEST_EMAIL3, null, null, null, null, null, null, null,
+						null); //email here should be ignored
+				assertThat(response.getTotalResults()).isEqualTo(_1);
+				validateListOfUsersByEmailFalse(response, TEST_EMAIL3); //none of the user should have this email
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by role")
+		public void listByRole() throws ApiException {
+			int id = _1;
+			try {
+				final AddUserRequestBody body = ApiTestData.createDefault();
+				final String userName = generateRandomName();
+				body.setUsername(userName);
+				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response1.getData().getId();
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						null, USER_ROLE, null, null, null, null, null, null,
+						null);
+				validateListOfUsersByRole(response, USER_ROLE);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by an invalid role")
+		public void listByInvalidRole() {
+			try {
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						null, INVALID, null, null, null, null, null, null,
+						null);
+				//TODO: what is a master role?
+				assertThat(response.getTotalResults()).isZero();
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by unlocked status")
+		public void listByUnlockStatus() throws ApiException {
+			int id = _1;
+			try {
+				final AddUserRequestBody body = ApiTestData.createDefault();
+				final String userName = generateRandomName();
+				body.setUsername(userName);
+				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response1.getData().getId();
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						null, null, _1, null, null, null, null, null,
+						null);
+				validateListOfUsersByStatus(response, _1);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by locked status")
+		public void listByLockedStatus() throws ApiException {
+			int id = _1;
+			try {
+				final AddUserRequestBody body = ApiTestData.createDefault();
+				final String userName = generateRandomName();
+				body.setUsername(userName);
+				body.setLocked(true);
+				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response1.getData().getId();
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						null, null, _0, null, null, null, null, null,
+						null);
+				assertThat(response.getTotalResults()).isEqualTo(_1);
+				validateListOfUsersByStatus(response, _0);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by invalid status")
+		public void listByInvalidStatus() {
+			try {
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						null, null, -_1, null, null, null, null, null,
+						null);
+				assertThat(response.getTotalResults()).isZero();
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by homeDir")
+		public void listByHomeDir() throws ApiException {
+			int id = _1;
+			try {
+				final AddUserRequestBody body = ApiTestData.createDefault();
+				final String userName = generateRandomName();
+				body.setUsername(userName);
+				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response1.getData().getId();
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						null, null, null, BASE_FOLDER_, null, null, null, null,
+						null);
+				validateListOfUsersByHomeDir(response, BASE_FOLDER_);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by search")
+		public void listBySearch() throws ApiException {
+			int id = _1;
+			try {
+				final AddUserRequestBody body = ApiTestData.createDefault();
+				final String userName = generateRandomName();
+				body.setUsername(userName);
+				body.setEmail(TEST_EMAIL3);
+				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response1.getData().getId();
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						null, null, null, null, TEST_EMAIL3, null, null, null,
+						null);
+				assertThat(response.getTotalResults()).isEqualTo(_1);
+				validateListOfUsersByEmail(response, TEST_EMAIL3);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by search with non existing value")
+		public void listBySearchWithNonExistingValue() {
+			try {
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						null, null, null, null, INVALID, null, null, null,
+						null);
+				assertThat(response.getTotalResults()).isZero();
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by valid offset")
+		public void listByValidOffset() throws ApiException {
+			int id = _1, id2 = _1;
+			try {
+				final AddUserRequestBody body = ApiTestData.createDefault();
+				final String userName = generateRandomName();
+				body.setUsername(userName);
+				body.setEmail(TEST_EMAIL3);
+				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response1.getData().getId();
+
+				final AddUserRequestBody body2 = ApiTestData.createDefault();
+				final String userName2 = generateRandomName();
+				body2.setUsername(userName2);
+				body2.setEmail(TEST_EMAIL3);
+				final UserResponse response2 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body2);
+				id2 = response2.getData().getId();
+
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						null, null, null, null, TEST_EMAIL3, _1, null, null,
+						null);
+				//TODO: offset does not work properly.
+				assertThat(response.getReturnedResults()).isEqualTo(_1);
+				validateListOfUsersByEmail(response, TEST_EMAIL3);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1 && id2 != _1) {
+					cleanup(id, id2);
+				}
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by an invalid offset")
+		public void listByInvalidOffset() {
+			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
+				@Override
+				public void call() throws ApiException {
+					api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+							null, null, null, null, null, -_1, null, null,
+							null);
+				}
+			}).isInstanceOf(ApiException.class)
+					.hasMessageContaining(BAD_REQUEST);
+		}
+
+		@Test
+		@DisplayName("List Users by sort")
+		public void listByValidSort() {
+			try {
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						null, null, null, null, null, null, USERNAME, null,
+						null);
+				validateListOfUsersDefault(response);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by an invalid sort")
+		public void listByInvalidSort() {
+			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
+				@Override
+				public void call() throws ApiException {
+					api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+							null, null, null, null, null, null, INVALID, null,
+							null);
+				}
+			}).isInstanceOf(ApiException.class)
+					.hasMessageContaining(BAD_REQUEST);
+		}
+
+		@Test
+		@DisplayName("List Users by valid limit")
+		public void listByValidLimit() throws ApiException {
+			int id = _1, id2 = _1;
+			try {
+				final AddUserRequestBody body = ApiTestData.createDefault();
+				final String userName = generateRandomName();
+				body.setUsername(userName);
+				body.setEmail(TEST_EMAIL3);
+				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response1.getData().getId();
+
+				final AddUserRequestBody body2 = ApiTestData.createDefault();
+				final String userName2 = generateRandomName();
+				body2.setUsername(userName2);
+				body2.setEmail(TEST_EMAIL3);
+				final UserResponse response2 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body2);
+				id2 = response2.getData().getId();
+
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						null, null, null, null, TEST_EMAIL3, null, null, _1,
+						null);
+				assertThat(response.getReturnedResults()).isEqualTo(_1);
+				validateListOfUsersByEmail(response, TEST_EMAIL3);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1 && id2 != _1) {
+					cleanup(id, id2);
+				}
+			}
+		}
+
+		@Test
+		@DisplayName("List Users by an invalid Limit")
+		public void listByInvalidLimit() {
+			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
+				@Override
+				public void call() throws ApiException {
+					api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+							null, null, null, null, null, null, null, -_1,
+							null);
+				}
+			}).isInstanceOf(ApiException.class)
+					.hasMessageContaining(BAD_REQUEST);
+		}
+
+		@Test
+		@DisplayName("List Users by include")
+		public void listByInclude() {
+			try {
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						null, null, null, null, null, null, null, null,
+						PARENT_RESOURCE);
+				validateListOfUsersDefault(response);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
+
 	}
 
 	public void cleanup(final int... ids) throws ApiException {
@@ -603,5 +1007,13 @@ public class UsersApiTest {
 		final DeleteResourcesRequestBody requestBody = new DeleteResourcesRequestBody();
 		requestBody.setResources(Arrays.asList(folderNames));
 		api.deleteResources(EV_API_KEY, EV_ACCESS_TOKEN, requestBody);
+	}
+
+	private int createUser() throws ApiException {
+		final AddUserRequestBody body = ApiTestData.createDefault();
+		final String userName = generateRandomName();
+		body.setUsername(userName);
+		final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
+		return response.getData().getId();
 	}
 }
