@@ -47,13 +47,13 @@ public class ActivityApiTest {
         OffsetDateTime startDate = null;
         OffsetDateTime endDate = null;
         String ipAddress = null;
-        String userName = null;
+        String username = null;
         String path = null;
         String type = null;
         Integer offset = null;
         Integer limit = null;
         String sort = null;
-        SessionActivityResponse response = api.getSessionLogs(evApiKey, evAccessToken, startDate, endDate, ipAddress, userName, path, type, offset, limit, sort);
+        SessionActivityResponse response = api.getSessionLogs(evApiKey, evAccessToken, startDate, endDate, ipAddress, username, path, type, offset, limit, sort);
 
         // TODO: test validations
     }
