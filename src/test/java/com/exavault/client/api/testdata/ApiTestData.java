@@ -84,6 +84,7 @@ public class ApiTestData {
 	public static final String TEST_EMAIL = "testuser@example.com";
 	public static final String TEST_EMAIL2 = "testuser2@example.com";
 	public static final String TEST_EMAIL3 = "testuser3@example.com";
+	public static final String TEST_EMAIL4 = "testuser3-dasgfashgfsf-asasjfashjkfashjkf@example.com";
 	public static final String TEST_PASSWORD = "testpaSsword8";
 	public static final String LA_TIMEZONE = "America/Los_Angeles";
 	public static final String DENVER_TIMEZONE = "America/Denver";
@@ -98,7 +99,7 @@ public class ApiTestData {
 	public static final String EMAIL_ATTR = "emailattr";
 	public static final String ROLE_ATTR = "roleattr";
 	public static final String STATUS_ATTR = "statusattr";
-	public static final String HOMEDIR_ATTR = "statusattr";
+	public static final String HOMEDIR_ATTR = "homdir";
 	public static final String EMAIL_ATTR_FALSE = "emailattr_false";
 	public static final String EXPIRATION = "2020-12-12";
 	public static final String EXPIRATION2 = "2020-12-13";

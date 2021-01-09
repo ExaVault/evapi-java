@@ -730,7 +730,6 @@ public class UsersApiTest {
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
 						null, INVALID, null, null, null, null, null, null,
 						null);
-				//TODO: what is a master role?
 				assertThat(response.getTotalResults()).isZero();
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
@@ -774,7 +773,6 @@ public class UsersApiTest {
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
 						null, null, _0, null, null, null, null, null,
 						null);
-				assertThat(response.getTotalResults()).isEqualTo(_1);
 				validateListOfUsersByStatus(response, _0);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
@@ -793,6 +791,7 @@ public class UsersApiTest {
 						null, null, -_1, null, null, null, null, null,
 						null);
 				assertThat(response.getTotalResults()).isZero();
+				//TODO: should be an error.
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			}
@@ -812,6 +811,7 @@ public class UsersApiTest {
 						null, null, null, BASE_FOLDER_, null, null, null, null,
 						null);
 				validateListOfUsersByHomeDir(response, BASE_FOLDER_);
+				//TODO: Not working currently
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -835,7 +835,6 @@ public class UsersApiTest {
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
 						null, null, null, null, TEST_EMAIL3, null, null, null,
 						null);
-				assertThat(response.getTotalResults()).isEqualTo(_1);
 				validateListOfUsersByEmail(response, TEST_EMAIL3);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
@@ -867,23 +866,23 @@ public class UsersApiTest {
 				final AddUserRequestBody body = ApiTestData.createDefault();
 				final String userName = generateRandomName();
 				body.setUsername(userName);
-				body.setEmail(TEST_EMAIL3);
+				body.setEmail(TEST_EMAIL4);
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
 
 				final AddUserRequestBody body2 = ApiTestData.createDefault();
 				final String userName2 = generateRandomName();
 				body2.setUsername(userName2);
-				body2.setEmail(TEST_EMAIL3);
+				body2.setEmail(TEST_EMAIL4);
 				final UserResponse response2 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body2);
 				id2 = response2.getData().getId();
 
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, null, null, null, TEST_EMAIL3, _1, null, null,
+						null, null, null, null, TEST_EMAIL4, _1, null, null,
 						null);
 				//TODO: offset does not work properly.
 				assertThat(response.getReturnedResults()).isEqualTo(_1);
-				validateListOfUsersByEmail(response, TEST_EMAIL3);
+				validateListOfUsersByEmail(response, TEST_EMAIL4);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -942,22 +941,22 @@ public class UsersApiTest {
 				final AddUserRequestBody body = ApiTestData.createDefault();
 				final String userName = generateRandomName();
 				body.setUsername(userName);
-				body.setEmail(TEST_EMAIL3);
+				body.setEmail(TEST_EMAIL4);
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
 
 				final AddUserRequestBody body2 = ApiTestData.createDefault();
 				final String userName2 = generateRandomName();
 				body2.setUsername(userName2);
-				body2.setEmail(TEST_EMAIL3);
+				body2.setEmail(TEST_EMAIL4);
 				final UserResponse response2 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body2);
 				id2 = response2.getData().getId();
 
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, null, null, null, TEST_EMAIL3, null, null, _1,
+						null, null, null, null, TEST_EMAIL4, null, null, _1,
 						null);
 				assertThat(response.getReturnedResults()).isEqualTo(_1);
-				validateListOfUsersByEmail(response, TEST_EMAIL3);
+				validateListOfUsersByEmail(response, TEST_EMAIL4);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -989,11 +988,11 @@ public class UsersApiTest {
 						null, null, null, null, null, null, null, null,
 						PARENT_RESOURCE);
 				validateListOfUsersDefault(response);
+				validateListOfUsersNonEmptyInclude(response);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			}
 		}
-
 	}
 
 	public void cleanup(final int... ids) throws ApiException {

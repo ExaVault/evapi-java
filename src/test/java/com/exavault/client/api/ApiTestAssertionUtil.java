@@ -301,6 +301,10 @@ public class ApiTestAssertionUtil {
 					final UserAttributes.RoleEnum role = attributes.getRole();
 					assertThat(role.getValue()).isEqualTo((String) args[_0]);
 					break;
+				case HOMEDIR_ATTR:
+					final String homePath = attributes.getHomePath();
+					assertThat(homePath).isEqualTo((String) args[_0]);
+					break;
 				default:
 					break;
 			}
@@ -317,6 +321,10 @@ public class ApiTestAssertionUtil {
 
 	public static void validateListOfUsersByEmail(final UserCollectionResponse response, final String email) {
 		validateUsersByAttribute(response, EMAIL_ATTR, email);
+	}
+
+	public static void validateListOfUsersNonEmptyInclude(final UserCollectionResponse response) {
+		assertThat(response.getIncluded()).isNotEmpty();
 	}
 
 	public static void validateListOfUsersByEmailFalse(final UserCollectionResponse response, final String email) {
