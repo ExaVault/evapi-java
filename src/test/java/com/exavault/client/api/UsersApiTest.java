@@ -200,7 +200,7 @@ public class UsersApiTest {
 				final int id = response.getData().getId();
 				//TODO: why id is Bigdecimal here? Amy will check on this
 				final EmptyResponse emptyResponse = api.deleteUser(BigDecimal.valueOf(id), EV_API_KEY, EV_ACCESS_TOKEN);
-				validDeleteResponse(emptyResponse);
+				validateDeleteResponse(emptyResponse);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
