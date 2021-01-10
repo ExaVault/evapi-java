@@ -486,4 +486,25 @@ public class ApiTestAssertionUtil {
 		assertThat(attributes.getPaths()).containsAll(body.getResources());
 	}
 
+	public static void validateDefaultEmailList(final EmailListResponse response, final AddEmailListRequestBody body) {
+		validateDefaultEmailList(response, body, RESPONSE_CODE_201);
+	}
+
+	public static void validateDefaultEmailList(final EmailListResponse response,
+												final AddEmailListRequestBody body, final int responseCode) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(responseCode);
+		final EmailList emailList = response.getData();
+		validateEachEmailGroup(body, emailList);
+	}
+
+	public static void validateEachEmailGroup(final AddEmailListRequestBody body, final EmailList emailList) {
+		assertThat(emailList.getId()).isInstanceOf(Integer.class);
+		assertThat(emailList.getType()).isEqualTo(EMAIL_LIST);
+		final EmailListAttributes attributes = emailList.getAttributes();
+		assertThat(attributes.getName()).isEqualTo(body.getName());
+		assertThat(attributes.getEmails()).containsAll(body.getEmails());
+	}
+
+
 }
