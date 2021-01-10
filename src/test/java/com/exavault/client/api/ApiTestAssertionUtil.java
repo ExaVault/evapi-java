@@ -467,4 +467,23 @@ public class ApiTestAssertionUtil {
 	public static void validateListNotificationByAction(final NotificationCollectionResponse response, final String newValue) {
 		validateNotificationsByAttribute(response, ACTION_ATTRIBUTE, newValue);
 	}
+
+	public static void validateDefaultShares(final ShareResponse response, final AddShareRequestBody body,
+											 final int responseCode) {
+		validateShares(response, body, responseCode, body.getType().getValue());
+	}
+
+	public static void validateShares(final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode, final String type) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(responseCode);
+		final Share share = response.getData();
+		assertThat(share.getId()).isInstanceOf(Integer.class);
+		assertThat(share.getType().getValue()).isEqualTo(SHARE);
+		final ShareAttributes attributes = share.getAttributes();
+		assertThat(attributes.getName()).isEqualTo(body.getName());
+		assertThat(attributes.getType().getValue()).isEqualTo(type);
+		assertThat(attributes.getPaths()).containsAll(body.getResources());
+	}
+
 }

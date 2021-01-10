@@ -4,6 +4,7 @@ import com.exavault.client.ApiClient;
 import com.exavault.client.ApiException;
 import com.exavault.client.api.ResourcesApi;
 import com.exavault.client.model.AddNotificationRequestBody;
+import com.exavault.client.model.AddShareRequestBody;
 import com.exavault.client.model.AddUserRequestBody;
 import com.exavault.client.model.UsersPermissions;
 
@@ -24,6 +25,7 @@ public class ApiTestData {
 	public static final String EV_ACCESS_TOKEN = "TOKEN";
 	public static final String EV_API_URL = "URL";
 	public static final String BASE_FOLDER_ = "/folder_for_test";
+	public static final String BASE_FOLDER2_ = "/folder_for_test2";
 	public static final String COPIED_FOLDER = "/copy/copied_%d";
 	public static final String TEST_FOLDER = BASE_FOLDER_ + "/test_%d";
 	public static final String DUMMY_ADD_FOLDER_TEST = "dummy_addFolder_Test";
@@ -123,11 +125,13 @@ public class ApiTestData {
 	public static final String ATTRIBUTE_NAME_IP = "IP";
 	public static final String WILDCARD = "*";
 	public static final String NOTIFICATION = "notification";
+	public static final String SHARE = "share";
 	public static final String MESSAGE = "Hello There! I am a notification";
 	public static final String FOLDER_TYPE = "folder";
 	public static final String TYPE = "type";
 	public static final String RESOURCE = "resource";
 	public static final String ALL = "all";
+	public static final String SHARE_NAME = "Share_Name";
 
 	private static ApiClient apiClient;
 	private static final Random random = new Random();
@@ -238,6 +242,14 @@ public class ApiTestData {
 		requestBody.setAction(AddNotificationRequestBody.ActionEnum.UPLOAD);
 		requestBody.setUsernames(Collections.singletonList(VALID_USER_NAME));
 		requestBody.sendEmail(true);
+		return requestBody;
+	}
+
+	public static AddShareRequestBody createDefaultShare() {
+		final AddShareRequestBody requestBody = new AddShareRequestBody();
+		requestBody.setType(AddShareRequestBody.TypeEnum.SHARED_FOLDER);
+		requestBody.setName(generateRandomName());
+		requestBody.setResources(Collections.singletonList(BASE_FOLDER_));
 		return requestBody;
 	}
 }
