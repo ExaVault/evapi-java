@@ -55,6 +55,7 @@ public class ApiTestData {
 	public static final String DOCS = "docs";
 	public static final String DOC_1_PDF = "/doc1.pdf";
 	public static final String PARENT_RESOURCE = "parentResource";
+	public static final String HOME_RESOURCE = "homeResource";
 	public static final int _1 = 1;
 	public static final int _0 = 0;
 	public static final String INVALID = "invalid";
