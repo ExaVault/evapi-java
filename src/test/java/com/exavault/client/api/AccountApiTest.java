@@ -13,50 +13,68 @@
 package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
+import com.exavault.client.api.testdata.ApiTestData;
 import com.exavault.client.model.AccountResponse;
 import com.exavault.client.model.UpdateAccountRequestBody;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-/**
- * API tests for AccountApi
- */
-@Disabled
+import static com.exavault.client.api.ApiTestAssertionUtil.validateAccountSettings;
+import static com.exavault.client.api.testdata.ApiTestData.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.AssertionsKt.fail;
+
+@DisplayName("Account API Tests")
 public class AccountApiTest {
 
-	private final AccountApi api = new AccountApi();
+	private AccountApi api;
 
-	/**
-	 * Get account settings
-	 * <p>
-	 * Get settings for your account, such as current space usage, webhooks settings, welcome email content and IP address restrictions.
-	 *
-	 * @throws ApiException if the Api call fails
-	 */
-	@Test
-	public void getAccountTest() throws ApiException {
-		final String evApiKey = null;
-		final String evAccessToken = null;
-		final String include = null;
-		final AccountResponse response = api.getAccount(evApiKey, evAccessToken, include);
-
-		// TODO: test validations
+	@BeforeEach
+	public void setup() {
+		api = new AccountApi(ApiTestData.getApiClient());
 	}
 
-	/**
-	 * Update account settings
-	 * <p>
-	 * Update account settings, such as welcome email content, IP address restrictions, webhooks settings and secure password requirements.  **Notes**  - You must have [admin-level access](/docs/account/04-users/00-introduction#managing-user-roles-and-permissions) to change account settings.
-	 *
-	 * @throws ApiException if the Api call fails
-	 */
-	@Test
-	public void updateAccountTest() throws ApiException {
-		final String evApiKey = null;
-		final String evAccessToken = null;
-		final UpdateAccountRequestBody body = null;
-		final AccountResponse response = api.updateAccount(evApiKey, evAccessToken, body);
 
-		// TODO: test validations
+	@Nested
+	@DisplayName("Get account settings, Method=GET, API=/account ")
+	class GetAccount {
+		@Test
+		@DisplayName("Get account settings")
+		public void getAccountTest() {
+			try {
+				final AccountResponse response = api.getAccount(EV_API_KEY, EV_ACCESS_TOKEN, MASTER_USER);
+				validateAccountSettings(response);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
+
+		@Test
+		@DisplayName("Get account settings with invalid include")
+		public void getAccountTestWithInvalidInclude() {
+			try {
+				final AccountResponse response = api.getAccount(EV_API_KEY, EV_ACCESS_TOKEN, INVALID);
+				assertThat(response.getIncluded()).isEmpty();
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
+	}
+
+	@Nested
+	@DisplayName("Update account settings, Method=PATCH, API=/account ")
+	class UpdateAccount {
+		@Test
+		@DisplayName("Update account settings")
+		public void updateAccountTest() {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
 	}
 }

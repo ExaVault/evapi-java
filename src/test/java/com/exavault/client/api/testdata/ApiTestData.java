@@ -129,6 +129,9 @@ public class ApiTestData {
 	public static final String SHARE_NAME = "Share_Name";
 	public static final String EMAIL_LIST_NAME = "EMAIL_LIST_NAME";
 	public static final String EMAIL_LIST = "emailList";
+	public static final String ACCOUNT = "account";
+	public static final String MASTER_USER = "masterUser";
+	public static final String OWNER_USER = "ownerUser";
 
 	private static ApiClient apiClient;
 	private static final Random random = new Random();
