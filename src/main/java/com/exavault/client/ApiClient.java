@@ -779,7 +779,8 @@ public class ApiClient {
         String contentDisposition = response.header("Content-Disposition");
         if (contentDisposition != null && !"".equals(contentDisposition)) {
             // Get filename from the Content-Disposition header.
-            Pattern pattern = Pattern.compile("filename=['\"]?([^'\"\\s]+)['\"]?");
+            /* EV-CUSTOM change the pattern to look for the UTF-8 indicator */
+            Pattern pattern = Pattern.compile("UTF-8'['\"]?([^'\"\\s]+)['\"]?");
             Matcher matcher = pattern.matcher(contentDisposition);
             if (matcher.find()) {
                 filename = sanitizeFilename(matcher.group(1));
@@ -805,7 +806,8 @@ public class ApiClient {
         }
 
         if (tempFolderPath == null)
-            return File.createTempFile(prefix, suffix);
+            /* EV-CUSTOM change the call to create the file w/ the given name */
+            return new File(filename);
         else
             return File.createTempFile(prefix, suffix, new File(tempFolderPath));
     }

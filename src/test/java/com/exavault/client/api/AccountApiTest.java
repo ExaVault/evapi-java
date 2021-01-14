@@ -15,54 +15,48 @@ package com.exavault.client.api;
 import com.exavault.client.ApiException;
 import com.exavault.client.model.AccountResponse;
 import com.exavault.client.model.UpdateAccountRequestBody;
-import org.junit.Test;
-import org.junit.Ignore;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * API tests for AccountApi
  */
-@Ignore
+@Disabled
 public class AccountApiTest {
 
-    private final AccountApi api = new AccountApi();
+	private final AccountApi api = new AccountApi();
 
-    /**
-     * Get account settings
-     *
-     * Get settings for your account, such as current space usage, webhooks settings, welcome email content and IP address restrictions.
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void getAccountTest() throws ApiException {
-        String evApiKey = null;
-        String evAccessToken = null;
-        String include = null;
-        AccountResponse response = api.getAccount(evApiKey, evAccessToken, include);
+	/**
+	 * Get account settings
+	 * <p>
+	 * Get settings for your account, such as current space usage, webhooks settings, welcome email content and IP address restrictions.
+	 *
+	 * @throws ApiException if the Api call fails
+	 */
+	@Test
+	public void getAccountTest() throws ApiException {
+		final String evApiKey = null;
+		final String evAccessToken = null;
+		final String include = null;
+		final AccountResponse response = api.getAccount(evApiKey, evAccessToken, include);
 
-        // TODO: test validations
-    }
-    /**
-     * Update account settings
-     *
-     * Update account settings, such as welcome email content, IP address restrictions, webhooks settings and secure password requirements.  **Notes**  - You must have [admin-level access](/docs/account/04-users/00-introduction#managing-user-roles-and-permissions) to change account settings.
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void updateAccountTest() throws ApiException {
-        String evApiKey = null;
-        String evAccessToken = null;
-        UpdateAccountRequestBody body = null;
-        AccountResponse response = api.updateAccount(evApiKey, evAccessToken, body);
+		// TODO: test validations
+	}
 
-        // TODO: test validations
-    }
+	/**
+	 * Update account settings
+	 * <p>
+	 * Update account settings, such as welcome email content, IP address restrictions, webhooks settings and secure password requirements.  **Notes**  - You must have [admin-level access](/docs/account/04-users/00-introduction#managing-user-roles-and-permissions) to change account settings.
+	 *
+	 * @throws ApiException if the Api call fails
+	 */
+	@Test
+	public void updateAccountTest() throws ApiException {
+		final String evApiKey = null;
+		final String evAccessToken = null;
+		final UpdateAccountRequestBody body = null;
+		final AccountResponse response = api.updateAccount(evApiKey, evAccessToken, body);
+
+		// TODO: test validations
+	}
 }
