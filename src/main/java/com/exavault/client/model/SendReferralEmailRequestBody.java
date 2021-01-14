@@ -67,7 +67,7 @@ public class SendReferralEmailRequestBody {
    * Get message
    * @return message
   **/
-  @Schema(required = true, description = "")
+  @Schema(example = "I use ExaVault for secure file sending, and so should you. Follow my link to sign up for a trial.", required = true, description = "")
   public String getMessage() {
     return message;
   }

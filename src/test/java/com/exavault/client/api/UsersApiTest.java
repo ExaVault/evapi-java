@@ -14,7 +14,6 @@ package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
 import com.exavault.client.model.AddUserRequestBody;
-import java.math.BigDecimal;
 import com.exavault.client.model.EmptyResponse;
 import com.exavault.client.model.UpdateUserRequestBody;
 import com.exavault.client.model.UserCollectionResponse;
@@ -62,7 +61,7 @@ public class UsersApiTest {
      */
     @Test
     public void deleteUserTest() throws ApiException {
-        BigDecimal id = null;
+        Integer id = null;
         String evApiKey = null;
         String evAccessToken = null;
         EmptyResponse response = api.deleteUser(id, evApiKey, evAccessToken);
@@ -79,7 +78,7 @@ public class UsersApiTest {
      */
     @Test
     public void getUserByIdTest() throws ApiException {
-        BigDecimal id = null;
+        Integer id = null;
         String evApiKey = null;
         String evAccessToken = null;
         String include = null;
@@ -100,17 +99,17 @@ public class UsersApiTest {
         String evApiKey = null;
         String evAccessToken = null;
         String username = null;
+        String homeResource = null;
         String nickname = null;
         String email = null;
         String role = null;
         Integer status = null;
-        String homeDir = null;
         String search = null;
         Integer offset = null;
         String sort = null;
         Integer limit = null;
         String include = null;
-        UserCollectionResponse response = api.listUsers(evApiKey, evAccessToken, username, nickname, email, role, status, homeDir, search, offset, sort, limit, include);
+        UserCollectionResponse response = api.listUsers(evApiKey, evAccessToken, username, homeResource, nickname, email, role, status, search, offset, sort, limit, include);
 
         // TODO: test validations
     }
@@ -126,7 +125,7 @@ public class UsersApiTest {
     public void updateUserTest() throws ApiException {
         String evApiKey = null;
         String evAccessToken = null;
-        BigDecimal id = null;
+        Integer id = null;
         UpdateUserRequestBody body = null;
         UserResponse response = api.updateUser(evApiKey, evAccessToken, id, body);
 

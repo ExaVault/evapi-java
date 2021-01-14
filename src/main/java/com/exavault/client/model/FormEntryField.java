@@ -63,7 +63,7 @@ public class FormEntryField {
    * Field value
    * @return value
   **/
-  @Schema(example = "example@email.com", description = "Field value")
+  @Schema(example = "example@example.com", description = "Field value")
   public String getValue() {
     return value;
   }

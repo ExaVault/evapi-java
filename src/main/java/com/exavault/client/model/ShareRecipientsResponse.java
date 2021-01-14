@@ -70,7 +70,7 @@ public class ShareRecipientsResponse {
    * Get data
    * @return data
   **/
-  @Schema(example = "[\"test+3@exavault.com\",\"test+4@exavault.com\"]", description = "")
+  @Schema(example = "[\"test+3@example.com\",\"test+4@example.com\"]", description = "")
   public List<String> getData() {
     return data;
   }

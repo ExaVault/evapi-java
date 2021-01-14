@@ -44,7 +44,7 @@ public class AddUserRequestBody {
   private String password = null;
 
   /**
-   * The type of user to create. Note that admin users cannot have a &#x60;homeResource&#x60; other than &#x27;/&#x27;, and will have full permissions, but you must provide at least \&quot;download,upload,list,delete\&quot; in the &#x60;permissions&#x60; parameter.
+   * The type of user to create, either **user** or **admin**.
    */
   @JsonAdapter(RoleEnum.Adapter.class)
   public enum RoleEnum {
@@ -147,10 +147,10 @@ public class AddUserRequestBody {
   }
 
    /**
-   * Resource identifier for the user&#x27;s home folder. See details on [how to specify resources](#section/Identifying-Resources) above.  The user will be locked to this directory and unable to move &#x27;up&#x27; in the account. If the folder does not exist in the account, it will be created when the user is created.   This setting is ignored for users with the &#x60;role&#x60; **admin**.
+   * Resource identifier for the user&#x27;s home folder. See details on [how to specify resources](#section/Identifying-Resources) above.  The user will be locked to this directory and unable to move &#x27;up&#x27; in the account. If the folder does not exist in the account, it will be created when the user is created.   Users with the &#x60;role&#x60; **admin** should have their homeResource set to &#x27;/&#x27;
    * @return homeResource
   **/
-  @Schema(example = "/", required = true, description = "Resource identifier for the user's home folder. See details on [how to specify resources](#section/Identifying-Resources) above.  The user will be locked to this directory and unable to move 'up' in the account. If the folder does not exist in the account, it will be created when the user is created.   This setting is ignored for users with the `role` **admin**.")
+  @Schema(example = "/", required = true, description = "Resource identifier for the user's home folder. See details on [how to specify resources](#section/Identifying-Resources) above.  The user will be locked to this directory and unable to move 'up' in the account. If the folder does not exist in the account, it will be created when the user is created.   Users with the `role` **admin** should have their homeResource set to '/'")
   public String getHomeResource() {
     return homeResource;
   }
@@ -168,7 +168,7 @@ public class AddUserRequestBody {
    * Email address for the user
    * @return email
   **/
-  @Schema(example = "testuser@email.com", required = true, description = "Email address for the user")
+  @Schema(example = "testuser@example.com", required = true, description = "Email address for the user")
   public String getEmail() {
     return email;
   }
@@ -201,10 +201,10 @@ public class AddUserRequestBody {
   }
 
    /**
-   * The type of user to create. Note that admin users cannot have a &#x60;homeResource&#x60; other than &#x27;/&#x27;, and will have full permissions, but you must provide at least \&quot;download,upload,list,delete\&quot; in the &#x60;permissions&#x60; parameter.
+   * The type of user to create, either **user** or **admin**.
    * @return role
   **/
-  @Schema(example = "user", required = true, description = "The type of user to create. Note that admin users cannot have a `homeResource` other than '/', and will have full permissions, but you must provide at least \"download,upload,list,delete\" in the `permissions` parameter.")
+  @Schema(example = "user", required = true, description = "The type of user to create, either **user** or **admin**.")
   public RoleEnum getRole() {
     return role;
   }
