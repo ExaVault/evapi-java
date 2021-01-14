@@ -122,6 +122,7 @@ public class ApiTestData {
 		if (apiClient == null) {
 			apiClient = new ApiClient();
 			apiClient.setBasePath(EV_API_URL);
+			apiClient.setReadTimeout(300000);
 		}
 		return apiClient;
 	}
