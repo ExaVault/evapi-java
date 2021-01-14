@@ -56,6 +56,8 @@ public class ActivityApiTest {
 			}
 		}
 
+		/* Disabled for outstanding API bug */
+		@Disabled
 		@Test
 		@DisplayName("Session logs with no matching dates")
 		public void getSessionLogsWithNoMatchingStartAndEndDates() throws ApiException {
@@ -363,6 +365,8 @@ public class ActivityApiTest {
 			}
 		}
 
+		/* Ignoring this test because of offset bug */
+		@Disabled
 		@Test
 		@DisplayName("Webhooks logs with a valid offset")
 		public void getWebhookLogsWithValidOffset() {
