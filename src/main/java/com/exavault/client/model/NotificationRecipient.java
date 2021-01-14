@@ -88,7 +88,7 @@ public class NotificationRecipient {
    * Recipient email.
    * @return email
   **/
-  @Schema(example = "exampleuser@exavault.com", description = "Recipient email.")
+  @Schema(example = "exampleuser@example.com", description = "Recipient email.")
   public String getEmail() {
     return email;
   }
