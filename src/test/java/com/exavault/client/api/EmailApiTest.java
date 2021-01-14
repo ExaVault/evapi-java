@@ -25,23 +25,6 @@ public class EmailApiTest {
 		api = new EmailApi(ApiTestData.getApiClient());
 	}
 
-
-	@Nested
-	@DisplayName("Resend welcome email to specific user, Method=POST, API=/email/welcome/{username} ")
-	class ResentEmail {
-		@Test
-		@DisplayName("Resend welcome email to specific user")
-		public void resendEmailTest() throws ApiException {
-			try {
-				final SendReferralEmailRequestBody body = new SendReferralEmailRequestBody();
-				//TODO: how to set username? is it applicable here?
-				final EmptyResponse response = api.sendReferralEmail(EV_API_KEY, EV_ACCESS_TOKEN, body);
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			}
-		}
-	}
-
 	@Nested
 	@DisplayName("Send referral email to a given address, Method=POST, API=/email/referral")
 	class SendReferral {
