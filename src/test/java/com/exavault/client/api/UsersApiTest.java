@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.*;
 public class UsersApiTest {
 	private UsersApi api;
 
+
 	@BeforeEach
 	public void setup() {
 		api = new UsersApi(ApiTestData.getApiClient());
@@ -568,8 +569,8 @@ public class UsersApiTest {
 				body.setUsername(userName);
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
-				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, nickName,
-						null, null, null, null, null, null, null, null,
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						nickName, null, null, null, null, null, null, null,
 						null);
 				validateListOfUsersByNickname(response, nickName);
 				assertThat(response.getTotalResults()).isEqualTo(_1);
@@ -594,8 +595,8 @@ public class UsersApiTest {
 				body.setUsername(userName);
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
-				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, nickName.substring(_0, _10) + WILDCARD,
-						null, null, null, null, null, null, null, null,
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						nickName.substring(_0, _10) + WILDCARD, null, null, null, null, null, null, null,
 						null);
 				validateListOfUsersByNickname(response, nickName);
 				assertThat(response.getTotalResults()).isEqualTo(_1);
@@ -612,8 +613,8 @@ public class UsersApiTest {
 		@DisplayName("List Users by an invalid nickname")
 		public void listByInvalidNickname() {
 			try {
-				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, INVALID,
-						null, null, null, null, null, null, null, null,
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						INVALID, null, null, null, null, null, null, null,
 						null);
 				assertThat(response.getTotalResults()).isZero();
 			} catch (final ApiException e) {
@@ -633,7 +634,7 @@ public class UsersApiTest {
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						TEST_EMAIL2, null, null, null, null, null, null, null,
+						null, TEST_EMAIL2, null, null, null, null, null, null,
 						null);
 				validateListOfUsersByEmail(response, TEST_EMAIL2);
 			} catch (final ApiException e) {
@@ -650,7 +651,7 @@ public class UsersApiTest {
 		public void listByInvalidEmail() {
 			try {
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						INVALID, null, null, null, null, null, null, null,
+						null, INVALID, null, null, null, null, null, null,
 						null);
 				assertThat(response.getTotalResults()).isZero();
 			} catch (final ApiException e) {
@@ -672,7 +673,7 @@ public class UsersApiTest {
 
 				//TODO: wrong error when we try to create a user with the same name already exist.
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, userName, null,
-						TEST_EMAIL3, null, null, null, null, null, null, null,
+						null, TEST_EMAIL4, null, null, null, null, null, null,
 						null); //email here should be ignored
 				assertThat(response.getTotalResults()).isEqualTo(_1);
 				validateListOfUsersByEmailFalse(response, TEST_EMAIL3); //none of the user should have this email
@@ -863,9 +864,9 @@ public class UsersApiTest {
 				id2 = response2.getData().getId();
 
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, TEST_EMAIL4, null, null, null,  _1, null, null,
+						null, TEST_EMAIL4, null, null, null,  _1, null, _1,
 						null);
-				//TODO: offset does not work properly.
+				//TODO: offset does not work properly, requires a limit
 				assertThat(response.getReturnedResults()).isEqualTo(_1);
 				validateListOfUsersByEmail(response, TEST_EMAIL4);
 			} catch (final ApiException e) {
@@ -970,7 +971,7 @@ public class UsersApiTest {
 			try {
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
 						null, null, null, null, null, null, null, null,
-						PARENT_RESOURCE);
+						HOME_RESOURCE);
 				validateListOfUsersDefault(response);
 				validateListOfUsersNonEmptyInclude(response);
 			} catch (final ApiException e) {
