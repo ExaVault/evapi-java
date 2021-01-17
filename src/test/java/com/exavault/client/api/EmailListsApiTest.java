@@ -3,6 +3,7 @@ package com.exavault.client.api;
 import com.exavault.client.ApiException;
 import com.exavault.client.api.testdata.ApiTestData;
 import com.exavault.client.model.*;
+import com.google.gson.internal.LinkedTreeMap;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -105,10 +106,13 @@ public class EmailListsApiTest {
 				final AddEmailListRequestBody body = defaultEmailList();
 				final EmailListResponse response = api.addEmailList(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
-				//TODO: Included does not work?
-				final EmailListResponse response1 = api.getEmailListById(EV_API_KEY, EV_ACCESS_TOKEN, id, PARENT_PATH);
+				final EmailListResponse response1 = api.getEmailListById(EV_API_KEY, EV_ACCESS_TOKEN, id, OWNER_USER);
 				validateDefaultEmailList(response1, body, RESPONSE_CODE_200);
 				assertThat(response1.getIncluded()).isNotEmpty();
+				for (final Object o : response.getIncluded()) {
+					final LinkedTreeMap map = (LinkedTreeMap) o;
+					assertThat(map.get(TYPE)).isEqualTo(USER);
+				}
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -196,13 +200,16 @@ public class EmailListsApiTest {
 				final AddEmailListRequestBody body = defaultEmailList();
 				final EmailListResponse response = api.addEmailList(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
-				//TODO : what is the difference here?
-				final EmailListCollectionResponse response1 = api.getEmailLists(EV_API_KEY, EV_ACCESS_TOKEN, "ownerUser");
+				final EmailListCollectionResponse response1 = api.getEmailLists(EV_API_KEY, EV_ACCESS_TOKEN, OWNER_USER);
 				assertThat(response1).isNotNull();
 				assertThat(response1.getResponseStatus()).isEqualTo(RESPONSE_CODE_200);
 				final List<EmailList> data = response1.getData();
 				for (final EmailList emailList : data) {
 					validateEachEmailGroup(body, emailList);
+					for (final Object o : response.getIncluded()) {
+						final LinkedTreeMap map = (LinkedTreeMap) o;
+						assertThat(map.get(TYPE)).isEqualTo(USER);
+					}
 				}
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);

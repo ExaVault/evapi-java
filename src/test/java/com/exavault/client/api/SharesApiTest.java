@@ -57,7 +57,7 @@ public class SharesApiTest {
 		@Test
 		@DisplayName("Create a shared_folder share with multiple resources")
 		public void sharedFolderWithMultipleResources() {
-			//TODO: Should it fail or not? Multiple resource for shared_folder not allowed.
+			//TODO: Should it fail or not? Multiple resource for shared_folder not allowed.Asana task added
 			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
 				@Override
 				public void call() throws ApiException {
@@ -117,7 +117,6 @@ public class SharesApiTest {
 				createResource();
 				final AddShareRequestBody body = ApiTestData.createDefaultShare();
 				body.setType(AddShareRequestBody.TypeEnum.SEND);
-				//TODO: how does send actually works?
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
@@ -153,14 +152,14 @@ public class SharesApiTest {
 				createResource();
 				final AddShareRequestBody body = ApiTestData.createDefaultShare();
 				final AccessMode accessMode = new AccessMode();
-				accessMode.setDelete(true);
+				accessMode.setDownload(true);
 				body.setAccessMode(accessMode);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
-				//TODO: how does access mode work? does it work on folder level or send or receive?
+				//TODO: how does access mode work? does it work on folder level or send or receive? API has to be updated
 				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
 				final ShareAttributes attributes = response.getData().getAttributes();
-				assertThat(attributes.getAccessMode().isDelete()).isTrue();
+				assertThat(attributes.getAccessMode().isDownload()).isTrue();
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -200,7 +199,6 @@ public class SharesApiTest {
 		final AddFolderRequestBody requestBody = new AddFolderRequestBody();
 		requestBody.setPath(BASE_FOLDER_);
 		resourcesApi.addFolder(EV_API_KEY, EV_ACCESS_TOKEN, requestBody);
-
 	}
 
 	private void createResource2() throws ApiException {

@@ -22,9 +22,9 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * An object containing name/value pairs for each permission. Any permission that is not passed will be set to &#x60;false&#x60; by default. Note that users will be unable to see any files in the account unless you include &#x60;list&#x60; permission.
+ * An object containing name/value pairs for each permission. Any permission that is not passed will be set to &#x60;false&#x60; by default. Note that users will be unable to see any files in the account unless you include &#x60;list&#x60; permission. When creating a user with the &#x60;role&#x60; **admin**, you should set all of the permissions to &#x60;true&#x60;
  */
-@Schema(description = "An object containing name/value pairs for each permission. Any permission that is not passed will be set to `false` by default. Note that users will be unable to see any files in the account unless you include `list` permission.")
+@Schema(description = "An object containing name/value pairs for each permission. Any permission that is not passed will be set to `false` by default. Note that users will be unable to see any files in the account unless you include `list` permission. When creating a user with the `role` **admin**, you should set all of the permissions to `true`")
 
 public class UsersPermissions {
   @SerializedName("list")
