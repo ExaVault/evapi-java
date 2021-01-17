@@ -4,7 +4,10 @@ import com.exavault.client.ApiException;
 import com.exavault.client.api.testdata.ApiTestData;
 import com.exavault.client.model.*;
 import org.assertj.core.api.ThrowableAssert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.text.ParseException;
@@ -86,8 +89,6 @@ public class ResourcesApiTest {
 	@Nested
 	@DisplayName("Compress resources, Method=POST, API=/resources/compress")
 	class CompressResources {
-		/* Ignoring test because of timezone issues if local time is behind account time */
-		@Disabled
 		@Test
 		@DisplayName("Files are uploaded before, when compress files is called, zip with default name is created")
 		public void compressFilesTest() throws ApiException {
@@ -171,7 +172,7 @@ public class ResourcesApiTest {
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
-				cleanup(COPY);
+				cleanup(COPY, BASE_FOLDER_);
 			}
 		}
 
