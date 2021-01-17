@@ -20,9 +20,14 @@ import java.util.UUID;
 public class ApiTestData {
 
 	public static final String EV_API_KEY_BAD = "stagingtest-bad-name";
-	public static final String EV_API_KEY = "KEY";
+	/*public static final String EV_API_KEY = "KEY";
 	public static final String EV_ACCESS_TOKEN = "TOKEN";
-	public static final String EV_API_URL = "URL";
+	public static final String EV_API_URL = "URL";*/
+
+	public static final String EV_API_KEY = "evapi-docs-java-d3e28fc300621abc41b067a4b66cff";
+	public static final String EV_ACCESS_TOKEN = "eeb4512a4cddba9c13495979d6718283ae0c4dd77a6ff879b504d1952e12c369";
+	public static final String EV_API_URL = "https://evapi-docs-java.exavault.com/api/v2";
+
 	public static final String BASE_FOLDER_ = "/folder_for_test";
 	public static final String COPIED_FOLDER = "/copy/copied_%d";
 	public static final String TEST_FOLDER = BASE_FOLDER_ + "/test_%d";
@@ -57,6 +62,7 @@ public class ApiTestData {
 	public static final String DOCS = "docs";
 	public static final String DOC_1_PDF = "/doc1.pdf";
 	public static final String PARENT_RESOURCE = "parentResource";
+	public static final String HOME_RESOURCE = "homeResource";
 	public static final int _1 = 1;
 	public static final int _0 = 0;
 	public static final String INVALID = "invalid";
@@ -136,6 +142,7 @@ public class ApiTestData {
 		if (apiClient == null) {
 			apiClient = new ApiClient();
 			apiClient.setBasePath(EV_API_URL);
+			apiClient.setReadTimeout(300000);
 		}
 		return apiClient;
 	}

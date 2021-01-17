@@ -67,7 +67,7 @@ public class AddEmailListRequestBody {
    * Array of email addresses to include in the email list. 
    * @return emails
   **/
-  @Schema(example = "[\"ykravchuk@exavault.com\",\"jdoe@exavault.com\"]", required = true, description = "Array of email addresses to include in the email list. ")
+  @Schema(example = "[\"johns@example.com\",\"jdoe@example.com\"]", required = true, description = "Array of email addresses to include in the email list. ")
   public List<String> getEmails() {
     return emails;
   }

@@ -6,7 +6,6 @@ import org.threeten.bp.OffsetDateTime;
 
 import java.io.File;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 import static com.exavault.client.api.testdata.ApiTestData.*;
@@ -90,10 +89,6 @@ public class ApiTestAssertionUtil {
 		assertThat(path).endsWith(ZIP);
 		if (compressName != null) {
 			assertThat(path).endsWith(compressName);
-		} else {
-			final String timestamp = path.substring(path.lastIndexOf(PARENT_PATH) + _1, path.indexOf(_DOT));
-			final Date parse = dateTimeFormatter.parse(timestamp);
-			assertThat(parse).isBeforeOrEqualTo(new Date());
 		}
 	}
 
