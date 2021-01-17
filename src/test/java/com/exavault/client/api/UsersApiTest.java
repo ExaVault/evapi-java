@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,6 +20,7 @@ import static org.assertj.core.api.Assertions.*;
 @DisplayName("User API Tests")
 public class UsersApiTest {
 	private UsersApi api;
+
 
 	@BeforeEach
 	public void setup() {
@@ -198,8 +198,7 @@ public class UsersApiTest {
 				body.setUsername(userName);
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				final int id = response.getData().getId();
-				//TODO: why id is Bigdecimal here? Amy will check on this
-				final EmptyResponse emptyResponse = api.deleteUser(BigDecimal.valueOf(id), EV_API_KEY, EV_ACCESS_TOKEN);
+				final EmptyResponse emptyResponse = api.deleteUser(id, EV_API_KEY, EV_ACCESS_TOKEN);
 				validateDeleteResponse(emptyResponse);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
@@ -214,7 +213,7 @@ public class UsersApiTest {
 			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
 				@Override
 				public void call() throws ApiException {
-					api.deleteUser(BigDecimal.valueOf(INVALID_USER_ID), EV_API_KEY, EV_ACCESS_TOKEN);
+					api.deleteUser(INVALID_USER_ID, EV_API_KEY, EV_ACCESS_TOKEN);
 				}
 			}).isInstanceOf(ApiException.class)
 					.hasMessageContaining(NOT_FOUND);
@@ -234,8 +233,7 @@ public class UsersApiTest {
 				body.setUsername(userName);
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
-				//TODO: id type has to be fixed.
-				final UserResponse userById = api.getUserById(BigDecimal.valueOf(id), EV_API_KEY, EV_ACCESS_TOKEN, PARENT_RESOURCE);
+				final UserResponse userById = api.getUserById(id, EV_API_KEY, EV_ACCESS_TOKEN, PARENT_RESOURCE);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userById, RESPONSE_CODE_200);
 				validateUserAttributes(userAttributes, body, false);
 			} catch (final ApiException e) {
@@ -254,7 +252,7 @@ public class UsersApiTest {
 			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
 				@Override
 				public void call() throws ApiException {
-					api.getUserById(BigDecimal.valueOf(INVALID_USER_ID), EV_API_KEY, EV_ACCESS_TOKEN, PARENT_RESOURCE);
+					api.getUserById(INVALID_USER_ID, EV_API_KEY, EV_ACCESS_TOKEN, PARENT_RESOURCE);
 				}
 			}).isInstanceOf(ApiException.class)
 					.hasMessageContaining(NOT_FOUND);
@@ -274,9 +272,7 @@ public class UsersApiTest {
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
 				final String randomUserName = generateRandomName();
 				body.setUsername(randomUserName);
-				//TODO: id type has to be updated.
-				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN,
-						BigDecimal.valueOf(id), body);
+				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, id, body);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userResponse, RESPONSE_CODE_200);
 				assertThat(userAttributes.getUsername()).isEqualTo(randomUserName);
 			} catch (final ApiException e) {
@@ -302,7 +298,7 @@ public class UsersApiTest {
 				assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
 					@Override
 					public void call() throws ApiException {
-						api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, BigDecimal.valueOf(finalId), body);
+						api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, finalId, body);
 					}
 				}).isInstanceOf(ApiException.class)
 						.hasMessageContaining(NOT_FOUND);
@@ -324,8 +320,7 @@ public class UsersApiTest {
 				id = createUser();
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
 				body.setNickname(NICKNAME);
-				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN,
-						BigDecimal.valueOf(id), body);
+				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, id, body);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userResponse, RESPONSE_CODE_200);
 				assertThat(userAttributes.getNickname()).isEqualTo(NICKNAME);
 			} catch (final ApiException e) {
@@ -346,8 +341,7 @@ public class UsersApiTest {
 				id = createUser();
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
 				body.setHomeResource(COPIED_FOLDER);
-				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN,
-						BigDecimal.valueOf(id), body);
+				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, id, body);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userResponse, RESPONSE_CODE_200);
 				assertThat(userAttributes.getHomePath()).isEqualTo(COPIED_FOLDER);
 			} catch (final ApiException e) {
@@ -372,8 +366,7 @@ public class UsersApiTest {
 				id = response.getData().getId();
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
 				body.setHomeResource(COPIED_FOLDER); //TODO: it is ok to update home resource for admin?
-				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN,
-						BigDecimal.valueOf(id), body);
+				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, id, body);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userResponse, RESPONSE_CODE_200);
 				assertThat(userAttributes.getHomePath()).isEqualTo(COPIED_FOLDER);
 			} catch (final ApiException e) {
@@ -393,8 +386,7 @@ public class UsersApiTest {
 				id = createUser();
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
 				body.setEmail(TEST_EMAIL2);
-				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN,
-						BigDecimal.valueOf(id), body);
+				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, id, body);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userResponse, RESPONSE_CODE_200);
 				assertThat(userAttributes.getEmail()).isEqualTo(TEST_EMAIL2);
 			} catch (final ApiException e) {
@@ -415,8 +407,7 @@ public class UsersApiTest {
 				id = createUser(); //create an admin
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
 				body.setRole(UpdateUserRequestBody.RoleEnum.ADMIN); //normal user
-				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN,
-						BigDecimal.valueOf(id), body);
+				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, id, body);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userResponse, RESPONSE_CODE_200);
 				assertThat(userAttributes.getRole().getValue()).isEqualTo(UserAttributes.RoleEnum.ADMIN.getValue());
 			} catch (final ApiException e) {
@@ -436,11 +427,10 @@ public class UsersApiTest {
 			try {
 				id = createUser();
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
-				final UsersPermissions permissions = new UsersPermissions()
+				final UserPermissions permissions = new UserPermissions()
 						.changePassword(true);
 				body.setPermissions(permissions);
-				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN,
-						BigDecimal.valueOf(id), body);
+				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, id, body);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userResponse, RESPONSE_CODE_200);
 				assertThat(userAttributes.getPermissions().isChangePassword()).isTrue();
 			} catch (final ApiException e) {
@@ -461,8 +451,7 @@ public class UsersApiTest {
 				id = createUser();
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
 				body.setTimeZone(DENVER_TIMEZONE);
-				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN,
-						BigDecimal.valueOf(id), body);
+				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, id, body);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userResponse, RESPONSE_CODE_200);
 				assertThat(userAttributes.getTimeZone()).isEqualTo(DENVER_TIMEZONE);
 			} catch (final ApiException e) {
@@ -483,8 +472,7 @@ public class UsersApiTest {
 				id = createUser();
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
 				body.setExpiration(EXPIRATION2);
-				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN,
-						BigDecimal.valueOf(id), body);
+				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, id, body);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userResponse, RESPONSE_CODE_200);
 				final Date parse = dateTimeFormatter2.parse(userAttributes.getExpiration());
 				final Date parse1 = dateTimeFormatter2.parse(EXPIRATION2);
@@ -507,8 +495,7 @@ public class UsersApiTest {
 				id = createUser();
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
 				body.setLocked(true);
-				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN,
-						BigDecimal.valueOf(id), body);
+				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, id, body);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userResponse, RESPONSE_CODE_200);
 				assertThat(userAttributes.isLocked()).isTrue();
 			} catch (final ApiException e) {
@@ -529,8 +516,7 @@ public class UsersApiTest {
 				id = createUser();
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
 				body.setOnboarding(true);
-				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN,
-						BigDecimal.valueOf(id), body);
+				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, id, body);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userResponse, RESPONSE_CODE_200);
 				assertThat(userAttributes.isOnboarding()).isTrue();
 			} catch (final ApiException e) {
@@ -583,8 +569,8 @@ public class UsersApiTest {
 				body.setUsername(userName);
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
-				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, nickName,
-						null, null, null, null, null, null, null, null,
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						nickName, null, null, null, null, null, null, null,
 						null);
 				validateListOfUsersByNickname(response, nickName);
 				assertThat(response.getTotalResults()).isEqualTo(_1);
@@ -609,8 +595,8 @@ public class UsersApiTest {
 				body.setUsername(userName);
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
-				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, nickName.substring(_0, _10) + WILDCARD,
-						null, null, null, null, null, null, null, null,
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						nickName.substring(_0, _10) + WILDCARD, null, null, null, null, null, null, null,
 						null);
 				validateListOfUsersByNickname(response, nickName);
 				assertThat(response.getTotalResults()).isEqualTo(_1);
@@ -627,8 +613,8 @@ public class UsersApiTest {
 		@DisplayName("List Users by an invalid nickname")
 		public void listByInvalidNickname() {
 			try {
-				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, INVALID,
-						null, null, null, null, null, null, null, null,
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+						INVALID, null, null, null, null, null, null, null,
 						null);
 				assertThat(response.getTotalResults()).isZero();
 			} catch (final ApiException e) {
@@ -648,7 +634,7 @@ public class UsersApiTest {
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						TEST_EMAIL2, null, null, null, null, null, null, null,
+						null, TEST_EMAIL2, null, null, null, null, null, null,
 						null);
 				validateListOfUsersByEmail(response, TEST_EMAIL2);
 			} catch (final ApiException e) {
@@ -665,7 +651,7 @@ public class UsersApiTest {
 		public void listByInvalidEmail() {
 			try {
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						INVALID, null, null, null, null, null, null, null,
+						null, INVALID, null, null, null, null, null, null,
 						null);
 				assertThat(response.getTotalResults()).isZero();
 			} catch (final ApiException e) {
@@ -687,7 +673,7 @@ public class UsersApiTest {
 
 				//TODO: wrong error when we try to create a user with the same name already exist.
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, userName, null,
-						TEST_EMAIL3, null, null, null, null, null, null, null,
+						null, TEST_EMAIL4, null, null, null, null, null, null,
 						null); //email here should be ignored
 				assertThat(response.getTotalResults()).isEqualTo(_1);
 				validateListOfUsersByEmailFalse(response, TEST_EMAIL3); //none of the user should have this email
@@ -747,7 +733,7 @@ public class UsersApiTest {
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, null, _1, null, null, null, null, null,
+						null, null, null, _1, null, null, null, null,
 						null);
 				validateListOfUsersByStatus(response, _1);
 			} catch (final ApiException e) {
@@ -771,7 +757,7 @@ public class UsersApiTest {
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, null, _0, null, null, null, null, null,
+						null, null, null, _0, null, null, null, null,
 						null);
 				validateListOfUsersByStatus(response, _0);
 			} catch (final ApiException e) {
@@ -788,7 +774,7 @@ public class UsersApiTest {
 		public void listByInvalidStatus() {
 			try {
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, null, -_1, null, null, null, null, null,
+						null, null, null, -_1, null, null, null, null,
 						null);
 				assertThat(response.getTotalResults()).isZero();
 				//TODO: should be an error.
@@ -807,8 +793,8 @@ public class UsersApiTest {
 				body.setUsername(userName);
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
-				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, null, null, BASE_FOLDER_, null, null, null, null,
+				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, BASE_FOLDER_,
+						null, null, null, null, null, null, null, null,
 						null);
 				validateListOfUsersByHomeDir(response, BASE_FOLDER_);
 				//TODO: Not working currently
@@ -833,7 +819,7 @@ public class UsersApiTest {
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, null, null, null, TEST_EMAIL3, null, null, null,
+						null, TEST_EMAIL3, null, null, null, null, null, null,
 						null);
 				validateListOfUsersByEmail(response, TEST_EMAIL3);
 			} catch (final ApiException e) {
@@ -878,9 +864,9 @@ public class UsersApiTest {
 				id2 = response2.getData().getId();
 
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, null, null, null, TEST_EMAIL4, _1, null, null,
+						null, TEST_EMAIL4, null, null, null, _1, null, _1,
 						null);
-				//TODO: offset does not work properly.
+				//TODO: offset does not work properly, requires a limit
 				assertThat(response.getReturnedResults()).isEqualTo(_1);
 				validateListOfUsersByEmail(response, TEST_EMAIL4);
 			} catch (final ApiException e) {
@@ -951,9 +937,8 @@ public class UsersApiTest {
 				body2.setEmail(TEST_EMAIL4);
 				final UserResponse response2 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body2);
 				id2 = response2.getData().getId();
-
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, null, null, null, TEST_EMAIL4, null, null, _1,
+						null, TEST_EMAIL4, null, null, null, null, null, _1,
 						null);
 				assertThat(response.getReturnedResults()).isEqualTo(_1);
 				validateListOfUsersByEmail(response, TEST_EMAIL4);
@@ -986,7 +971,7 @@ public class UsersApiTest {
 			try {
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
 						null, null, null, null, null, null, null, null,
-						PARENT_RESOURCE);
+						HOME_RESOURCE);
 				validateListOfUsersDefault(response);
 				validateListOfUsersNonEmptyInclude(response);
 			} catch (final ApiException e) {
@@ -997,7 +982,7 @@ public class UsersApiTest {
 
 	public void cleanup(final int... ids) throws ApiException {
 		for (final int id : ids) {
-			api.deleteUser(BigDecimal.valueOf(id), EV_API_KEY, EV_ACCESS_TOKEN);
+			api.deleteUser(id, EV_API_KEY, EV_ACCESS_TOKEN);
 		}
 	}
 

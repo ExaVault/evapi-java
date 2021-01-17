@@ -27,7 +27,6 @@ import java.io.IOException;
 
 
 import com.exavault.client.model.AddUserRequestBody;
-import java.math.BigDecimal;
 import com.exavault.client.model.EmptyResponse;
 import com.exavault.client.model.UpdateUserRequestBody;
 import com.exavault.client.model.UserCollectionResponse;
@@ -208,7 +207,7 @@ public class UsersApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteUserCall(BigDecimal id, String evApiKey, String evAccessToken, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call deleteUserCall(Integer id, String evApiKey, String evAccessToken, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -255,7 +254,7 @@ public class UsersApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteUserValidateBeforeCall(BigDecimal id, String evApiKey, String evAccessToken, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteUserValidateBeforeCall(Integer id, String evApiKey, String evAccessToken, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new ApiException("Missing the required parameter 'id' when calling deleteUser(Async)");
@@ -287,7 +286,7 @@ public class UsersApi {
      * @return EmptyResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public EmptyResponse deleteUser(BigDecimal id, String evApiKey, String evAccessToken) throws ApiException {
+    public EmptyResponse deleteUser(Integer id, String evApiKey, String evAccessToken) throws ApiException {
         ApiResponse<EmptyResponse> resp = deleteUserWithHttpInfo(id, evApiKey, evAccessToken);
         return resp.getData();
     }
@@ -301,7 +300,7 @@ public class UsersApi {
      * @return ApiResponse&lt;EmptyResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<EmptyResponse> deleteUserWithHttpInfo(BigDecimal id, String evApiKey, String evAccessToken) throws ApiException {
+    public ApiResponse<EmptyResponse> deleteUserWithHttpInfo(Integer id, String evApiKey, String evAccessToken) throws ApiException {
         com.squareup.okhttp.Call call = deleteUserValidateBeforeCall(id, evApiKey, evAccessToken, null, null);
         Type localVarReturnType = new TypeToken<EmptyResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -317,7 +316,7 @@ public class UsersApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteUserAsync(BigDecimal id, String evApiKey, String evAccessToken, final ApiCallback<EmptyResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteUserAsync(Integer id, String evApiKey, String evAccessToken, final ApiCallback<EmptyResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -354,7 +353,7 @@ public class UsersApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getUserByIdCall(BigDecimal id, String evApiKey, String evAccessToken, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getUserByIdCall(Integer id, String evApiKey, String evAccessToken, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -403,7 +402,7 @@ public class UsersApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getUserByIdValidateBeforeCall(BigDecimal id, String evApiKey, String evAccessToken, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getUserByIdValidateBeforeCall(Integer id, String evApiKey, String evAccessToken, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new ApiException("Missing the required parameter 'id' when calling getUserById(Async)");
@@ -436,7 +435,7 @@ public class UsersApi {
      * @return UserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public UserResponse getUserById(BigDecimal id, String evApiKey, String evAccessToken, String include) throws ApiException {
+    public UserResponse getUserById(Integer id, String evApiKey, String evAccessToken, String include) throws ApiException {
         ApiResponse<UserResponse> resp = getUserByIdWithHttpInfo(id, evApiKey, evAccessToken, include);
         return resp.getData();
     }
@@ -451,7 +450,7 @@ public class UsersApi {
      * @return ApiResponse&lt;UserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<UserResponse> getUserByIdWithHttpInfo(BigDecimal id, String evApiKey, String evAccessToken, String include) throws ApiException {
+    public ApiResponse<UserResponse> getUserByIdWithHttpInfo(Integer id, String evApiKey, String evAccessToken, String include) throws ApiException {
         com.squareup.okhttp.Call call = getUserByIdValidateBeforeCall(id, evApiKey, evAccessToken, include, null, null);
         Type localVarReturnType = new TypeToken<UserResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -468,7 +467,7 @@ public class UsersApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getUserByIdAsync(BigDecimal id, String evApiKey, String evAccessToken, String include, final ApiCallback<UserResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getUserByIdAsync(Integer id, String evApiKey, String evAccessToken, String include, final ApiCallback<UserResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -499,11 +498,11 @@ public class UsersApi {
      * @param evApiKey API key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param username The username of the user you are looking for. Only entries with the same username as this will be in the list of results. Does not support wildcard searches. (optional)
+     * @param homeResource Resource identifier for user&#x27;s home directory. Does not support wildcard searches. (optional)
      * @param nickname Nickname to search for. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches. (optional)
      * @param email Email to search for. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches (optional)
      * @param role Types of users to include the list. Ignored if &#x60;username&#x60; is provided. Valid options are **admin**, **master** and **user** (optional)
      * @param status Whether a user is locked. Ignored if &#x60;username&#x60; is provided. **0** means user is locked, **1** means user is not locked.  (optional)
-     * @param homeDir Path for user&#x27;s home directory. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches. (optional)
      * @param search Searches the nickname, email, role and homeDir fields for the provided value. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches. (optional)
      * @param offset Starting user record in the result set. Can be used for pagination. (optional)
      * @param sort Sort order or matching users. You can sort by multiple columns by separating sort options with a comma; the sort will be applied in the order specified. The sort order for each sort field is ascending unless it is prefixed with a minus (“-“), in which case it will be descending.  Valid sort fields are: **nickname**, **username**, **email**, **homeDir** and **modified** (optional)
@@ -514,7 +513,7 @@ public class UsersApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listUsersCall(String evApiKey, String evAccessToken, String username, String nickname, String email, String role, Integer status, String homeDir, String search, Integer offset, String sort, Integer limit, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listUsersCall(String evApiKey, String evAccessToken, String username, String homeResource, String nickname, String email, String role, Integer status, String search, Integer offset, String sort, Integer limit, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -524,6 +523,8 @@ public class UsersApi {
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (username != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
+        if (homeResource != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("homeResource", homeResource));
         if (nickname != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("nickname", nickname));
         if (email != null)
@@ -532,8 +533,6 @@ public class UsersApi {
         localVarQueryParams.addAll(apiClient.parameterToPair("role", role));
         if (status != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("status", status));
-        if (homeDir != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("homeDir", homeDir));
         if (search != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("search", search));
         if (offset != null)
@@ -582,7 +581,7 @@ public class UsersApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listUsersValidateBeforeCall(String evApiKey, String evAccessToken, String username, String nickname, String email, String role, Integer status, String homeDir, String search, Integer offset, String sort, Integer limit, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listUsersValidateBeforeCall(String evApiKey, String evAccessToken, String username, String homeResource, String nickname, String email, String role, Integer status, String search, Integer offset, String sort, Integer limit, String include, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling listUsers(Async)");
@@ -592,7 +591,7 @@ public class UsersApi {
             throw new ApiException("Missing the required parameter 'evAccessToken' when calling listUsers(Async)");
         }
         
-        com.squareup.okhttp.Call call = listUsersCall(evApiKey, evAccessToken, username, nickname, email, role, status, homeDir, search, offset, sort, limit, include, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listUsersCall(evApiKey, evAccessToken, username, homeResource, nickname, email, role, status, search, offset, sort, limit, include, progressListener, progressRequestListener);
         return call;
 
         
@@ -607,11 +606,11 @@ public class UsersApi {
      * @param evApiKey API key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param username The username of the user you are looking for. Only entries with the same username as this will be in the list of results. Does not support wildcard searches. (optional)
+     * @param homeResource Resource identifier for user&#x27;s home directory. Does not support wildcard searches. (optional)
      * @param nickname Nickname to search for. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches. (optional)
      * @param email Email to search for. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches (optional)
      * @param role Types of users to include the list. Ignored if &#x60;username&#x60; is provided. Valid options are **admin**, **master** and **user** (optional)
      * @param status Whether a user is locked. Ignored if &#x60;username&#x60; is provided. **0** means user is locked, **1** means user is not locked.  (optional)
-     * @param homeDir Path for user&#x27;s home directory. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches. (optional)
      * @param search Searches the nickname, email, role and homeDir fields for the provided value. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches. (optional)
      * @param offset Starting user record in the result set. Can be used for pagination. (optional)
      * @param sort Sort order or matching users. You can sort by multiple columns by separating sort options with a comma; the sort will be applied in the order specified. The sort order for each sort field is ascending unless it is prefixed with a minus (“-“), in which case it will be descending.  Valid sort fields are: **nickname**, **username**, **email**, **homeDir** and **modified** (optional)
@@ -620,8 +619,8 @@ public class UsersApi {
      * @return UserCollectionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public UserCollectionResponse listUsers(String evApiKey, String evAccessToken, String username, String nickname, String email, String role, Integer status, String homeDir, String search, Integer offset, String sort, Integer limit, String include) throws ApiException {
-        ApiResponse<UserCollectionResponse> resp = listUsersWithHttpInfo(evApiKey, evAccessToken, username, nickname, email, role, status, homeDir, search, offset, sort, limit, include);
+    public UserCollectionResponse listUsers(String evApiKey, String evAccessToken, String username, String homeResource, String nickname, String email, String role, Integer status, String search, Integer offset, String sort, Integer limit, String include) throws ApiException {
+        ApiResponse<UserCollectionResponse> resp = listUsersWithHttpInfo(evApiKey, evAccessToken, username, homeResource, nickname, email, role, status, search, offset, sort, limit, include);
         return resp.getData();
     }
 
@@ -631,11 +630,11 @@ public class UsersApi {
      * @param evApiKey API key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param username The username of the user you are looking for. Only entries with the same username as this will be in the list of results. Does not support wildcard searches. (optional)
+     * @param homeResource Resource identifier for user&#x27;s home directory. Does not support wildcard searches. (optional)
      * @param nickname Nickname to search for. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches. (optional)
      * @param email Email to search for. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches (optional)
      * @param role Types of users to include the list. Ignored if &#x60;username&#x60; is provided. Valid options are **admin**, **master** and **user** (optional)
      * @param status Whether a user is locked. Ignored if &#x60;username&#x60; is provided. **0** means user is locked, **1** means user is not locked.  (optional)
-     * @param homeDir Path for user&#x27;s home directory. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches. (optional)
      * @param search Searches the nickname, email, role and homeDir fields for the provided value. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches. (optional)
      * @param offset Starting user record in the result set. Can be used for pagination. (optional)
      * @param sort Sort order or matching users. You can sort by multiple columns by separating sort options with a comma; the sort will be applied in the order specified. The sort order for each sort field is ascending unless it is prefixed with a minus (“-“), in which case it will be descending.  Valid sort fields are: **nickname**, **username**, **email**, **homeDir** and **modified** (optional)
@@ -644,8 +643,8 @@ public class UsersApi {
      * @return ApiResponse&lt;UserCollectionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<UserCollectionResponse> listUsersWithHttpInfo(String evApiKey, String evAccessToken, String username, String nickname, String email, String role, Integer status, String homeDir, String search, Integer offset, String sort, Integer limit, String include) throws ApiException {
-        com.squareup.okhttp.Call call = listUsersValidateBeforeCall(evApiKey, evAccessToken, username, nickname, email, role, status, homeDir, search, offset, sort, limit, include, null, null);
+    public ApiResponse<UserCollectionResponse> listUsersWithHttpInfo(String evApiKey, String evAccessToken, String username, String homeResource, String nickname, String email, String role, Integer status, String search, Integer offset, String sort, Integer limit, String include) throws ApiException {
+        com.squareup.okhttp.Call call = listUsersValidateBeforeCall(evApiKey, evAccessToken, username, homeResource, nickname, email, role, status, search, offset, sort, limit, include, null, null);
         Type localVarReturnType = new TypeToken<UserCollectionResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -656,11 +655,11 @@ public class UsersApi {
      * @param evApiKey API key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
      * @param username The username of the user you are looking for. Only entries with the same username as this will be in the list of results. Does not support wildcard searches. (optional)
+     * @param homeResource Resource identifier for user&#x27;s home directory. Does not support wildcard searches. (optional)
      * @param nickname Nickname to search for. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches. (optional)
      * @param email Email to search for. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches (optional)
      * @param role Types of users to include the list. Ignored if &#x60;username&#x60; is provided. Valid options are **admin**, **master** and **user** (optional)
      * @param status Whether a user is locked. Ignored if &#x60;username&#x60; is provided. **0** means user is locked, **1** means user is not locked.  (optional)
-     * @param homeDir Path for user&#x27;s home directory. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches. (optional)
      * @param search Searches the nickname, email, role and homeDir fields for the provided value. Ignored if &#x60;username&#x60; is provided. Supports wildcard searches. (optional)
      * @param offset Starting user record in the result set. Can be used for pagination. (optional)
      * @param sort Sort order or matching users. You can sort by multiple columns by separating sort options with a comma; the sort will be applied in the order specified. The sort order for each sort field is ascending unless it is prefixed with a minus (“-“), in which case it will be descending.  Valid sort fields are: **nickname**, **username**, **email**, **homeDir** and **modified** (optional)
@@ -670,7 +669,7 @@ public class UsersApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listUsersAsync(String evApiKey, String evAccessToken, String username, String nickname, String email, String role, Integer status, String homeDir, String search, Integer offset, String sort, Integer limit, String include, final ApiCallback<UserCollectionResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listUsersAsync(String evApiKey, String evAccessToken, String username, String homeResource, String nickname, String email, String role, Integer status, String search, Integer offset, String sort, Integer limit, String include, final ApiCallback<UserCollectionResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -691,7 +690,7 @@ public class UsersApi {
             };
         }
 
-        com.squareup.okhttp.Call call = listUsersValidateBeforeCall(evApiKey, evAccessToken, username, nickname, email, role, status, homeDir, search, offset, sort, limit, include, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listUsersValidateBeforeCall(evApiKey, evAccessToken, username, homeResource, nickname, email, role, status, search, offset, sort, limit, include, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<UserCollectionResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -707,7 +706,7 @@ public class UsersApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateUserCall(String evApiKey, String evAccessToken, BigDecimal id, UpdateUserRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateUserCall(String evApiKey, String evAccessToken, Integer id, UpdateUserRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
         
         // create path and map variables
@@ -754,7 +753,7 @@ public class UsersApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateUserValidateBeforeCall(String evApiKey, String evAccessToken, BigDecimal id, UpdateUserRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateUserValidateBeforeCall(String evApiKey, String evAccessToken, Integer id, UpdateUserRequestBody body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling updateUser(Async)");
@@ -787,7 +786,7 @@ public class UsersApi {
      * @return UserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public UserResponse updateUser(String evApiKey, String evAccessToken, BigDecimal id, UpdateUserRequestBody body) throws ApiException {
+    public UserResponse updateUser(String evApiKey, String evAccessToken, Integer id, UpdateUserRequestBody body) throws ApiException {
         ApiResponse<UserResponse> resp = updateUserWithHttpInfo(evApiKey, evAccessToken, id, body);
         return resp.getData();
     }
@@ -802,7 +801,7 @@ public class UsersApi {
      * @return ApiResponse&lt;UserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<UserResponse> updateUserWithHttpInfo(String evApiKey, String evAccessToken, BigDecimal id, UpdateUserRequestBody body) throws ApiException {
+    public ApiResponse<UserResponse> updateUserWithHttpInfo(String evApiKey, String evAccessToken, Integer id, UpdateUserRequestBody body) throws ApiException {
         com.squareup.okhttp.Call call = updateUserValidateBeforeCall(evApiKey, evAccessToken, id, body, null, null);
         Type localVarReturnType = new TypeToken<UserResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -819,7 +818,7 @@ public class UsersApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateUserAsync(String evApiKey, String evAccessToken, BigDecimal id, UpdateUserRequestBody body, final ApiCallback<UserResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateUserAsync(String evApiKey, String evAccessToken, Integer id, UpdateUserRequestBody body, final ApiCallback<UserResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

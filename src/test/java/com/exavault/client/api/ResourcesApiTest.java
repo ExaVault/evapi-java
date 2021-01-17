@@ -172,7 +172,7 @@ public class ResourcesApiTest {
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
-				cleanup(COPY);
+				cleanup(COPY, BASE_FOLDER_);
 			}
 		}
 
