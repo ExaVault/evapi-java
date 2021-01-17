@@ -14,7 +14,7 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.UsersPermissions;
+import com.exavault.client.model.UserPermissions;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -88,7 +88,7 @@ public class UpdateUserRequestBody {
   private RoleEnum role = null;
 
   @SerializedName("permissions")
-  private UsersPermissions permissions = null;
+  private UserPermissions permissions = null;
 
   @SerializedName("timeZone")
   private String timeZone = null;
@@ -101,9 +101,6 @@ public class UpdateUserRequestBody {
 
   @SerializedName("onboarding")
   private Boolean onboarding = null;
-
-  @SerializedName("currentUserPassword")
-  private String currentUserPassword = null;
 
   public UpdateUserRequestBody username(String username) {
     this.username = username;
@@ -168,7 +165,7 @@ public class UpdateUserRequestBody {
    * Email address for the user
    * @return email
   **/
-  @Schema(example = "testuser@email.com", description = "Email address for the user")
+  @Schema(example = "testuser@example.com", description = "Email address for the user")
   public String getEmail() {
     return email;
   }
@@ -213,7 +210,7 @@ public class UpdateUserRequestBody {
     this.role = role;
   }
 
-  public UpdateUserRequestBody permissions(UsersPermissions permissions) {
+  public UpdateUserRequestBody permissions(UserPermissions permissions) {
     this.permissions = permissions;
     return this;
   }
@@ -223,11 +220,11 @@ public class UpdateUserRequestBody {
    * @return permissions
   **/
   @Schema(description = "")
-  public UsersPermissions getPermissions() {
+  public UserPermissions getPermissions() {
     return permissions;
   }
 
-  public void setPermissions(UsersPermissions permissions) {
+  public void setPermissions(UserPermissions permissions) {
     this.permissions = permissions;
   }
 
@@ -303,24 +300,6 @@ public class UpdateUserRequestBody {
     this.onboarding = onboarding;
   }
 
-  public UpdateUserRequestBody currentUserPassword(String currentUserPassword) {
-    this.currentUserPassword = currentUserPassword;
-    return this;
-  }
-
-   /**
-   * The password of the currently authenticated user. Required when updating any user’s email, username or password.
-   * @return currentUserPassword
-  **/
-  @Schema(example = "examplespass", description = "The password of the currently authenticated user. Required when updating any user’s email, username or password.")
-  public String getCurrentUserPassword() {
-    return currentUserPassword;
-  }
-
-  public void setCurrentUserPassword(String currentUserPassword) {
-    this.currentUserPassword = currentUserPassword;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -341,13 +320,12 @@ public class UpdateUserRequestBody {
         Objects.equals(this.timeZone, updateUserRequestBody.timeZone) &&
         Objects.equals(this.expiration, updateUserRequestBody.expiration) &&
         Objects.equals(this.locked, updateUserRequestBody.locked) &&
-        Objects.equals(this.onboarding, updateUserRequestBody.onboarding) &&
-        Objects.equals(this.currentUserPassword, updateUserRequestBody.currentUserPassword);
+        Objects.equals(this.onboarding, updateUserRequestBody.onboarding);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, nickname, homeResource, email, password, role, permissions, timeZone, expiration, locked, onboarding, currentUserPassword);
+    return Objects.hash(username, nickname, homeResource, email, password, role, permissions, timeZone, expiration, locked, onboarding);
   }
 
 
@@ -367,7 +345,6 @@ public class UpdateUserRequestBody {
     sb.append("    expiration: ").append(toIndentedString(expiration)).append("\n");
     sb.append("    locked: ").append(toIndentedString(locked)).append("\n");
     sb.append("    onboarding: ").append(toIndentedString(onboarding)).append("\n");
-    sb.append("    currentUserPassword: ").append(toIndentedString(currentUserPassword)).append("\n");
     sb.append("}");
     return sb.toString();
   }

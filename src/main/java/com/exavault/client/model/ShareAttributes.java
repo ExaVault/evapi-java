@@ -525,7 +525,7 @@ public class ShareAttributes {
    * Array of recipients.
    * @return recipients
   **/
-  @Schema(example = "[{\"id\":2,\"shareId\":23,\"type\":\"direct\",\"hash\":\"fseowxan\",\"email\":\"recipient@gmail.com\",\"sent\":true,\"received\":false,\"created\":\"2017-04-21T10:53:47Z\"}]", description = "Array of recipients.")
+  @Schema(example = "[{\"id\":2,\"shareId\":23,\"type\":\"direct\",\"hash\":\"fseowxan\",\"email\":\"recipient@example.com\",\"sent\":true,\"received\":false,\"created\":\"2017-04-21T10:53:47Z\"}]", description = "Array of recipients.")
   public List<ShareRecipient> getRecipients() {
     return recipients;
   }
