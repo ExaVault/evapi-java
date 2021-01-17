@@ -62,7 +62,7 @@ public class ActivityApi {
      * @param startDate Start date of the filter data range (optional)
      * @param endDate End date of the filter data range (optional)
      * @param ipAddress Used to filter session logs by ip address. (optional)
-     * @param userName Username used for filtering a list (optional)
+     * @param username Username used for filtering a list (optional)
      * @param path Path used to filter records (optional)
      * @param type Filter session logs for operation type (see table above for acceptable values) (optional)
      * @param offset Offset of the records list (optional)
@@ -73,7 +73,7 @@ public class ActivityApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getSessionLogsCall(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String ipAddress, String userName, String path, String type, Integer offset, Integer limit, String sort, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getSessionLogsCall(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String ipAddress, String username, String path, String type, Integer offset, Integer limit, String sort, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -87,8 +87,8 @@ public class ActivityApi {
         localVarQueryParams.addAll(apiClient.parameterToPair("endDate", endDate));
         if (ipAddress != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("ipAddress", ipAddress));
-        if (userName != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("userName", userName));
+        if (username != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
         if (path != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("path", path));
         if (type != null)
@@ -137,7 +137,7 @@ public class ActivityApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getSessionLogsValidateBeforeCall(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String ipAddress, String userName, String path, String type, Integer offset, Integer limit, String sort, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getSessionLogsValidateBeforeCall(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String ipAddress, String username, String path, String type, Integer offset, Integer limit, String sort, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling getSessionLogs(Async)");
@@ -147,7 +147,7 @@ public class ActivityApi {
             throw new ApiException("Missing the required parameter 'evAccessToken' when calling getSessionLogs(Async)");
         }
         
-        com.squareup.okhttp.Call call = getSessionLogsCall(evApiKey, evAccessToken, startDate, endDate, ipAddress, userName, path, type, offset, limit, sort, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getSessionLogsCall(evApiKey, evAccessToken, startDate, endDate, ipAddress, username, path, type, offset, limit, sort, progressListener, progressRequestListener);
         return call;
 
         
@@ -164,7 +164,7 @@ public class ActivityApi {
      * @param startDate Start date of the filter data range (optional)
      * @param endDate End date of the filter data range (optional)
      * @param ipAddress Used to filter session logs by ip address. (optional)
-     * @param userName Username used for filtering a list (optional)
+     * @param username Username used for filtering a list (optional)
      * @param path Path used to filter records (optional)
      * @param type Filter session logs for operation type (see table above for acceptable values) (optional)
      * @param offset Offset of the records list (optional)
@@ -173,8 +173,8 @@ public class ActivityApi {
      * @return SessionActivityResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public SessionActivityResponse getSessionLogs(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String ipAddress, String userName, String path, String type, Integer offset, Integer limit, String sort) throws ApiException {
-        ApiResponse<SessionActivityResponse> resp = getSessionLogsWithHttpInfo(evApiKey, evAccessToken, startDate, endDate, ipAddress, userName, path, type, offset, limit, sort);
+    public SessionActivityResponse getSessionLogs(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String ipAddress, String username, String path, String type, Integer offset, Integer limit, String sort) throws ApiException {
+        ApiResponse<SessionActivityResponse> resp = getSessionLogsWithHttpInfo(evApiKey, evAccessToken, startDate, endDate, ipAddress, username, path, type, offset, limit, sort);
         return resp.getData();
     }
 
@@ -186,7 +186,7 @@ public class ActivityApi {
      * @param startDate Start date of the filter data range (optional)
      * @param endDate End date of the filter data range (optional)
      * @param ipAddress Used to filter session logs by ip address. (optional)
-     * @param userName Username used for filtering a list (optional)
+     * @param username Username used for filtering a list (optional)
      * @param path Path used to filter records (optional)
      * @param type Filter session logs for operation type (see table above for acceptable values) (optional)
      * @param offset Offset of the records list (optional)
@@ -195,8 +195,8 @@ public class ActivityApi {
      * @return ApiResponse&lt;SessionActivityResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<SessionActivityResponse> getSessionLogsWithHttpInfo(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String ipAddress, String userName, String path, String type, Integer offset, Integer limit, String sort) throws ApiException {
-        com.squareup.okhttp.Call call = getSessionLogsValidateBeforeCall(evApiKey, evAccessToken, startDate, endDate, ipAddress, userName, path, type, offset, limit, sort, null, null);
+    public ApiResponse<SessionActivityResponse> getSessionLogsWithHttpInfo(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String ipAddress, String username, String path, String type, Integer offset, Integer limit, String sort) throws ApiException {
+        com.squareup.okhttp.Call call = getSessionLogsValidateBeforeCall(evApiKey, evAccessToken, startDate, endDate, ipAddress, username, path, type, offset, limit, sort, null, null);
         Type localVarReturnType = new TypeToken<SessionActivityResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -209,7 +209,7 @@ public class ActivityApi {
      * @param startDate Start date of the filter data range (optional)
      * @param endDate End date of the filter data range (optional)
      * @param ipAddress Used to filter session logs by ip address. (optional)
-     * @param userName Username used for filtering a list (optional)
+     * @param username Username used for filtering a list (optional)
      * @param path Path used to filter records (optional)
      * @param type Filter session logs for operation type (see table above for acceptable values) (optional)
      * @param offset Offset of the records list (optional)
@@ -219,7 +219,7 @@ public class ActivityApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getSessionLogsAsync(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String ipAddress, String userName, String path, String type, Integer offset, Integer limit, String sort, final ApiCallback<SessionActivityResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getSessionLogsAsync(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String ipAddress, String username, String path, String type, Integer offset, Integer limit, String sort, final ApiCallback<SessionActivityResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -240,7 +240,7 @@ public class ActivityApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getSessionLogsValidateBeforeCall(evApiKey, evAccessToken, startDate, endDate, ipAddress, userName, path, type, offset, limit, sort, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getSessionLogsValidateBeforeCall(evApiKey, evAccessToken, startDate, endDate, ipAddress, username, path, type, offset, limit, sort, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<SessionActivityResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

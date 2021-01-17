@@ -174,7 +174,7 @@ public class ShareRecipient {
    * Recipient email address.
    * @return email
   **/
-  @Schema(example = "recipient@gmail.com", description = "Recipient email address.")
+  @Schema(example = "recipient@example.com", description = "Recipient email address.")
   public String getEmail() {
     return email;
   }
