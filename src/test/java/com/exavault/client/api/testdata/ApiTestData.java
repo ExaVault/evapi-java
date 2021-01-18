@@ -133,6 +133,7 @@ public class ApiTestData {
 	public static final String RESOURCE = "resource";
 	public static final String ALL = "all";
 	public static final String SHARE_NAME = "Share_Name";
+	public static final String DIRECT_EMAIL = "direct";
 
 	private static ApiClient apiClient;
 	private static final Random random = new Random();

@@ -481,4 +481,14 @@ public class ApiTestAssertionUtil {
 		assertThat(attributes.getPaths()).containsAll(body.getResources());
 	}
 
+	public static void validateShares(final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode, final SharesRecipients sharesRecipients) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		final List<ShareRecipient> recipients = attributes.getRecipients();
+		assertThat(recipients.get(_0).getEmail()).isEqualTo(sharesRecipients.getEmail());
+		assertThat(recipients.get(_0).getType().getValue()).isEqualTo(sharesRecipients.getType());
+	}
+
 }
