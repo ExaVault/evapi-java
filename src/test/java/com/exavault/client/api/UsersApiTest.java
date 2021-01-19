@@ -350,7 +350,7 @@ public class UsersApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(BASE_FOLDER_, COPY);
 			}
 		}
 
@@ -375,6 +375,7 @@ public class UsersApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
+				cleanup(COPY);
 			}
 		}
 
@@ -819,7 +820,7 @@ public class UsersApiTest {
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, TEST_EMAIL3,  null, null, null, null, null, null,
+						null, TEST_EMAIL3, null, null, null, null, null, null,
 						null);
 				validateListOfUsersByEmail(response, TEST_EMAIL3);
 			} catch (final ApiException e) {
@@ -864,7 +865,7 @@ public class UsersApiTest {
 				id2 = response2.getData().getId();
 
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, TEST_EMAIL4, null, null, null,  _1, null, _1,
+						null, TEST_EMAIL4, null, null, null, _1, null, _1,
 						null);
 				//TODO: offset does not work properly, requires a limit
 				assertThat(response.getReturnedResults()).isEqualTo(_1);
@@ -938,7 +939,7 @@ public class UsersApiTest {
 				final UserResponse response2 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body2);
 				id2 = response2.getData().getId();
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-						null, TEST_EMAIL4, null, null, null,  null, null, _1,
+						null, TEST_EMAIL4, null, null, null, null, null, _1,
 						null);
 				assertThat(response.getReturnedResults()).isEqualTo(_1);
 				validateListOfUsersByEmail(response, TEST_EMAIL4);
