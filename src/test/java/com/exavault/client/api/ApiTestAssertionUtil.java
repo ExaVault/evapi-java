@@ -6,6 +6,7 @@ import org.threeten.bp.OffsetDateTime;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import static com.exavault.client.api.testdata.ApiTestData.*;
@@ -482,6 +483,16 @@ public class ApiTestAssertionUtil {
 	}
 
 	public static void validateShares(final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode, final OffsetDateTime expiration) throws ParseException {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		final Date parse = dateTimeFormatter2.parse(attributes.getExpiration());
+		final Date parse1 = dateTimeFormatter2.parse(expiration.toString());
+		assertThat(parse).isEqualToIgnoringMillis(parse1);
+	}
+
+	public static void validateShares(final ShareResponse response, final AddShareRequestBody body,
 									  final int responseCode, final SharesRecipients sharesRecipients) {
 		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
 		final Share share = response.getData();
@@ -491,4 +502,48 @@ public class ApiTestAssertionUtil {
 		assertThat(recipients.get(_0).getType().getValue()).isEqualTo(sharesRecipients.getType());
 	}
 
+	public static void validateShares(final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode, final boolean hasNotification) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		assertThat(attributes.isHasNotification()).isEqualTo(hasNotification);
+	}
+
+	public static void validateShares(final boolean isPublic, final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		assertThat(attributes.isPublic()).isEqualTo(isPublic);
+	}
+
+	public static void validateShares(final String msg, final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		final List<ShareMessage> messages = attributes.getMessages();
+		assertThat(messages.size()).isEqualTo(_1);
+		assertThat(messages.get(_0).getAttributes().getBody()).isEqualTo(msg);
+	}
+
+	public static void validateShares(final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode, final List<String> emails) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		/*final List<ShareMessage> messages = attributes.get
+		assertThat(messages.size()).isEqualTo(_1);
+		assertThat(messages.get(_0).getAttributes().getBody()).isEqualTo(msg);*/
+	}
+
+	public static void validateSharesWithFileDropFlag(final ShareResponse response, final AddShareRequestBody body,
+													  final int responseCode) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.RECEIVE.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		assertThat(attributes.isFileDropCreateFolders()).isEqualTo(true);
+
+	}
 }

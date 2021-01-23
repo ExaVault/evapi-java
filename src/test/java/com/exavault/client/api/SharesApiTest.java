@@ -6,13 +6,13 @@ import com.exavault.client.model.*;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.exavault.client.api.ApiTestAssertionUtil.validateDefaultShares;
-import static com.exavault.client.api.ApiTestAssertionUtil.validateShares;
+import static com.exavault.client.api.ApiTestAssertionUtil.*;
 import static com.exavault.client.api.testdata.ApiTestData.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -51,10 +51,10 @@ public class SharesApiTest {
 			}
 		}
 
+		@Disabled("Current bug in API, Multiple resource for shared_folder not allowed.Asana task added")
 		@Test
 		@DisplayName("Create a shared_folder share with multiple resources")
 		public void sharedFolderWithMultipleResources() {
-			//TODO: Should it fail or not? Multiple resource for shared_folder not allowed.Asana task added
 			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
 				@Override
 				public void call() throws ApiException {
@@ -204,7 +204,6 @@ public class SharesApiTest {
 				body.setRecipients(Collections.singletonList(shareRecipient));
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
-				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
 				validateShares(response, body, RESPONSE_CODE_201, shareRecipient);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
@@ -223,14 +222,211 @@ public class SharesApiTest {
 			try {
 				createResource();
 				final AddShareRequestBody body = ApiTestData.createDefaultShare();
-				final SharesRecipients shareRecipient = new SharesRecipients();
-				shareRecipient.setType(DIRECT_EMAIL);
-				shareRecipient.setEmail(TEST_EMAIL4);
-				body.setRecipients(Collections.singletonList(shareRecipient));
+				body.setExpiration(EXPIRATION1);
+				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response.getData().getId();
+				validateShares(response, body, RESPONSE_CODE_201, EXPIRATION1);
+			} catch (final ApiException | ParseException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+				cleanup(BASE_FOLDER_);
+			}
+		}
+
+		@Test
+		@DisplayName("Create a share with hasNotification")
+		public void shareWithHasNotification() throws ApiException {
+			int id = _1;
+			try {
+				createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				body.setHasNotification(true);
+				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response.getData().getId();
+				validateShares(response, body, RESPONSE_CODE_201, true);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+				cleanup(BASE_FOLDER_);
+			}
+		}
+
+		@Disabled("Failed currently, need to check")
+		@Test
+		@DisplayName("Create a share with public flag")
+		public void shareWithPublicFlag() throws ApiException {
+			int id = _1;
+			try {
+				createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				body.isPublic(true);
+				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response.getData().getId();
+				//TODO: public is null in the response
+				validateShares(true, response, body, RESPONSE_CODE_201);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+				cleanup(BASE_FOLDER_);
+			}
+		}
+
+		@Disabled("Currently failing, need to check")
+		@Test
+		@DisplayName("Create a share with message body")
+		public void shareWithMsgBody() throws ApiException {
+			int id = _1;
+			try {
+				createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				body.setMessageBody(MESSAGE);
+				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response.getData().getId();
+				//TODO: Why messages comes empty?
+				validateShares(MESSAGE, response, body, RESPONSE_CODE_201);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+				cleanup(BASE_FOLDER_);
+			}
+		}
+
+		@Disabled("How to validate notification emails?")
+		@Test
+		@DisplayName("Create a share with notificationEmails")
+		public void shareWithNotificationEmails() throws ApiException {
+			int id = _1;
+			try {
+				createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				body.setNotificationEmails(Collections.singletonList(TEST_EMAIL4));
+				body.hasNotification(true);
+				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response.getData().getId();
+				//TODO: "How to validate notification emails?"
+				validateShares(response, body, RESPONSE_CODE_201, Collections.singletonList(TEST_EMAIL4));
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+				cleanup(BASE_FOLDER_);
+			}
+		}
+
+		@Test
+		@DisplayName("Create a share with password")
+		public void shareWithPassword() throws ApiException {
+			int id = _1;
+			try {
+				createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				body.setPassword(PASSWORD);
+				//TODO: we can not validate password?
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
-				validateShares(response, body, RESPONSE_CODE_201, shareRecipient);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+				cleanup(BASE_FOLDER_);
+			}
+		}
+
+		@Test
+		@DisplayName("Create a share with require email")
+		public void shareWithRequireEmail() throws ApiException {
+			int id = _1;
+			try {
+				createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				body.setRequireEmail(true);
+				//TODO: how to validate this flag?
+				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response.getData().getId();
+				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+				cleanup(BASE_FOLDER_);
+			}
+		}
+
+		@Test
+		@DisplayName("Create a share with msg subject")
+		public void shareWithMsgSubject() throws ApiException {
+			int id = _1;
+			try {
+				createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				body.setMessageSubject(MESSAGE);
+				//TODO: how to validate this?
+				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response.getData().getId();
+				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+				cleanup(BASE_FOLDER_);
+			}
+		}
+
+		@Test
+		@DisplayName("Create a share with fileDropCreateFolders")
+		public void shareWithFileDropCreateFolders() throws ApiException {
+			int id = _1;
+			try {
+				createResource();
+				final AddShareRequestBody body = ApiTestData.createReceiveShare();
+				body.setFileDropCreateFolders(true);
+				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response.getData().getId();
+				validateSharesWithFileDropFlag(response, body, RESPONSE_CODE_201);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				if (id != _1) {
+					cleanup(id);
+				}
+				cleanup(BASE_FOLDER_);
+			}
+		}
+
+		@Test
+		@DisplayName("Create a share with sendingLocalFiles")
+		public void shareWithSendingLocalFiles() throws ApiException {
+			int id = _1;
+			try {
+				createResource();
+				final AddShareRequestBody body = ApiTestData.createSendShare();
+				body.setSendingLocalFiles(true);
+				//TODO: how to validate this flag?
+				//TODO: Why do shares fail first time?
+				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				id = response.getData().getId();
+				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {

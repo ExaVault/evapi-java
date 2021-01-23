@@ -7,6 +7,8 @@ import com.exavault.client.model.AddNotificationRequestBody;
 import com.exavault.client.model.AddShareRequestBody;
 import com.exavault.client.model.AddUserRequestBody;
 import com.exavault.client.model.UsersPermissions;
+import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.ZoneOffset;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -128,12 +130,16 @@ public class ApiTestData {
 	public static final String NOTIFICATION = "notification";
 	public static final String SHARE = "share";
 	public static final String MESSAGE = "Hello There! I am a notification";
+	public static final String PASSWORD = "Hello There! I am a Password";
 	public static final String FOLDER_TYPE = "folder";
 	public static final String TYPE = "type";
 	public static final String RESOURCE = "resource";
 	public static final String ALL = "all";
 	public static final String SHARE_NAME = "Share_Name";
 	public static final String DIRECT_EMAIL = "direct";
+	public static final int _2021 = 2021;
+	public static final int MONTH_12 = 12;
+	public static final OffsetDateTime EXPIRATION1 = OffsetDateTime.of(_2021, MONTH_12, MONTH_12, _0, _0, _0, _0, ZoneOffset.UTC);
 
 	private static ApiClient apiClient;
 	private static final Random random = new Random();
@@ -251,6 +257,22 @@ public class ApiTestData {
 	public static AddShareRequestBody createDefaultShare() {
 		final AddShareRequestBody requestBody = new AddShareRequestBody();
 		requestBody.setType(AddShareRequestBody.TypeEnum.SHARED_FOLDER);
+		requestBody.setName(generateRandomName());
+		requestBody.setResources(Collections.singletonList(BASE_FOLDER_));
+		return requestBody;
+	}
+
+	public static AddShareRequestBody createReceiveShare() {
+		final AddShareRequestBody requestBody = new AddShareRequestBody();
+		requestBody.setType(AddShareRequestBody.TypeEnum.RECEIVE);
+		requestBody.setName(generateRandomName());
+		requestBody.setResources(Collections.singletonList(BASE_FOLDER_));
+		return requestBody;
+	}
+
+	public static AddShareRequestBody createSendShare() {
+		final AddShareRequestBody requestBody = new AddShareRequestBody();
+		requestBody.setType(AddShareRequestBody.TypeEnum.SEND);
 		requestBody.setName(generateRandomName());
 		requestBody.setResources(Collections.singletonList(BASE_FOLDER_));
 		return requestBody;
