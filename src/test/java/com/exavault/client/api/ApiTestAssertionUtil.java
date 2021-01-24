@@ -482,6 +482,15 @@ public class ApiTestAssertionUtil {
 		assertThat(attributes.getPaths()).containsAll(body.getResources());
 	}
 
+	public static ShareAttributes validateAndGetSharesAttributes(final ShareResponse response, final int responseCode) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(responseCode);
+		final Share share = response.getData();
+		assertThat(share.getId()).isInstanceOf(Integer.class);
+		assertThat(share.getType().getValue()).isEqualTo(SHARE);
+		return share.getAttributes();
+	}
+
 	public static void validateShares(final ShareResponse response, final AddShareRequestBody body,
 									  final int responseCode, final OffsetDateTime expiration) throws ParseException {
 		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
@@ -544,6 +553,78 @@ public class ApiTestAssertionUtil {
 		final Share share = response.getData();
 		final ShareAttributes attributes = share.getAttributes();
 		assertThat(attributes.isFileDropCreateFolders()).isEqualTo(true);
+	}
 
+	public static void validateListSharesByType(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, TYPE_ATTR, newValue);
+	}
+
+	public static void validateListSharesByScope(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, SCOPE_ATTR, newValue);
+	}
+
+	public static void validateListSharesByName(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, NAME, newValue);
+	}
+
+	public static void validateListSharesByRecipients(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, RECIPIENT_ATTR, newValue);
+	}
+
+	public static void validateListSharesByMsg(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, MSG_ATTR, newValue);
+	}
+
+	public static void validateListSharesByUsername(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, USERNAME_ATTRIBUTE, newValue);
+	}
+
+	public static void validateListSharesBySearch(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, SEARCH_ATTRIBUTE, newValue);
+	}
+
+	private static void validateSharesByAttribute(final ShareCollectionResponse response,
+												  final String attributeName, final Object... args) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(RESPONSE_CODE_200);
+		final List<Share> shares = response.getData();
+		assertThat(shares).isNotNull();
+		for (final Share share : shares) {
+			assertThat(share.getId()).isInstanceOf(Integer.class);
+			assertThat(share.getType().getValue()).isEqualTo(SHARE);
+			final ShareAttributes attributes = share.getAttributes();
+			assertThat(attributes).isNotNull();
+			switch (attributeName) {
+				case TYPE_ATTR:
+					final String real = attributes.getType().getValue();
+					assertThat(real).isEqualTo((String) args[_0]);
+					break;
+				case SCOPE_ATTR:
+					//TODO: check
+					break;
+				case NAME:
+					final String name = attributes.getName();
+					assertThat(name).isEqualTo((String) args[_0]);
+					break;
+				case MSG_ATTR:
+					final List<ShareMessage> messages = attributes.getMessages();
+					for (final ShareMessage message : messages) {
+						assertThat(message.getAttributes().getBody()).isEqualTo((String) args[_0]);
+					}
+					break;
+				case RECIPIENT_ATTR:
+					final List<ShareRecipient> recipients = attributes.getRecipients();
+					for (final ShareRecipient recipient : recipients) {
+						assertThat(recipient.getEmail()).isEqualTo((String) args[_0]);
+					}
+					break;
+				case USERNAME_ATTRIBUTE:
+					break;
+				case SEARCH_ATTRIBUTE:
+
+				default:
+					break;
+			}
+		}
 	}
 }

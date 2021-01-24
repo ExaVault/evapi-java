@@ -111,7 +111,7 @@ public class ApiTestData {
 	public static final String STATUS_ATTR = "statusattr";
 	public static final String HOMEDIR_ATTR = "homdir";
 	public static final String TYPE_ATTR = "typeAttr";
-	public static final String INCLUDE_ATTR = "includeAttr";
+	public static final String SCOPE_ATTR = "scopeAttr";
 	public static final String ACTION_ATTRIBUTE = "action";
 	public static final String EMAIL_ATTR_FALSE = "emailattr_false";
 	public static final String EXPIRATION = "2020-12-12";
@@ -121,6 +121,7 @@ public class ApiTestData {
 	public static final int INVALID_USER_ID = 123;
 	public static final String OFFSET_DATE = "date";
 	public static final String USERNAME_ATTRIBUTE = "username";
+	public static final String SEARCH_ATTRIBUTE = "search";
 	public static final String FILENAME_ATTRIBUTE = "filename";
 	public static final String OPS_TYPE = "type";
 	public static final long INVALID_ID = 123L;
@@ -140,6 +141,10 @@ public class ApiTestData {
 	public static final int _2021 = 2021;
 	public static final int MONTH_12 = 12;
 	public static final OffsetDateTime EXPIRATION1 = OffsetDateTime.of(_2021, MONTH_12, MONTH_12, _0, _0, _0, _0, ZoneOffset.UTC);
+	public static final String NOTIFICATIONS = "notifications";
+	public static final String SHARED_FOLDER = "shared_folder";
+	public static final String CREATED = "created";
+	public static final String MESSAGE_SUBJECT = "I am a subject";
 
 	private static ApiClient apiClient;
 	private static final Random random = new Random();
@@ -219,8 +224,12 @@ public class ApiTestData {
 	}
 
 	public static String generateRandomName() {
+		return generateRandomName(TESTUSER);
+	}
+
+	public static String generateRandomName(final String prefix) {
 		final UUID uuid = UUID.randomUUID();
-		return TESTUSER + HYPHEN_SEPARATOR + uuid.toString().replaceAll(HYPHEN_SEPARATOR, EMPTY)
+		return prefix + HYPHEN_SEPARATOR + uuid.toString().replaceAll(HYPHEN_SEPARATOR, EMPTY)
 				+ HYPHEN_SEPARATOR + Math.abs(getRandomNumber());
 	}
 
@@ -257,7 +266,7 @@ public class ApiTestData {
 	public static AddShareRequestBody createDefaultShare() {
 		final AddShareRequestBody requestBody = new AddShareRequestBody();
 		requestBody.setType(AddShareRequestBody.TypeEnum.SHARED_FOLDER);
-		requestBody.setName(generateRandomName());
+		requestBody.setName(generateRandomName(SHARE_NAME));
 		requestBody.setResources(Collections.singletonList(BASE_FOLDER_));
 		return requestBody;
 	}
