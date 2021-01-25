@@ -123,6 +123,8 @@ public class ApiTestData {
 	public static final String NOTIFICATION = "notification";
 	public static final String SHARE = "share";
 	public static final String MESSAGE = "Hello There! I am a notification";
+	public static final String EMAIL_SUBJECT = "Hello There! I am a subject";
+	public static final String SIGNATURE = "Hello There! I am a signature";
 	public static final String FOLDER_TYPE = "folder";
 	public static final String TYPE = "type";
 	public static final String RESOURCE = "resource";
@@ -133,6 +135,12 @@ public class ApiTestData {
 	public static final String ACCOUNT = "account";
 	public static final String MASTER_USER = "masterUser";
 	public static final String OWNER_USER = "ownerUser";
+	public static final int NOTICE_THRESHOLD = 80;
+	public static final String SOME_DOMAIN = "somedomain";
+	public static final String IP_START = "dummy";
+	public static final String IP_END = "dummy2";
+	public static final String NAME1 = "NAME";
+	public static final String THEME = "Theme";
 
 	private static ApiClient apiClient;
 	private static final Random random = new Random();

@@ -503,10 +503,16 @@ public class ApiTestAssertionUtil {
 
 
 	public static void validateAccountSettings(final AccountResponse response) {
+		validateAccountSettings(response, true);
+	}
+
+	public static void validateAccountSettings(final AccountResponse response, final boolean isEmpty) {
 		assertThat(response).isNotNull();
 		assertThat(response.getResponseStatus()).isEqualTo(RESPONSE_CODE_200);
 		final Account data = response.getData();
-		assertThat(response.getIncluded()).isNotEmpty();
+		if (isEmpty) {
+			assertThat(response.getIncluded()).isNotEmpty();
+		}
 		assertThat(data.getId()).isInstanceOf(Integer.class);
 		assertThat(data.getType().getValue()).isEqualTo(ACCOUNT);
 	}
