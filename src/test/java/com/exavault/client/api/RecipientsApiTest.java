@@ -59,7 +59,6 @@ public class RecipientsApiTest {
 				final ShareRecipientsResponse shareRecipientsResponse =
 						api.resendInvitationsForShare(EV_API_KEY, EV_ACCESS_TOKEN, shareId, resendInvitationsRequestBody);
 				assertThat(shareRecipientsResponse.getResponseStatus()).isEqualTo(RESPONSE_CODE_201);
-				System.out.println();
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
