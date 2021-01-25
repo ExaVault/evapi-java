@@ -255,7 +255,7 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Failed currently, need to check")
+		@Disabled("bug in the API, public flag is not populated")
 		@Test
 		@DisplayName("Create a share with public flag")
 		public void shareWithPublicFlag() throws ApiException {
@@ -278,7 +278,7 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Currently failing, need to check")
+		@Disabled("Need to find how to validate this via response")
 		@Test
 		@DisplayName("Create a share with message body")
 		public void shareWithMsgBody() throws ApiException {
@@ -301,52 +301,6 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("How to validate notification emails?")
-		@Test
-		@DisplayName("Create a share with notificationEmails")
-		public void shareWithNotificationEmails() throws ApiException {
-			int id = _1;
-			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
-				body.setNotificationEmails(Collections.singletonList(TEST_EMAIL4));
-				body.hasNotification(true);
-				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				id = response.getData().getId();
-				//TODO: "How to validate notification emails?"
-				validateShares(response, body, RESPONSE_CODE_201, Collections.singletonList(TEST_EMAIL4));
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				if (id != _1) {
-					cleanup(id);
-				}
-				cleanup(BASE_FOLDER_);
-			}
-		}
-
-		@Test
-		@DisplayName("Create a share with password")
-		public void shareWithPassword() throws ApiException {
-			int id = _1;
-			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
-				body.setPassword(PASSWORD);
-				//TODO: we can not validate password?
-				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				id = response.getData().getId();
-				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				if (id != _1) {
-					cleanup(id);
-				}
-				cleanup(BASE_FOLDER_);
-			}
-		}
-
 		@Test
 		@DisplayName("Create a share with require email")
 		public void shareWithRequireEmail() throws ApiException {
@@ -355,32 +309,10 @@ public class SharesApiTest {
 				createResource();
 				final AddShareRequestBody body = ApiTestData.createDefaultShare();
 				body.setRequireEmail(true);
-				//TODO: how to validate this flag?
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				if (id != _1) {
-					cleanup(id);
-				}
-				cleanup(BASE_FOLDER_);
-			}
-		}
-
-		@Test
-		@DisplayName("Create a share with msg subject")
-		public void shareWithMsgSubject() throws ApiException {
-			int id = _1;
-			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
-				body.setMessageSubject(MESSAGE);
-				//TODO: how to validate this?
-				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				id = response.getData().getId();
-				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
+				assertThat(response.getData().getAttributes().isRequireEmail()).isTrue();
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -411,30 +343,6 @@ public class SharesApiTest {
 				cleanup(BASE_FOLDER_);
 			}
 		}
-
-		@Test
-		@DisplayName("Create a share with sendingLocalFiles")
-		public void shareWithSendingLocalFiles() throws ApiException {
-			int id = _1;
-			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createSendShare();
-				body.setSendingLocalFiles(true);
-				//TODO: how to validate this flag?
-				//TODO: Why do shares fail first time?
-				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				id = response.getData().getId();
-				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				if (id != _1) {
-					cleanup(id);
-				}
-				cleanup(BASE_FOLDER_);
-			}
-		}
-
 	}
 
 	@Nested
@@ -451,6 +359,13 @@ public class SharesApiTest {
 				id = response.getData().getId();
 				final EmptyResponse emptyResponse = api.deleteShareById(id, EV_API_KEY, EV_ACCESS_TOKEN);
 				validateDeleteResponse(emptyResponse);
+				assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
+					@Override
+					public void call() throws ApiException {
+						api.getShareById(id, EV_API_KEY, EV_ACCESS_TOKEN, null);
+					}
+				}).isInstanceOf(ApiException.class)
+						.hasMessageContaining(NOT_FOUND);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -484,7 +399,7 @@ public class SharesApiTest {
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareResponse response1 = api.getShareById(id, EV_API_KEY, EV_ACCESS_TOKEN, null);
-				validateDefaultShares(response1, body, RESPONSE_CODE_200);
+				assertThat(response1.getData().getId()).isEqualTo(id);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -505,7 +420,7 @@ public class SharesApiTest {
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareResponse response1 = api.getShareById(id, EV_API_KEY, EV_ACCESS_TOKEN, NOTIFICATIONS);
-				validateDefaultShares(response1, body, RESPONSE_CODE_200);
+				assertThat(response1.getData().getId()).isEqualTo(id);
 				for (final Object o : response.getIncluded()) {
 					final LinkedTreeMap map = (LinkedTreeMap) o;
 					assertThat(map.get(TYPE)).isEqualTo(NOTIFICATIONS);
@@ -717,7 +632,11 @@ public class SharesApiTest {
 						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
 								ALL, null, null, null, null,
 								null, null, null, null);
-				validateListSharesByScope(response1, ALL);
+				final ShareCollectionResponse response2 =
+						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+								null, null, null, null, null,
+								null, null, null, null);
+				assertThat(response1.getData()).isEqualTo(response2.getData());
 				//TODO: How to validate the scope?
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
@@ -754,22 +673,6 @@ public class SharesApiTest {
 					cleanup(id);
 				}
 				cleanup(BASE_FOLDER_);
-			}
-		}
-
-		@Disabled("Why does it return 25 results?")
-		@Test
-		@DisplayName("List shares by invalid include")
-		public void listByInvalidInclude() {
-			try {
-				//TODO: Why it return 25 results, should it not be 0?
-				final ShareCollectionResponse response1 =
-						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-								null, null, null, INVALID, null,
-								null, null, null, null);
-				assertThat(response1.getReturnedResults()).isZero();
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
 			}
 		}
 
@@ -826,31 +729,6 @@ public class SharesApiTest {
 		}
 
 		@Test
-		@DisplayName("List shares by message")
-		public void listByMessage() throws ApiException {
-			int id = _1;
-			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createReceiveShare();
-				body.setMessageBody(MESSAGE);
-				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				id = response.getData().getId();
-				final ShareCollectionResponse response1 =
-						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-								null, null, null, null, null,
-								null, MESSAGE, null, null);
-				validateListSharesByMsg(response1, MESSAGE);
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				if (id != _1) {
-					cleanup(id);
-				}
-				cleanup(BASE_FOLDER_);
-			}
-		}
-
-		@Test
 		@DisplayName("List shares by username")
 		public void listByUsername() throws ApiException {
 			int id = _1;
@@ -861,35 +739,13 @@ public class SharesApiTest {
 				id = response.getData().getId();
 				final ShareCollectionResponse response1 =
 						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-								null, null, null, null, null,
+								null, null, null, OWNER, null,
 								null, null, VALID_USER_NAME, null);
-				validateListSharesByUsername(response1, VALID_USER_NAME);
-				//TODO : how to validate username?
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				if (id != _1) {
-					cleanup(id);
+				for (final Object o : response1.getIncluded()) {
+					final LinkedTreeMap map = (LinkedTreeMap) o;
+					final LinkedTreeMap attributes = (LinkedTreeMap) map.get(ATTRIBUTES);
+					assertThat(attributes.get(USERNAME)).isEqualTo(VALID_USER_NAME);
 				}
-				cleanup(BASE_FOLDER_);
-			}
-		}
-
-		@Test
-		@DisplayName("List shares by search")
-		public void listBySearch() throws ApiException {
-			int id = _1;
-			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
-				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				id = response.getData().getId();
-				final ShareCollectionResponse response1 =
-						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-								null, null, null, null, null,
-								null, null, null, SHARE_NAME);
-				validateListSharesBySearch(response1, SHARE_NAME);
-				//TODO: how do we know which field to validate?
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -904,7 +760,6 @@ public class SharesApiTest {
 	@Nested
 	@DisplayName("Complete send files, Method=POST, API=/complete-send/{id} ")
 	class CompleteSendFiles {
-		@Disabled("How to test this?")
 		@Test
 		@DisplayName("Complete send files with valid id")
 		public void completeSend() throws ApiException {
@@ -912,10 +767,12 @@ public class SharesApiTest {
 			try {
 				createResource();
 				final AddShareRequestBody body = ApiTestData.createSendShare();
+				body.setSendingLocalFiles(true);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareResponse shareResponse = api.completeDirectSend(EV_API_KEY, EV_ACCESS_TOKEN, id);
-				validateDefaultShares(shareResponse, body, RESPONSE_CODE_200);
+				final ShareResponse shareById = api.getShareById(id, EV_API_KEY, EV_ACCESS_TOKEN, null);
+				assertThat(shareById.getData().getAttributes().getAccessMode().isUpload()).isNull();
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -1094,6 +951,10 @@ public class SharesApiTest {
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
+				final SharesRecipients shareRecipient = new SharesRecipients();
+				shareRecipient.setType(DIRECT_EMAIL);
+				shareRecipient.setEmail(TEST_EMAIL4);
+				body1.setRecipients(Collections.singletonList(shareRecipient));
 				body1.setHasNotification(true);
 				final ShareResponse shareResponse = api.updateShareById(body1, EV_API_KEY, EV_ACCESS_TOKEN, id);
 				final ShareAttributes shareAttributes = validateAndGetSharesAttributes(shareResponse, RESPONSE_CODE_200);
@@ -1159,87 +1020,6 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Null values for type and body")
-		@Test
-		@DisplayName("Update msg body")
-		public void updateMsgBody() throws ApiException {
-			int id = _1;
-			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
-				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				id = response.getData().getId();
-				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
-				body1.setMessageBody(MESSAGE);
-				final SharesRecipients shareRecipient = new SharesRecipients();
-				shareRecipient.setType(DIRECT_EMAIL);
-				shareRecipient.setEmail(TEST_EMAIL4);
-				body1.setMessageSubject(MESSAGE_SUBJECT);
-				body1.setRecipients(Collections.singletonList(shareRecipient));
-				final ShareResponse shareResponse = api.updateShareById(body1, EV_API_KEY, EV_ACCESS_TOKEN, id);
-				final ShareAttributes shareAttributes = validateAndGetSharesAttributes(shareResponse, RESPONSE_CODE_200);
-				assertThat(shareAttributes.getMessages().size()).isGreaterThan(0);
-				//TODO : why null values?
-				assertThat(shareAttributes.getMessages().get(_0).getAttributes().getBody()).isEqualTo(MESSAGE);
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				if (id != _1) {
-					cleanup(id);
-				}
-				cleanup(BASE_FOLDER_);
-			}
-		}
-
-		@Test
-		@DisplayName("Update notifications emails")
-		public void updateNotificationEmails() throws ApiException {
-			int id = _1;
-			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
-				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				id = response.getData().getId();
-				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
-				body1.setNotificationEmails(Collections.singletonList(TEST_EMAIL4));
-				body1.setHasNotification(true);
-				final ShareResponse shareResponse = api.updateShareById(body1, EV_API_KEY, EV_ACCESS_TOKEN, id);
-				final ShareAttributes shareAttributes = validateAndGetSharesAttributes(shareResponse, RESPONSE_CODE_200);
-				//TODO: how to validate?
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				if (id != _1) {
-					cleanup(id);
-				}
-				cleanup(BASE_FOLDER_);
-			}
-		}
-
-		@Test
-		@DisplayName("Update password")
-		public void updatePassword() throws ApiException {
-			int id = _1;
-			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
-				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				id = response.getData().getId();
-				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
-				body1.setPassword(generateRandomName(PASSWORD));
-				final ShareResponse shareResponse = api.updateShareById(body1, EV_API_KEY, EV_ACCESS_TOKEN, id);
-				final ShareAttributes shareAttributes = validateAndGetSharesAttributes(shareResponse, RESPONSE_CODE_200);
-				//TODO: how to validate?
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				if (id != _1) {
-					cleanup(id);
-				}
-				cleanup(BASE_FOLDER_);
-			}
-		}
-
 		@Test
 		@DisplayName("Update require email")
 		public void updateRequireEmail() throws ApiException {
@@ -1263,37 +1043,7 @@ public class SharesApiTest {
 				cleanup(BASE_FOLDER_);
 			}
 		}
-
-		@Disabled("Values are null")
-		@Test
-		@DisplayName("Update msg subject")
-		public void updateMsgSubject() throws ApiException {
-			int id = _1;
-			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createSendShare();
-				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				id = response.getData().getId();
-				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
-				body1.setMessageSubject(MESSAGE_SUBJECT);
-				body1.setMessageBody(MESSAGE);
-				final SharesRecipients shareRecipient = new SharesRecipients();
-				shareRecipient.setType(DIRECT_EMAIL);
-				shareRecipient.setEmail(TEST_EMAIL4);
-				body1.setRecipients(Collections.singletonList(shareRecipient));
-				final ShareResponse shareResponse = api.updateShareById(body1, EV_API_KEY, EV_ACCESS_TOKEN, id);
-				final ShareAttributes shareAttributes = validateAndGetSharesAttributes(shareResponse, RESPONSE_CODE_200);
-				assertThat(shareAttributes.isRequireEmail()).isTrue();
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				if (id != _1) {
-					cleanup(id);
-				}
-				cleanup(BASE_FOLDER_);
-			}
-		}
-
+		
 		@Test
 		@DisplayName("Update fileDropCreateFolders")
 		public void updateFileDropCreateFolders() throws ApiException {
