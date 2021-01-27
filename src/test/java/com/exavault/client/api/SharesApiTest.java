@@ -32,9 +32,10 @@ public class SharesApiTest {
 		@DisplayName("Create a share with default values")
 		public void defaultShare() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				//TODO: resource is a required field, API doc needs to be updated
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -45,7 +46,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -56,11 +57,11 @@ public class SharesApiTest {
 			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
 				@Override
 				public void call() throws ApiException {
-					createResource();
-					createResource2();
+					final String resource1 = createResource();
+					final String resource2 = createResource();
 					final List<String> ids = new ArrayList<>();
-					ids.add(BASE_FOLDER2_);
-					ids.add(BASE_FOLDER_);
+					ids.add(resource1);
+					ids.add(resource2);
 					final AddShareRequestBody body = ApiTestData.createDefaultShare();
 					body.setResources(ids);
 					api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
@@ -83,35 +84,14 @@ public class SharesApiTest {
 					.hasMessageContaining(NOT_FOUND);
 		}
 
-		@Disabled("Check, why its failing?")
-		@Test
-		@DisplayName("Create a share with type receive")
-		public void receiveShare() throws ApiException {
-			int id = _1;
-			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
-				body.setType(AddShareRequestBody.TypeEnum.RECEIVE);
-				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				id = response.getData().getId();
-				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				if (id != _1) {
-					cleanup(id);
-				}
-				cleanup(BASE_FOLDER_);
-			}
-		}
-
 		@Test
 		@DisplayName("Create a share with type send")
 		public void sendShare() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				body.setType(AddShareRequestBody.TypeEnum.SEND);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -122,7 +102,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -144,9 +124,10 @@ public class SharesApiTest {
 		@DisplayName("Create a share with access mode")
 		public void shareWithAccessMode() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final AccessMode accessMode = new AccessMode();
 				accessMode.setDownload(true);
 				body.setAccessMode(accessMode);
@@ -162,7 +143,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -170,9 +151,10 @@ public class SharesApiTest {
 		@DisplayName("Create a share with an embed option")
 		public void shareWithEmbedOption() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				body.setEmbed(true);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -185,7 +167,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -193,9 +175,10 @@ public class SharesApiTest {
 		@DisplayName("Create a share with recipients")
 		public void shareWithRecipients() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final SharesRecipients shareRecipient = new SharesRecipients();
 				shareRecipient.setType(DIRECT_EMAIL);
 				shareRecipient.setEmail(TEST_EMAIL4);
@@ -209,7 +192,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -217,9 +200,10 @@ public class SharesApiTest {
 		@DisplayName("Create a share with expiration")
 		public void shareWithExpiration() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				body.setExpiration(EXPIRATION1);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -230,7 +214,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -238,9 +222,10 @@ public class SharesApiTest {
 		@DisplayName("Create a share with hasNotification")
 		public void shareWithHasNotification() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				body.setHasNotification(true);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -251,7 +236,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -260,9 +245,10 @@ public class SharesApiTest {
 		@DisplayName("Create a share with public flag")
 		public void shareWithPublicFlag() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				body.isPublic(true);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -274,7 +260,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -283,9 +269,10 @@ public class SharesApiTest {
 		@DisplayName("Create a share with message body")
 		public void shareWithMsgBody() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				body.setMessageBody(MESSAGE);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -297,7 +284,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -305,9 +292,10 @@ public class SharesApiTest {
 		@DisplayName("Create a share with require email")
 		public void shareWithRequireEmail() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				body.setRequireEmail(true);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -319,7 +307,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -327,9 +315,10 @@ public class SharesApiTest {
 		@DisplayName("Create a share with fileDropCreateFolders")
 		public void shareWithFileDropCreateFolders() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createReceiveShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createReceiveShare(resource);
 				body.setFileDropCreateFolders(true);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -340,7 +329,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 	}
@@ -352,9 +341,10 @@ public class SharesApiTest {
 		@DisplayName("Deactivate a share with valid id")
 		public void deactivateShareTest() throws ApiException {
 			final int id;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final EmptyResponse emptyResponse = api.deleteShareById(id, EV_API_KEY, EV_ACCESS_TOKEN);
@@ -369,7 +359,7 @@ public class SharesApiTest {
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -393,9 +383,10 @@ public class SharesApiTest {
 		@DisplayName("Get a share with valid id")
 		public void getShareTest() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareResponse response1 = api.getShareById(id, EV_API_KEY, EV_ACCESS_TOKEN, null);
@@ -406,7 +397,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -414,9 +405,10 @@ public class SharesApiTest {
 		@DisplayName("Get a share with valid id and include")
 		public void getShareWithIncludeTest() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareResponse response1 = api.getShareById(id, EV_API_KEY, EV_ACCESS_TOKEN, NOTIFICATIONS);
@@ -431,7 +423,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -456,9 +448,10 @@ public class SharesApiTest {
 		@DisplayName("List shares by type")
 		public void listByType() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareCollectionResponse response1 =
@@ -472,7 +465,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -480,9 +473,10 @@ public class SharesApiTest {
 		@DisplayName("List shares by an invalid type")
 		public void listByAnInvalidType() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareCollectionResponse response1 =
@@ -496,7 +490,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -505,9 +499,10 @@ public class SharesApiTest {
 		@DisplayName("List shares by offset")
 		public void listByOffset() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareCollectionResponse response1 =
@@ -522,7 +517,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -546,9 +541,10 @@ public class SharesApiTest {
 		@DisplayName("List shares by sort")
 		public void listBySort() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareCollectionResponse response1 =
@@ -563,7 +559,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -585,9 +581,10 @@ public class SharesApiTest {
 		@DisplayName("List shares by a valid limit")
 		public void listByValidLimit() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareCollectionResponse response1 =
@@ -601,7 +598,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -623,9 +620,10 @@ public class SharesApiTest {
 		@DisplayName("List shares by a scope")
 		public void listByValidScope() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareCollectionResponse response1 =
@@ -636,15 +634,16 @@ public class SharesApiTest {
 						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
 								null, null, null, null, null,
 								null, null, null, null);
-				assertThat(response1.getData()).isEqualTo(response2.getData());
-				//TODO: How to validate the scope?
+				for (int i = 0; i < response1.getData().size(); i++) {
+					assertThat(response1.getData().get(i).getId()).isEqualTo(response2.getData().get(i).getId());
+				}
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -653,9 +652,10 @@ public class SharesApiTest {
 		@DisplayName("List shares by include")
 		public void listByInclude() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareCollectionResponse response1 =
@@ -672,7 +672,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -680,9 +680,10 @@ public class SharesApiTest {
 		@DisplayName("List shares by name")
 		public void listByName() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareCollectionResponse response1 =
@@ -696,7 +697,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -704,9 +705,10 @@ public class SharesApiTest {
 		@DisplayName("List shares by recipients")
 		public void listByRecipients() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createReceiveShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createReceiveShare(resource);
 				final SharesRecipients shareRecipient = new SharesRecipients();
 				shareRecipient.setType(DIRECT_EMAIL);
 				shareRecipient.setEmail(TEST_EMAIL3);
@@ -724,7 +726,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -732,9 +734,10 @@ public class SharesApiTest {
 		@DisplayName("List shares by username")
 		public void listByUsername() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final ShareCollectionResponse response1 =
@@ -752,7 +755,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 	}
@@ -764,9 +767,10 @@ public class SharesApiTest {
 		@DisplayName("Complete send files with valid id")
 		public void completeSend() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createSendShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createSendShare(resource);
 				body.setSendingLocalFiles(true);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
@@ -779,7 +783,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -796,18 +800,13 @@ public class SharesApiTest {
 		}
 	}
 
-	private void createResource() throws ApiException {
+	private String createResource() throws ApiException {
 		final AddFolderRequestBody requestBody = new AddFolderRequestBody();
-		requestBody.setPath(BASE_FOLDER_);
+		final String path = generateRandomName(BASE_FOLDER_);
+		requestBody.setPath(path);
 		resourcesApi.addFolder(EV_API_KEY, EV_ACCESS_TOKEN, requestBody);
+		return path;
 	}
-
-	private void createResource2() throws ApiException {
-		final AddFolderRequestBody requestBody = new AddFolderRequestBody();
-		requestBody.setPath(BASE_FOLDER2_);
-		resourcesApi.addFolder(EV_API_KEY, EV_ACCESS_TOKEN, requestBody);
-	}
-
 
 	@Nested
 	@DisplayName("Update a share, Method=PATCH, API=/shares/{id} ")
@@ -816,9 +815,10 @@ public class SharesApiTest {
 		@DisplayName("Update Name")
 		public void updateName() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
@@ -832,7 +832,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -840,24 +840,26 @@ public class SharesApiTest {
 		@DisplayName("Update resources")
 		public void updateResources() throws ApiException {
 			int id = _1;
+			String resource = null;
+			String resource2 = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
-				createResource2();
-				body1.setResources(Collections.singletonList(BASE_FOLDER2_));
+				resource2 = createResource();
+				body1.setResources(Collections.singletonList(resource2));
 				final ShareResponse shareResponse = api.updateShareById(body1, EV_API_KEY, EV_ACCESS_TOKEN, id);
 				final ShareAttributes shareAttributes = validateAndGetSharesAttributes(shareResponse, RESPONSE_CODE_200);
-				assertThat(shareAttributes.getPaths()).containsExactly(BASE_FOLDER2_);
+				assertThat(shareAttributes.getPaths()).containsExactly(resource2);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_, BASE_FOLDER2_);
+				cleanup(resource, resource2);
 			}
 		}
 
@@ -865,9 +867,10 @@ public class SharesApiTest {
 		@DisplayName("Update embed flag")
 		public void updateEmbedFlag() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
@@ -881,7 +884,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -889,9 +892,10 @@ public class SharesApiTest {
 		@DisplayName("Update access mode")
 		public void updateAccessMode() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
@@ -907,7 +911,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -915,9 +919,10 @@ public class SharesApiTest {
 		@DisplayName("Update recipients")
 		public void updateRecipients() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
@@ -936,7 +941,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -945,9 +950,10 @@ public class SharesApiTest {
 		@DisplayName("Update has Notification")
 		public void updateHasNotification() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
@@ -965,7 +971,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -974,9 +980,10 @@ public class SharesApiTest {
 		@DisplayName("Update is public flag")
 		public void updateIsPublic() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
@@ -990,7 +997,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -998,9 +1005,10 @@ public class SharesApiTest {
 		@DisplayName("Update expiration")
 		public void updateExpiration() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createDefaultShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
@@ -1016,7 +1024,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -1024,9 +1032,10 @@ public class SharesApiTest {
 		@DisplayName("Update require email")
 		public void updateRequireEmail() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createSendShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createSendShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
@@ -1040,17 +1049,18 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
-		
+
 		@Test
 		@DisplayName("Update fileDropCreateFolders")
 		public void updateFileDropCreateFolders() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createReceiveShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createReceiveShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
@@ -1064,7 +1074,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 
@@ -1072,9 +1082,10 @@ public class SharesApiTest {
 		@DisplayName("Update status")
 		public void updateStatus() throws ApiException {
 			int id = _1;
+			String resource = null;
 			try {
-				createResource();
-				final AddShareRequestBody body = ApiTestData.createReceiveShare();
+				resource = createResource();
+				final AddShareRequestBody body = ApiTestData.createReceiveShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final UpdateShareRequestBody body1 = new UpdateShareRequestBody();
@@ -1088,7 +1099,7 @@ public class SharesApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(resource);
 			}
 		}
 	}

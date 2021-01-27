@@ -266,26 +266,30 @@ public class ApiTestData {
 	}
 
 	public static AddShareRequestBody createDefaultShare() {
+		return createDefaultShare(BASE_FOLDER_);
+	}
+
+	public static AddShareRequestBody createDefaultShare(final String resource) {
 		final AddShareRequestBody requestBody = new AddShareRequestBody();
 		requestBody.setType(AddShareRequestBody.TypeEnum.SHARED_FOLDER);
 		requestBody.setName(generateRandomName(SHARE_NAME));
-		requestBody.setResources(Collections.singletonList(BASE_FOLDER_));
+		requestBody.setResources(Collections.singletonList(resource));
 		return requestBody;
 	}
 
-	public static AddShareRequestBody createReceiveShare() {
+	public static AddShareRequestBody createReceiveShare(final String resource) {
 		final AddShareRequestBody requestBody = new AddShareRequestBody();
 		requestBody.setType(AddShareRequestBody.TypeEnum.RECEIVE);
 		requestBody.setName(generateRandomName());
-		requestBody.setResources(Collections.singletonList(BASE_FOLDER_));
+		requestBody.setResources(Collections.singletonList(resource));
 		return requestBody;
 	}
 
-	public static AddShareRequestBody createSendShare() {
+	public static AddShareRequestBody createSendShare(final String resource) {
 		final AddShareRequestBody requestBody = new AddShareRequestBody();
 		requestBody.setType(AddShareRequestBody.TypeEnum.SEND);
 		requestBody.setName(generateRandomName());
-		requestBody.setResources(Collections.singletonList(BASE_FOLDER_));
+		requestBody.setResources(Collections.singletonList(resource));
 		return requestBody;
 	}
 }
