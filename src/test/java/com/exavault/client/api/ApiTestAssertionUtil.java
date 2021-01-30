@@ -627,4 +627,12 @@ public class ApiTestAssertionUtil {
 			}
 		}
 	}
+
+	public static void validateForm(final FormResponse response, final int responseCode) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(responseCode);
+		final Form form = response.getData();
+		assertThat(form.getId()).isInstanceOf(Integer.class);
+		assertThat(form.getType()).isEqualTo(FORM);
+	}
 }
