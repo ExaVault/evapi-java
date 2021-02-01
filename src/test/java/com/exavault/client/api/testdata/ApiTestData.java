@@ -3,6 +3,7 @@ package com.exavault.client.api.testdata;
 import com.exavault.client.ApiClient;
 import com.exavault.client.ApiException;
 import com.exavault.client.api.ResourcesApi;
+import com.exavault.client.model.AddNotificationRequestBody;
 import com.exavault.client.model.AddUserRequestBody;
 import com.exavault.client.model.UsersPermissions;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Random;
 import java.util.UUID;
 
@@ -37,7 +39,7 @@ public class ApiTestData {
 	public static final int RESPONSE_CODE_201 = 201;
 	public static final int RESPONSE_CODE_200 = 200;
 	public static final String COMPRESS_ZIP = "compress_zip";
-	public static final String SEPARATOR_PARENT = "/";
+	public static final String PARENT_PATH = "/";
 	public static final String TEST_ZIP = "test.zip";
 	public static final String DECOMPRESS_ZIP = "decompress_zip";
 	public static final String FAILED_DUE_TO = "Failed due to :";
@@ -79,6 +81,7 @@ public class ApiTestData {
 	public static final int _50 = 50;
 	public static final String WEBHOOK_ACTIVITY = "webhookActivity";
 	public static final String UPLOAD = "Upload";
+	public static final String UPLOAD2 = "upload";
 	public static final String UPLOAD_TREE = "/upload tree";
 	public static final String PATH_COLON = "path:";
 	public static final String EVENT = "event";
@@ -98,9 +101,14 @@ public class ApiTestData {
 	public static final String NICKNAME = "Nickname";
 	public static final String NICKNAME_ATTR = "nicknameattr";
 	public static final String EMAIL_ATTR = "emailattr";
+	public static final String RECIPIENT_ATTR = "recipientAttr";
+	public static final String MSG_ATTR = "msgAttr";
 	public static final String ROLE_ATTR = "roleattr";
 	public static final String STATUS_ATTR = "statusattr";
 	public static final String HOMEDIR_ATTR = "homdir";
+	public static final String TYPE_ATTR = "typeAttr";
+	public static final String INCLUDE_ATTR = "includeAttr";
+	public static final String ACTION_ATTRIBUTE = "action";
 	public static final String EMAIL_ATTR_FALSE = "emailattr_false";
 	public static final String EXPIRATION = "2020-12-12";
 	public static final String EXPIRATION2 = "2020-12-13";
@@ -115,6 +123,12 @@ public class ApiTestData {
 	public static final String HTTP_CHECKIP_AMAZONAWS_COM = "http://checkip.amazonaws.com";
 	public static final String ATTRIBUTE_NAME_IP = "IP";
 	public static final String WILDCARD = "*";
+	public static final String NOTIFICATION = "notification";
+	public static final String MESSAGE = "Hello There! I am a notification";
+	public static final String FOLDER_TYPE = "folder";
+	public static final String TYPE = "type";
+	public static final String RESOURCE = "resource";
+	public static final String ALL = "all";
 
 	private static ApiClient apiClient;
 	private static final Random random = new Random();
@@ -157,7 +171,7 @@ public class ApiTestData {
 	}
 
 	private static void uploadFile(final ResourcesApi resourcesApi, final File file) throws ApiException {
-		final String path = BASE_FOLDER_ + SEPARATOR_PARENT + file.getName();
+		final String path = BASE_FOLDER_ + PARENT_PATH + file.getName();
 		final int fileSize = (int) file.length();
 		final int offsetBytes = 0;
 		final boolean resume = false;
@@ -181,13 +195,14 @@ public class ApiTestData {
 		return requestBody;
 	}
 
+
 	public static AddUserRequestBody createAdmin() {
 		final AddUserRequestBody aDefault = createDefault();
 		final UsersPermissions permissions = aDefault.getPermissions();
 		permissions.list(true).deleteFormData(true).changePassword(true)
 				.notification(true).share(true).viewFormData(true);
 		aDefault.setPermissions(permissions);
-		aDefault.setHomeResource(SEPARATOR_PARENT);
+		aDefault.setHomeResource(PARENT_PATH);
 		aDefault.setRole(AddUserRequestBody.RoleEnum.ADMIN);
 		return aDefault;
 	}
@@ -218,4 +233,13 @@ public class ApiTestData {
 		}
 	}
 
+	public static AddNotificationRequestBody createDefaultNotification() {
+		final AddNotificationRequestBody requestBody = new AddNotificationRequestBody();
+		requestBody.setType(AddNotificationRequestBody.TypeEnum.FOLDER);
+		requestBody.setResource(PARENT_PATH);
+		requestBody.setAction(AddNotificationRequestBody.ActionEnum.UPLOAD);
+		requestBody.setUsernames(Collections.singletonList(VALID_USER_NAME));
+		requestBody.sendEmail(true);
+		return requestBody;
+	}
 }

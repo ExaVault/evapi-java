@@ -199,7 +199,7 @@ public class UsersApiTest {
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				final int id = response.getData().getId();
 				final EmptyResponse emptyResponse = api.deleteUser(id, EV_API_KEY, EV_ACCESS_TOKEN);
-				validDeleteResponse(emptyResponse);
+				validateDeleteResponse(emptyResponse);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {

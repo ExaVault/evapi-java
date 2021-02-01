@@ -44,17 +44,17 @@ public class ApiTestAssertionUtil {
 
 	public static void validateAddFolderResponse2(final ResourceResponse response) {
 		final String path = validateResourceAPICommons(response);
-		assertThat(path).isEqualTo(SEPARATOR_PARENT + DUMMY_ADD_FOLDER_TEST);
+		assertThat(path).isEqualTo(PARENT_PATH + DUMMY_ADD_FOLDER_TEST);
 	}
 
 	public static void validateExtract(final ResourceCollectionResponse response) {
 		validateResourcesList(response, _2, RESPONSE_CODE_201,
-				SEPARATOR_PARENT + DECOMPRESS_ZIP + SEPARATOR_PARENT + DUMMY);
+				PARENT_PATH + DECOMPRESS_ZIP + PARENT_PATH + DUMMY);
 	}
 
 	public static void validateResourcesList(final ResourceCollectionResponse response, final int size) {
 		validateResourcesList(response, size, RESPONSE_CODE_200,
-				BASE_FOLDER_ + SEPARATOR_PARENT + DUMMY);
+				BASE_FOLDER_ + PARENT_PATH + DUMMY);
 	}
 
 	public static void validateResourcesList(final ResourceCollectionResponse response, final int size,
@@ -242,7 +242,7 @@ public class ApiTestAssertionUtil {
 		assertThat(userAttributes.getTimeZone()).isEqualTo(LA_TIMEZONE);
 		final UserPermissions permissions = userAttributes.getPermissions();
 		if (isAdmin) {
-			assertThat(userAttributes.getHomePath()).isEqualTo(SEPARATOR_PARENT);
+			assertThat(userAttributes.getHomePath()).isEqualTo(PARENT_PATH);
 			assertThat(userAttributes.getRole().getValue()).isEqualTo(AddUserRequestBody.RoleEnum.ADMIN.getValue());
 			validatePermissions(permissions.isList(), permissions.isChangePassword(), permissions.isDeleteFormData(),
 					permissions.isShare(), permissions.isViewFormData());
@@ -260,7 +260,7 @@ public class ApiTestAssertionUtil {
 		}
 	}
 
-	public static void validDeleteResponse(final EmptyResponse response) {
+	public static void validateDeleteResponse(final EmptyResponse response) {
 		assertThat(response).isNotNull();
 		assertThat(response.getResponseStatus()).isEqualTo(RESPONSE_CODE_200);
 	}
@@ -340,5 +340,126 @@ public class ApiTestAssertionUtil {
 
 	public static void validateListOfUsersDefault(final UserCollectionResponse response) {
 		validateUsersByAttribute(response, EMPTY);
+	}
+
+	public static void validateDefaultNotification(final NotificationResponse response,
+												   final AddNotificationRequestBody body, final boolean recipientCheck,
+												   final boolean msgCheck) {
+		validateDefaultNotification(response, body, recipientCheck, msgCheck, RESPONSE_CODE_201);
+	}
+
+	public static void validateDefaultNotification(final NotificationResponse response,
+												   final AddNotificationRequestBody body, final boolean recipientCheck,
+												   final boolean msgCheck, final int responseCode) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(responseCode);
+		final Notification notification = response.getData();
+		assertThat(notification.getId()).isInstanceOf(Integer.class);
+		assertThat(notification.getType()).isEqualTo(NOTIFICATION);
+		final NotificationAttributes attributes = notification.getAttributes();
+		assertThat(attributes.getPath()).isEqualTo(body.getResource());
+		assertThat(attributes.getType().getValue()).isEqualTo(body.getType().getValue());
+		assertThat(attributes.getUsernames().size()).isEqualTo(body.getUsernames().size());
+		assertThat(attributes.getUsernames().get(_0)).isEqualTo(body.getUsernames().get(_0));
+		if (recipientCheck) {
+			assertThat(attributes.getRecipients().get(_0).getEmail()).isEqualTo(body.getRecipients().get(_0));
+		}
+		if (msgCheck) {
+			assertThat(attributes.getMessage()).isEqualTo(body.getMessage());
+		}
+		assertThat(attributes.getAction().getValue()).isEqualTo(body.getAction().getValue());
+	}
+
+	public static void validateDefaultNotification(final NotificationResponse response,
+												   final AddNotificationRequestBody body, final boolean recipientCheck) {
+		validateDefaultNotification(response, body, recipientCheck, false);
+	}
+
+	public static void validateUpdatedActionNotification(final NotificationResponse response, final String action) {
+		validateUpdatedNotificationAttribute(response, ACTION_ATTRIBUTE, action);
+	}
+
+	public static void validateUpdatedUsernamesNotification(final NotificationResponse response, final String username) {
+		validateUpdatedNotificationAttribute(response, USERNAME_ATTRIBUTE, username);
+	}
+
+	public static void validateUpdatedSendEmailNotification(final NotificationResponse response, final boolean newValue) {
+		validateUpdatedNotificationAttribute(response, EMAIL_ATTR, newValue);
+	}
+
+	public static void validateUpdatedRecipientsNotification(final NotificationResponse response, final String newValue) {
+		validateUpdatedNotificationAttribute(response, RECIPIENT_ATTR, newValue);
+	}
+
+	public static void validateUpdatedMsgNotification(final NotificationResponse response, final String newValue) {
+		validateUpdatedNotificationAttribute(response, MSG_ATTR, newValue);
+	}
+
+	public static void validateUpdatedNotificationAttribute(final NotificationResponse response,
+															final String attributeName, final Object... args) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(RESPONSE_CODE_200);
+		final Notification notification = response.getData();
+		assertThat(notification.getId()).isInstanceOf(Integer.class);
+		assertThat(notification.getType()).isEqualTo(NOTIFICATION);
+		final NotificationAttributes attributes = notification.getAttributes();
+		switch (attributeName) {
+			case ACTION_ATTRIBUTE:
+				final String real = attributes.getAction().getValue();
+				assertThat(real).isEqualTo((String) args[_0]);
+				break;
+			case USERNAME_ATTRIBUTE:
+				final String realUserName = attributes.getUsernames().get(_0);
+				assertThat(realUserName).isEqualTo((String) args[_0]);
+				break;
+			case EMAIL_ATTR:
+				final boolean isSendEmail = attributes.isSendEmail();
+				assertThat(isSendEmail).isEqualTo((boolean) args[_0]);
+				break;
+			case RECIPIENT_ATTR:
+				final String realRecipient = attributes.getRecipients().get(_0).getEmail();
+				assertThat(realRecipient).isEqualTo((String) args[_0]);
+				break;
+			case MSG_ATTR:
+				final String msg = attributes.getMessage();
+				assertThat(msg).isEqualTo((String) args[_0]);
+				break;
+			default:
+				break;
+		}
+	}
+
+	private static void validateNotificationsByAttribute(final NotificationCollectionResponse response,
+														 final String attributeName, final Object... args) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(RESPONSE_CODE_200);
+		final List<Notification> notifications = response.getData();
+		assertThat(notifications).isNotNull();
+		for (final Notification notification : notifications) {
+			assertThat(notification.getId()).isInstanceOf(Integer.class);
+			assertThat(notification.getType()).isEqualTo(NOTIFICATION);
+			final NotificationAttributes attributes = notification.getAttributes();
+			assertThat(attributes).isNotNull();
+			switch (attributeName) {
+				case TYPE_ATTR:
+					final String real = attributes.getType().getValue();
+					assertThat(real).isEqualTo((String) args[_0]);
+					break;
+				case ACTION_ATTRIBUTE:
+					final String action = attributes.getAction().getValue();
+					assertThat(action).isEqualTo((String) args[_0]);
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	public static void validateListNotificationByType(final NotificationCollectionResponse response, final String newValue) {
+		validateNotificationsByAttribute(response, TYPE_ATTR, newValue);
+	}
+
+	public static void validateListNotificationByAction(final NotificationCollectionResponse response, final String newValue) {
+		validateNotificationsByAttribute(response, ACTION_ATTRIBUTE, newValue);
 	}
 }

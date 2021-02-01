@@ -55,14 +55,14 @@ public class ResourcesApiTest {
 			try {
 				final AddFolderRequestBody requestBody = new AddFolderRequestBody();
 				requestBody.setName(DUMMY_ADD_FOLDER_TEST);
-				requestBody.setParentResource(SEPARATOR_PARENT);
+				requestBody.setParentResource(PARENT_PATH);
 				final ResourceResponse response = api.addFolder(EV_API_KEY, EV_ACCESS_TOKEN, requestBody);
 				assertThat(response).isNotNull();
 				validateAddFolderResponse2(response);
 			} catch (final ApiException e) {
 				fail("Failed due to APIException", e);
 			} finally {
-				cleanup(SEPARATOR_PARENT + DUMMY_ADD_FOLDER_TEST);
+				cleanup(PARENT_PATH + DUMMY_ADD_FOLDER_TEST);
 			}
 		}
 
@@ -118,7 +118,7 @@ public class ResourcesApiTest {
 				compress.setParentResource(BASE_FOLDER_);
 				final ResourceResponse response = api.compressFiles(EV_API_KEY, EV_ACCESS_TOKEN, compress);
 				assertThat(response).isNotNull();
-				validateCompressFilesResponse(response, SEPARATOR_PARENT + TEST_ARCHIVE + ".zip");
+				validateCompressFilesResponse(response, PARENT_PATH + TEST_ARCHIVE + ".zip");
 			} catch (final ApiException | ParseException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -288,16 +288,16 @@ public class ResourcesApiTest {
 		public void extractResources() throws ApiException {
 			try {
 				uploadDummyFiles(api);
-				createFolder(SEPARATOR_PARENT + COMPRESS_ZIP);
-				createFolder(SEPARATOR_PARENT + DECOMPRESS_ZIP);
+				createFolder(PARENT_PATH + COMPRESS_ZIP);
+				createFolder(PARENT_PATH + DECOMPRESS_ZIP);
 				final CompressFilesRequestBody compress = new CompressFilesRequestBody();
 				compress.setResources(Collections.singletonList(BASE_FOLDER_));
-				compress.setParentResource(SEPARATOR_PARENT + COMPRESS_ZIP);
+				compress.setParentResource(PARENT_PATH + COMPRESS_ZIP);
 				compress.setArchiveName(TEST_ZIP);
 				api.compressFiles(EV_API_KEY, EV_ACCESS_TOKEN, compress);
 				final ExtractFilesRequestBody body = new ExtractFilesRequestBody();
-				body.setResource(SEPARATOR_PARENT + COMPRESS_ZIP + SEPARATOR_PARENT + TEST_ZIP);
-				body.setParentResource(SEPARATOR_PARENT + DECOMPRESS_ZIP);
+				body.setResource(PARENT_PATH + COMPRESS_ZIP + PARENT_PATH + TEST_ZIP);
+				body.setParentResource(PARENT_PATH + DECOMPRESS_ZIP);
 				final ResourceCollectionResponse response = api.extractFiles(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				validateExtract(response);
 			} catch (final ApiException e) {
@@ -746,7 +746,7 @@ public class ResourcesApiTest {
 				if (files != null && files.length > _0) {
 					if (files[_0].isFile()) {
 						final ResourceResponse resourceResponse = api.uploadFile(EV_API_KEY, EV_ACCESS_TOKEN,
-								BASE_FOLDER_ + SEPARATOR_PARENT + files[_0].getName(), (int) files[_0].length(),
+								BASE_FOLDER_ + PARENT_PATH + files[_0].getName(), (int) files[_0].length(),
 								files[_0], _0, false, false);
 						validateUploadResponse(resourceResponse);
 					}
