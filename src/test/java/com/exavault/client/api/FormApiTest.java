@@ -99,7 +99,6 @@ public class FormApiTest {
 	@Nested
 	@DisplayName("Get receive folder form settings, Method=GET, API=/forms ")
 	class GetReceiveFormByShareHash {
-		@Disabled("Unauthorized error!")
 		@Test
 		@DisplayName("Get receive folder form by share hash")
 		public void getFormByHash() throws ApiException {
@@ -110,9 +109,8 @@ public class FormApiTest {
 				final AddShareRequestBody body = ApiTestData.createReceiveShare(resource);
 				final ShareResponse response = sharesApi.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
-				//TODO: Getting unauthorized
-				final String hash = response.getData().getAttributes().getOwnerHash();
-				final FormResponse formResponse = api.getFormByShareHash(hash, EV_API_KEY, EV_ACCESS_TOKEN, null);
+				final String hash = response.getData().getAttributes().getHash();
+				final FormResponse formResponse = api.getFormByShareHash(EV_API_KEY, EV_ACCESS_TOKEN, hash, null);
 				validateForm(formResponse, RESPONSE_CODE_200);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
@@ -229,6 +227,7 @@ public class FormApiTest {
 				final int formId = response.getData().getAttributes().getFormId();
 				final UpdateFormByIdRequestBody updateFormByIdRequestBody = new UpdateFormByIdRequestBody();
 				updateFormByIdRequestBody.setCssStyles(SOME_STYLE);
+				//TODO: no validation done for CSS
 				final FormResponse formResponse = api.updateFormById(EV_API_KEY, EV_ACCESS_TOKEN, formId, updateFormByIdRequestBody);
 				validateForm(formResponse, RESPONSE_CODE_200);
 				assertThat(formResponse.getData().getAttributes().getCssStyles()).isEqualTo(SOME_STYLE);
@@ -244,7 +243,7 @@ public class FormApiTest {
 			}
 		}
 
-		@Disabled("500 error, how to test it?")
+		@Disabled("500 error, how to test it? https://app.asana.com/0/1199226257934550/1199888654991074/f")
 		@Test
 		@DisplayName("Updates a form with given parameters, elements")
 		public void updateElements() throws ApiException {
@@ -256,10 +255,8 @@ public class FormApiTest {
 				final ShareResponse response = sharesApi.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				final int formId = response.getData().getAttributes().getFormId();
-
 				final FormResponse formById = api.getFormById(formId, EV_API_KEY, EV_ACCESS_TOKEN, null);
 				//TODO: 500 error why? and why get and setter class are different fro elements?
-				final List<FormField> elements1 = formById.getData().getAttributes().getElements();
 				final UpdateFormByIdRequestBody updateFormByIdRequestBody = new UpdateFormByIdRequestBody();
 				final List<FormsidElements> elementsList = new ArrayList<>();
 				final FormsidElements elements = new FormsidElements();
