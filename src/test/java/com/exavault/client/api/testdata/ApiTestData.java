@@ -21,11 +21,13 @@ import java.util.Random;
 import java.util.UUID;
 
 public class ApiTestData {
-
+	
 	public static final String EV_API_KEY_BAD = "stagingtest-bad-name";
+	// To run tests, add the valid key, token and URL and also set VALID_USER_NAME to the matching username for the acount
 	public static final String EV_API_KEY = "KEY";
 	public static final String EV_ACCESS_TOKEN = "TOKEN";
 	public static final String EV_API_URL = "URL";
+	public static final String VALID_USER_NAME = "USERNAME";
 	public static final String BASE_FOLDER_ = "/folder_for_test";
 	public static final String BASE_FOLDER2_ = "/folder_for_test2";
 	public static final String COPIED_FOLDER = "/copy/copied_%d";
@@ -79,7 +81,6 @@ public class ApiTestData {
 	public static final int _10 = 10;
 	public static final int _1000 = 1000;
 	public static final int _900 = 900;
-	public static final String VALID_USER_NAME = "evapi-docs-java";
 	public static final String DELETE_TYPE = "Delete";
 	public static final String USERNAME = "username";
 	public static final int _50 = 50;
