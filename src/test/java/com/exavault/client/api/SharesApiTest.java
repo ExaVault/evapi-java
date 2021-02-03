@@ -50,7 +50,7 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Current bug in API, Multiple resource for shared_folder not allowed.Asana task added")
+		@Disabled("API Bug: No error from API when you pass multiple resources for shared folder https://app.asana.com/0/1195625154865746/1199548666006564/f")
 		@Test
 		@DisplayName("Create a shared_folder share with multiple resources")
 		public void sharedFolderWithMultipleResources() {
@@ -240,7 +240,6 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("bug in the API, public flag is not populated")
 		@Test
 		@DisplayName("Create a share with public flag")
 		public void shareWithPublicFlag() throws ApiException {
@@ -945,7 +944,7 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Flag is not set correctly, seems like a bug")
+		@Disabled("API Bug: hasNotification flag does not update as expected - https://app.asana.com/0/1195625154865746/1199663247882990/f")
 		@Test
 		@DisplayName("Update has Notification")
 		public void updateHasNotification() throws ApiException {
