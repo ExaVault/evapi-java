@@ -129,13 +129,19 @@ public class SharesApiTest {
 				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final AccessMode accessMode = new AccessMode();
 				accessMode.setDownload(true);
+				accessMode.setUpload(true);
+				accessMode.setDelete(false);
+				accessMode.setModify(false);
 				body.setAccessMode(accessMode);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
-				//TODO: how does access mode work? does it work on folder level or send or receive? API has to be updated
 				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
 				final ShareAttributes attributes = response.getData().getAttributes();
 				assertThat(attributes.getAccessMode().isDownload()).isTrue();
+				assertThat(attributes.getAccessMode().isUpload()).isTrue();
+				// Disabling assertions because API is returning null rather than false https://app.asana.com/0/956984820471204/1199663247882988/f
+				// assertThat(attributes.getAccessMode().isDelete()).isFalse();
+				// assertThat(attributes.getAccessMode().isModify()).isFalse();
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
