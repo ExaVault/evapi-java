@@ -975,7 +975,6 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Flag is not set correctly, seems like a bug")
 		@Test
 		@DisplayName("Update is public flag")
 		public void updateIsPublic() throws ApiException {
