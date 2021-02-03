@@ -36,7 +36,6 @@ public class SharesApiTest {
 			try {
 				resource = createResource();
 				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
-				//TODO: resource is a required field, API doc needs to be updated
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				validateDefaultShares(response, body, RESPONSE_CODE_201);
@@ -251,7 +250,6 @@ public class SharesApiTest {
 				body.isPublic(true);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
-				//TODO: public is null in the response
 				validateShares(true, response, body, RESPONSE_CODE_201);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
