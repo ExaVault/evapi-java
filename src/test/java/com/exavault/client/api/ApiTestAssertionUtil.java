@@ -534,7 +534,7 @@ public class ApiTestAssertionUtil {
 		final ShareAttributes attributes = share.getAttributes();
 		final List<ShareMessage> messages = attributes.getMessages();
 		assertThat(messages.size()).isEqualTo(_1);
-		assertThat(messages.get(_0).getAttributes().getBody()).isEqualTo(msg);
+		assertThat(messages.get(_0).getBody()).isEqualTo(msg);
 	}
 
 	public static void validateShares(final ShareResponse response, final AddShareRequestBody body,
@@ -545,6 +545,21 @@ public class ApiTestAssertionUtil {
 		/*final List<ShareMessage> messages = attributes.get
 		assertThat(messages.size()).isEqualTo(_1);
 		assertThat(messages.get(_0).getAttributes().getBody()).isEqualTo(msg);*/
+	}
+
+	public static void validateSharesWithInvite(final ShareResponse response, final AddShareRequestBody body,
+												final int responseCode, final String inviteEmail, 
+												final String messageSubject, final String messageBody) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		final List<ShareMessage> messages = attributes.getMessages();
+		assertThat(messages.size()).isEqualTo(_1);
+		assertThat(messages.get(_0).getBody()).isEqualTo(messageBody);
+		assertThat(messages.get(_0).getSubject()).isEqualTo(messageSubject);
+		final List<ShareRecipient> recipients = attributes.getRecipients();
+		assertThat(recipients.get(_0).getEmail()).isEqualTo(inviteEmail);
+		assertThat(recipients.get(_0).getType().getValue()).isEqualTo(DIRECT_EMAIL);
 	}
 
 	public static void validateSharesWithFileDropFlag(final ShareResponse response, final AddShareRequestBody body,
@@ -609,7 +624,7 @@ public class ApiTestAssertionUtil {
 				case MSG_ATTR:
 					final List<ShareMessage> messages = attributes.getMessages();
 					for (final ShareMessage message : messages) {
-						assertThat(message.getAttributes().getBody()).isEqualTo((String) args[_0]);
+						assertThat(message.getBody()).isEqualTo((String) args[_0]);
 					}
 					break;
 				case RECIPIENT_ATTR:
