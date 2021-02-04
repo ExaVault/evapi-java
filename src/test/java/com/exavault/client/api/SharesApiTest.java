@@ -664,7 +664,6 @@ public class SharesApiTest {
 			}
 		}
 
-
 		@Test
 		@DisplayName("List shares by include")
 		public void listByInclude() throws ApiException {
@@ -677,11 +676,11 @@ public class SharesApiTest {
 				id = response.getData().getId();
 				final ShareCollectionResponse response1 =
 						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-								null, null, null, NOTIFICATIONS, null,
+								null, null, null, OWNER, null,
 								null, null, null, null);
 				for (final Object o : response1.getIncluded()) {
 					final LinkedTreeMap map = (LinkedTreeMap) o;
-					assertThat(map.get(TYPE)).isEqualTo(NOTIFICATIONS);
+					assertThat(map.get(TYPE)).isEqualTo(USER);
 				}
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
