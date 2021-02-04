@@ -39,8 +39,9 @@ public class ShareAttributes {
   @SerializedName("hasPassword")
   private Boolean hasPassword = null;
 
-  @SerializedName("public")
-  private Boolean _public = null;
+  // EV-CUSTOM override name of _public to isPublic
+  @SerializedName("isPublic")
+  private Boolean isPublic = null;
 
   @SerializedName("accessMode")
   private AccessMode accessMode = null;
@@ -266,22 +267,25 @@ public class ShareAttributes {
     this.hasPassword = hasPassword;
   }
 
-  public ShareAttributes _public(Boolean _public) {
-    this._public = _public;
+  // EV-CUSTOM Override name _public to isPublic
+  public ShareAttributes isPublic(Boolean _public) {
+    this.isPublic = _public;
     return this;
   }
 
    /**
    * True if the share has a public url.
-   * @return _public
+   * @return isPublic
   **/
   @Schema(example = "true", description = "True if the share has a public url.")
   public Boolean isPublic() {
-    return _public;
+    // EV-CUSTOM rename _public to isPublic
+    return isPublic;
   }
 
   public void setPublic(Boolean _public) {
-    this._public = _public;
+    // EV-CUSTOM rename _public to isPublic
+    this.isPublic = _public;
   }
 
   public ShareAttributes accessMode(AccessMode accessMode) {
@@ -696,9 +700,10 @@ public class ShareAttributes {
       return false;
     }
     ShareAttributes shareAttributes = (ShareAttributes) o;
+    // EV-CUSTOM - rename _public to isPublic
     return Objects.equals(this.name, shareAttributes.name) &&
         Objects.equals(this.hasPassword, shareAttributes.hasPassword) &&
-        Objects.equals(this._public, shareAttributes._public) &&
+        Objects.equals(this.isPublic, shareAttributes.isPublic) &&
         Objects.equals(this.accessMode, shareAttributes.accessMode) &&
         Objects.equals(this.accessDescription, shareAttributes.accessDescription) &&
         Objects.equals(this.embed, shareAttributes.embed) &&
@@ -724,7 +729,8 @@ public class ShareAttributes {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, hasPassword, _public, accessMode, accessDescription, embed, hash, ownerHash, expiration, expired, resent, type, requireEmail, fileDropCreateFolders, paths, recipients, messages, inherited, status, hasNotification, created, modified, trackingStatus, formId);
+    // EV-CUSTOM rename _public to isPublic
+    return Objects.hash(name, hasPassword, isPublic, accessMode, accessDescription, embed, hash, ownerHash, expiration, expired, resent, type, requireEmail, fileDropCreateFolders, paths, recipients, messages, inherited, status, hasNotification, created, modified, trackingStatus, formId);
   }
 
 
@@ -735,7 +741,8 @@ public class ShareAttributes {
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    hasPassword: ").append(toIndentedString(hasPassword)).append("\n");
-    sb.append("    _public: ").append(toIndentedString(_public)).append("\n");
+    // EV-CUSTOM rename _public to isPublic
+    sb.append("    isPublic: ").append(toIndentedString(isPublic)).append("\n");
     sb.append("    accessMode: ").append(toIndentedString(accessMode)).append("\n");
     sb.append("    accessDescription: ").append(toIndentedString(accessDescription)).append("\n");
     sb.append("    embed: ").append(toIndentedString(embed)).append("\n");

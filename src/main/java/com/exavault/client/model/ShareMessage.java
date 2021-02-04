@@ -14,7 +14,6 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.ShareMessageAttributes;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,6 +21,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import org.threeten.bp.OffsetDateTime;
 /**
  * ShareMessage
  */
@@ -31,51 +31,23 @@ public class ShareMessage {
   @SerializedName("id")
   private Integer id = null;
 
-  /**
-   * Resource type
-   */
-  @JsonAdapter(TypeEnum.Adapter.class)
-  public enum TypeEnum {
-    MESSAGE("message");
+  @SerializedName("userId")
+  private Integer userId = null;
 
-    private String value;
+  @SerializedName("shareId")
+  private Integer shareId = null;
 
-    TypeEnum(String value) {
-      this.value = value;
-    }
-    public String getValue() {
-      return value;
-    }
+  @SerializedName("subject")
+  private String subject = null;
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-    public static TypeEnum fromValue(String text) {
-      for (TypeEnum b : TypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-    public static class Adapter extends TypeAdapter<TypeEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final TypeEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
+  @SerializedName("body")
+  private String body = null;
 
-      @Override
-      public TypeEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return TypeEnum.fromValue(String.valueOf(value));
-      }
-    }
-  }  @SerializedName("type")
-  private TypeEnum type = null;
+  @SerializedName("created")
+  private OffsetDateTime created = null;
 
-  @SerializedName("attributes")
-  private ShareMessageAttributes attributes = null;
+  @SerializedName("modified")
+  private OffsetDateTime modified = null;
 
   public ShareMessage id(Integer id) {
     this.id = id;
@@ -95,40 +67,112 @@ public class ShareMessage {
     this.id = id;
   }
 
-  public ShareMessage type(TypeEnum type) {
-    this.type = type;
+  public ShareMessage userId(Integer userId) {
+    this.userId = userId;
     return this;
   }
 
    /**
-   * Resource type
-   * @return type
+   * User ID who generated share invite
+   * @return userId
   **/
-  @Schema(example = "message", description = "Resource type")
-  public TypeEnum getType() {
-    return type;
+  @Schema(example = "119394", description = "User ID who generated share invite")
+  public Integer getUserId() {
+    return userId;
   }
 
-  public void setType(TypeEnum type) {
-    this.type = type;
+  public void setUserId(Integer userId) {
+    this.userId = userId;
   }
 
-  public ShareMessage attributes(ShareMessageAttributes attributes) {
-    this.attributes = attributes;
+  public ShareMessage shareId(Integer shareId) {
+    this.shareId = shareId;
     return this;
   }
 
    /**
-   * Get attributes
-   * @return attributes
+   * ID of associated share
+   * @return shareId
   **/
-  @Schema(description = "")
-  public ShareMessageAttributes getAttributes() {
-    return attributes;
+  @Schema(example = "3544253", description = "ID of associated share")
+  public Integer getShareId() {
+    return shareId;
   }
 
-  public void setAttributes(ShareMessageAttributes attributes) {
-    this.attributes = attributes;
+  public void setShareId(Integer shareId) {
+    this.shareId = shareId;
+  }
+
+  public ShareMessage subject(String subject) {
+    this.subject = subject;
+    return this;
+  }
+
+   /**
+   * Share invitation message subject.
+   * @return subject
+  **/
+  @Schema(example = "Files available for download", description = "Share invitation message subject.")
+  public String getSubject() {
+    return subject;
+  }
+
+  public void setSubject(String subject) {
+    this.subject = subject;
+  }
+
+  public ShareMessage body(String body) {
+    this.body = body;
+    return this;
+  }
+
+   /**
+   * Share invitation message text.
+   * @return body
+  **/
+  @Schema(example = "You have files available for download.", description = "Share invitation message text.")
+  public String getBody() {
+    return body;
+  }
+
+  public void setBody(String body) {
+    this.body = body;
+  }
+
+  public ShareMessage created(OffsetDateTime created) {
+    this.created = created;
+    return this;
+  }
+
+   /**
+   * Timestamp of message creation.
+   * @return created
+  **/
+  @Schema(example = "2017-01-26T18:10:47Z", description = "Timestamp of message creation.")
+  public OffsetDateTime getCreated() {
+    return created;
+  }
+
+  public void setCreated(OffsetDateTime created) {
+    this.created = created;
+  }
+
+  public ShareMessage modified(OffsetDateTime modified) {
+    this.modified = modified;
+    return this;
+  }
+
+   /**
+   * Timestamp of message modification.
+   * @return modified
+  **/
+  @Schema(example = "2017-01-28T13:10:47Z", description = "Timestamp of message modification.")
+  public OffsetDateTime getModified() {
+    return modified;
+  }
+
+  public void setModified(OffsetDateTime modified) {
+    this.modified = modified;
   }
 
 
@@ -142,13 +186,17 @@ public class ShareMessage {
     }
     ShareMessage shareMessage = (ShareMessage) o;
     return Objects.equals(this.id, shareMessage.id) &&
-        Objects.equals(this.type, shareMessage.type) &&
-        Objects.equals(this.attributes, shareMessage.attributes);
+        Objects.equals(this.userId, shareMessage.userId) &&
+        Objects.equals(this.shareId, shareMessage.shareId) &&
+        Objects.equals(this.subject, shareMessage.subject) &&
+        Objects.equals(this.body, shareMessage.body) &&
+        Objects.equals(this.created, shareMessage.created) &&
+        Objects.equals(this.modified, shareMessage.modified);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type, attributes);
+    return Objects.hash(id, userId, shareId, subject, body, created, modified);
   }
 
 
@@ -158,8 +206,12 @@ public class ShareMessage {
     sb.append("class ShareMessage {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    attributes: ").append(toIndentedString(attributes)).append("\n");
+    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
+    sb.append("    shareId: ").append(toIndentedString(shareId)).append("\n");
+    sb.append("    subject: ").append(toIndentedString(subject)).append("\n");
+    sb.append("    body: ").append(toIndentedString(body)).append("\n");
+    sb.append("    created: ").append(toIndentedString(created)).append("\n");
+    sb.append("    modified: ").append(toIndentedString(modified)).append("\n");
     sb.append("}");
     return sb.toString();
   }
