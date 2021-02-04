@@ -267,20 +267,24 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Need to find how to validate this via response")
+		@Disabled("Bug w/ YAML/Java library - https://app.asana.com/0/995549063759750/1199657062477807/f")
 		@Test
-		@DisplayName("Create a share with message body")
-		public void shareWithMsgBody() throws ApiException {
+		@DisplayName("Create a share with an invitation")
+		public void shareWithInvitation() throws ApiException {
 			int id = _1;
 			String resource = null;
 			try {
 				resource = createResource();
 				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				body.setMessageBody(MESSAGE);
+				body.setMessageSubject(MESSAGE_SUBJECT);
+				final SharesRecipients shareRecipient = new SharesRecipients();
+				shareRecipient.setType(DIRECT_EMAIL);
+				shareRecipient.setEmail(TEST_EMAIL3);
+				body.setRecipients(Collections.singletonList(shareRecipient));
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
-				//TODO: Why messages comes empty?
-				validateShares(MESSAGE, response, body, RESPONSE_CODE_201);
+				validateSharesWithInvite(response, body, RESPONSE_CODE_201, TEST_EMAIL3, MESSAGE_SUBJECT, MESSAGE);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
