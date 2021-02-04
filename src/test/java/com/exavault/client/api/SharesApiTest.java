@@ -497,7 +497,6 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Need to check the offset")
 		@Test
 		@DisplayName("List shares by offset")
 		public void listByOffset() throws ApiException {
@@ -508,12 +507,24 @@ public class SharesApiTest {
 				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
+				final ShareCollectionResponse response0 = 
+						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+							null, null, null, null, null,
+							null, null, null, null);				
 				final ShareCollectionResponse response1 =
 						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, _1, null,
 								null, null, null, null, null,
 								null, null, null, null);
-				//TODO: Is this expected behaviour of offset? it does not return 0
-				assertThat(response1.getReturnedResults()).isZero();
+				if (response1.getData().size() > 0) {
+					// If for some reason there are existing shares in the account, just verify that 
+					// the offset skips the first response
+					int firstIdResponse0 = response0.getData().get(_0).getId();
+					int firstIdResponse1 = response1.getData().get(_0).getId();
+					assertThat(firstIdResponse0 != firstIdResponse1).isTrue();
+				} else {
+					// If the account has no other shares, there should be nothing returned with offset >= 1
+					assertThat(response1.getReturnedResults()).isZero();
+				}
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
