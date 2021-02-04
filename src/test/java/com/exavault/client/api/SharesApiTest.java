@@ -535,11 +535,10 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Know bug, got not found error, should be bad request")
+		@Disabled("API Bug for wrong error message https://app.asana.com/0/956984820471204/1199657062477813/f")
 		@Test
 		@DisplayName("List shares by an invalid offset")
 		public void listByInvalidOffset() {
-			//TODO: wrong error message.
 			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
 				@Override
 				public void call() throws ApiException {
