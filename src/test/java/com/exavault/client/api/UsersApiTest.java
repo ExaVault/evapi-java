@@ -350,7 +350,7 @@ public class UsersApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
-				cleanup(BASE_FOLDER_);
+				cleanup(BASE_FOLDER_, COPY);
 			}
 		}
 
@@ -375,6 +375,7 @@ public class UsersApiTest {
 				if (id != _1) {
 					cleanup(id);
 				}
+				cleanup(COPY);
 			}
 		}
 

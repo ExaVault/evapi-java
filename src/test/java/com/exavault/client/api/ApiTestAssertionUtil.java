@@ -6,7 +6,6 @@ import org.threeten.bp.OffsetDateTime;
 
 import java.io.File;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 import static com.exavault.client.api.testdata.ApiTestData.*;

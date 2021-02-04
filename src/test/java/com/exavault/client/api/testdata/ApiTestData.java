@@ -137,17 +137,6 @@ public class ApiTestData {
 	public static final String TYPE = "type";
 	public static final String RESOURCE = "resource";
 	public static final String ALL = "all";
-	public static final String SHARE_NAME = "Share_Name";
-	public static final String DIRECT_EMAIL = "direct";
-	public static final int _2021 = 2021;
-	public static final int MONTH_12 = 12;
-	public static final OffsetDateTime EXPIRATION1 = OffsetDateTime.of(_2021, MONTH_12, MONTH_12, _0, _0, _0, _0, ZoneOffset.UTC);
-	public static final String NOTIFICATIONS = "notifications";
-	public static final String SHARED_FOLDER = "shared_folder";
-	public static final String CREATED = "created";
-	public static final String MESSAGE_SUBJECT = "I am a subject";
-	public static final String OWNER = "owner";
-	public static final String ATTRIBUTES = "attributes";
 
 	private static ApiClient apiClient;
 	private static final Random random = new Random();
