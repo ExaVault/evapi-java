@@ -267,7 +267,6 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Bug w/ YAML/Java library - https://app.asana.com/0/995549063759750/1199657062477807/f")
 		@Test
 		@DisplayName("Create a share with an invitation")
 		public void shareWithInvitation() throws ApiException {
