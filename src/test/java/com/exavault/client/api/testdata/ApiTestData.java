@@ -3,10 +3,7 @@ package com.exavault.client.api.testdata;
 import com.exavault.client.ApiClient;
 import com.exavault.client.ApiException;
 import com.exavault.client.api.ResourcesApi;
-import com.exavault.client.model.AddNotificationRequestBody;
-import com.exavault.client.model.AddShareRequestBody;
-import com.exavault.client.model.AddUserRequestBody;
-import com.exavault.client.model.UsersPermissions;
+import com.exavault.client.model.*;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.ZoneOffset;
 
@@ -16,16 +13,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class ApiTestData {
 
 	public static final String EV_API_KEY_BAD = "stagingtest-bad-name";
+	// To run tests, add the valid key, token and URL and also set VALID_USER_NAME to the matching username for the acount
 	public static final String EV_API_KEY = "KEY";
 	public static final String EV_ACCESS_TOKEN = "TOKEN";
 	public static final String EV_API_URL = "URL";
+	public static final String VALID_USER_NAME = "USERNAME";
 	public static final String BASE_FOLDER_ = "/folder_for_test";
 	public static final String BASE_FOLDER2_ = "/folder_for_test2";
 	public static final String COPIED_FOLDER = "/copy/copied_%d";
@@ -79,7 +76,6 @@ public class ApiTestData {
 	public static final int _10 = 10;
 	public static final int _1000 = 1000;
 	public static final int _900 = 900;
-	public static final String VALID_USER_NAME = "evapi-docs-java";
 	public static final String DELETE_TYPE = "Delete";
 	public static final String USERNAME = "username";
 	public static final int _50 = 50;
@@ -111,8 +107,9 @@ public class ApiTestData {
 	public static final String STATUS_ATTR = "statusattr";
 	public static final String HOMEDIR_ATTR = "homdir";
 	public static final String TYPE_ATTR = "typeAttr";
-	public static final String SCOPE_ATTR = "scopeAttr";
+	public static final String INCLUDE_ATTR = "includeAttr";
 	public static final String ACTION_ATTRIBUTE = "action";
+	public static final String SCOPE_ATTR = "scopeAttr";
 	public static final String EMAIL_ATTR_FALSE = "emailattr_false";
 	public static final String EXPIRATION = "2020-12-12";
 	public static final String EXPIRATION2 = "2020-12-13";
@@ -130,8 +127,16 @@ public class ApiTestData {
 	public static final String WILDCARD = "*";
 	public static final String NOTIFICATION = "notification";
 	public static final String SHARE = "share";
-	public static final String MESSAGE = "Hello There! I am a notification";
 	public static final String PASSWORD = "Hello There! I am a Password";
+	public static final String MESSAGE = "Hello There! I am a notification";
+	public static final String EMAIL_CONTENT_DEFAULT = "Great news, your new account is ready!\n" +
+			"For your records, we've listed information you'll use to log in below:\n" +
+			"FTP Server: [[ftpserver]]\n" +
+			"Username (Web and FTP access): [[username]]\n" +
+			"[[setpassword]]";
+	public static final String EMAIL_SUBJECT = "Hello There! I am a subject";
+	public static final String EMAIL_SUBJECT_DEFAULT = "ExaVault File Sharing Account";
+	public static final String SIGNATURE = "Hello There! I am a signature";
 	public static final String FOLDER_TYPE = "folder";
 	public static final String TYPE = "type";
 	public static final String RESOURCE = "resource";
@@ -145,6 +150,22 @@ public class ApiTestData {
 	public static final String SHARED_FOLDER = "shared_folder";
 	public static final String CREATED = "created";
 	public static final String MESSAGE_SUBJECT = "I am a subject";
+	public static final String OWNER = "owner";
+	public static final String ATTRIBUTES = "attributes";
+	public static final String EMAIL_LIST_NAME = "EMAIL_LIST_NAME";
+	public static final String EMAIL_LIST = "emailList";
+	public static final String ACCOUNT = "account";
+	public static final String MASTER_USER = "masterUser";
+	public static final String OWNER_USER = "ownerUser";
+	public static final int NOTICE_THRESHOLD = 80;
+	public static final int NOTICE_THRESHOLD_DEFAULT = 70;
+	public static final String SOME_DOMAIN = "www.google.com";
+	public static final String NAME1 = "NAME";
+	public static final String THEME = "dark";
+	public static final String IP_START1 = "0.0.0.0";
+	public static final String IP_END1 = "255.255.255.255";
+	public static final String DEFAULT = "default";
+	public static final String EMPTY2 = "";
 
 	private static ApiClient apiClient;
 	private static final Random random = new Random();
@@ -264,26 +285,45 @@ public class ApiTestData {
 	}
 
 	public static AddShareRequestBody createDefaultShare() {
+		return createDefaultShare(BASE_FOLDER_);
+	}
+
+	public static AddShareRequestBody createDefaultShare(final String resource) {
 		final AddShareRequestBody requestBody = new AddShareRequestBody();
 		requestBody.setType(AddShareRequestBody.TypeEnum.SHARED_FOLDER);
 		requestBody.setName(generateRandomName(SHARE_NAME));
-		requestBody.setResources(Collections.singletonList(BASE_FOLDER_));
+		requestBody.setResources(Collections.singletonList(resource));
 		return requestBody;
 	}
 
-	public static AddShareRequestBody createReceiveShare() {
+	public static AddShareRequestBody createReceiveShare(final String resource) {
 		final AddShareRequestBody requestBody = new AddShareRequestBody();
 		requestBody.setType(AddShareRequestBody.TypeEnum.RECEIVE);
 		requestBody.setName(generateRandomName());
-		requestBody.setResources(Collections.singletonList(BASE_FOLDER_));
+		requestBody.setResources(Collections.singletonList(resource));
+		return requestBody;
+	}
+
+	public static AddShareRequestBody createSendShare(final String resource) {
+		final AddShareRequestBody requestBody = new AddShareRequestBody();
+		requestBody.setType(AddShareRequestBody.TypeEnum.SEND);
+		requestBody.setName(generateRandomName());
+		requestBody.setResources(Collections.singletonList(resource));
 		return requestBody;
 	}
 
 	public static AddShareRequestBody createSendShare() {
-		final AddShareRequestBody requestBody = new AddShareRequestBody();
-		requestBody.setType(AddShareRequestBody.TypeEnum.SEND);
-		requestBody.setName(generateRandomName());
-		requestBody.setResources(Collections.singletonList(BASE_FOLDER_));
-		return requestBody;
+		return createSendShare(BASE_FOLDER_);
+	}
+
+	public static AddEmailListRequestBody defaultEmailList() {
+		final AddEmailListRequestBody body = new AddEmailListRequestBody();
+		body.setName(generateRandomName(EMAIL_LIST_NAME));
+		final List<String> emails = new ArrayList<>();
+		emails.add(TEST_EMAIL);
+		emails.add(TEST_EMAIL2);
+		emails.add(TEST_EMAIL3);
+		body.setEmails(emails);
+		return body;
 	}
 }

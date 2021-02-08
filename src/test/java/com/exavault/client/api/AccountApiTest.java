@@ -13,50 +13,308 @@
 package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
-import com.exavault.client.model.AccountResponse;
-import com.exavault.client.model.UpdateAccountRequestBody;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import com.exavault.client.api.testdata.ApiTestData;
+import com.exavault.client.model.*;
+import org.junit.jupiter.api.*;
 
-/**
- * API tests for AccountApi
- */
-@Disabled
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static com.exavault.client.api.ApiTestAssertionUtil.validateAccountSettings;
+import static com.exavault.client.api.testdata.ApiTestData.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.AssertionsKt.fail;
+
+@DisplayName("Account API Tests")
 public class AccountApiTest {
 
-	private final AccountApi api = new AccountApi();
+	private AccountApi api;
 
-	/**
-	 * Get account settings
-	 * <p>
-	 * Get settings for your account, such as current space usage, webhooks settings, welcome email content and IP address restrictions.
-	 *
-	 * @throws ApiException if the Api call fails
-	 */
-	@Test
-	public void getAccountTest() throws ApiException {
-		final String evApiKey = null;
-		final String evAccessToken = null;
-		final String include = null;
-		final AccountResponse response = api.getAccount(evApiKey, evAccessToken, include);
-
-		// TODO: test validations
+	@BeforeEach
+	public void setup() {
+		api = new AccountApi(ApiTestData.getApiClient());
 	}
 
-	/**
-	 * Update account settings
-	 * <p>
-	 * Update account settings, such as welcome email content, IP address restrictions, webhooks settings and secure password requirements.  **Notes**  - You must have [admin-level access](/docs/account/04-users/00-introduction#managing-user-roles-and-permissions) to change account settings.
-	 *
-	 * @throws ApiException if the Api call fails
-	 */
-	@Test
-	public void updateAccountTest() throws ApiException {
-		final String evApiKey = null;
-		final String evAccessToken = null;
-		final UpdateAccountRequestBody body = null;
-		final AccountResponse response = api.updateAccount(evApiKey, evAccessToken, body);
+	@Nested
+	@DisplayName("Get account settings, Method=GET, API=/account ")
+	class GetAccount {
+		@Test
+		@DisplayName("Get account settings")
+		public void getAccountTest() {
+			try {
+				//TODO: how to run these tests for a dummy account, its updating crucial info.
+				final AccountResponse response = api.getAccount(EV_API_KEY, EV_ACCESS_TOKEN, MASTER_USER);
+				validateAccountSettings(response);
+				for (final Object o : response.getIncluded()) {
+					final User user = (User) o;
+					assertThat(user.getType()).isEqualTo(USER);
+				}
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
 
-		// TODO: test validations
+		@Test
+		@DisplayName("Get account settings with invalid include")
+		public void getAccountTestWithInvalidInclude() {
+			try {
+				final AccountResponse response = api.getAccount(EV_API_KEY, EV_ACCESS_TOKEN, INVALID);
+				assertThat(response.getIncluded()).isEmpty();
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
+	}
+
+	@Nested
+	@DisplayName("Update account settings, Method=PATCH, API=/account ")
+	class UpdateAccount {
+		@Test
+		@DisplayName("Update account settings, quotaNoticeEnabled")
+		public void updateQuotaNoticeEnabled() throws ApiException {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setQuotaNoticeEnabled(true);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+				assertThat(response.getData().getAttributes().getQuota().isNoticeEnabled()).isTrue();
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setQuotaNoticeEnabled(false);
+				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+			}
+		}
+
+
+		@Disabled("Value does not match")
+		@Test
+		@DisplayName("Update account settings, quotaNoticeThreshold")
+		public void updateQuotaNoticeThreshold() throws ApiException {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setQuotaNoticeThreshold(NOTICE_THRESHOLD);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+				assertThat(response.getData().getAttributes().getQuota().getNoticeThreshold()).isEqualTo(NOTICE_THRESHOLD);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setQuotaNoticeThreshold(NOTICE_THRESHOLD_DEFAULT);
+				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+			}
+		}
+
+
+		@Disabled("Should it fail?")
+		@Test
+		@DisplayName("Update account settings, invalid quotaNoticeThreshold")
+		public void updateQuotaNoticeInvalidThreshold() {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setQuotaNoticeThreshold(_1);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+				assertThat(response.getData().getAttributes().getQuota().getNoticeThreshold()).isEqualTo(_1);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
+
+		@Test
+		@DisplayName("Update account settings, secure only")
+		public void updateSecureOnly() throws ApiException {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setSecureOnly(true);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+				assertThat(response.getData().getAttributes().isSecureOnly()).isTrue();
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setSecureOnly(false);
+				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+			}
+		}
+
+		@Test
+		@DisplayName("Update account settings, complex passwords")
+		public void updateComplexPassword() throws ApiException {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setComplexPasswords(true);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+				assertThat(response.getData().getAttributes().isComplexPasswords()).isTrue();
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setComplexPasswords(false);
+				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+			}
+		}
+
+		@Test
+		@DisplayName("Update account settings, show referral links")
+		public void updateShowReferralLinks() throws ApiException {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setShowReferralLinks(true);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+				assertThat(response.getData().getAttributes().isShowReferralLinks()).isTrue();
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setShowReferralLinks(false);
+				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+			}
+		}
+
+		@Disabled("Why does it fail?")
+		@Test
+		@DisplayName("Update account settings, external domain")
+		public void updateExternalDomain() {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setExternalDomain(SOME_DOMAIN);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+				assertThat(response.getData().getAttributes().getExternalDomains().get(_0)).isEqualTo(SOME_DOMAIN);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			}
+		}
+
+		@Test
+		@DisplayName("Update account settings, email content")
+		public void updateEmailContent() throws ApiException {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setEmailContent(MESSAGE);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+				assertThat(response.getData().getAttributes().getWelcomeEmailContent()).isEqualTo(MESSAGE);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setEmailContent(EMAIL_CONTENT_DEFAULT);
+				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+			}
+		}
+
+		@Test
+		@DisplayName("Update account settings, email subject")
+		public void updateEmailSubject() throws ApiException {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setEmailSubject(EMAIL_SUBJECT);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+				assertThat(response.getData().getAttributes().getWelcomeEmailSubject()).isEqualTo(EMAIL_SUBJECT);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setEmailSubject(EMAIL_SUBJECT_DEFAULT);
+				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+			}
+		}
+
+		@Disabled("iprange list is not populated correctly")
+		@Test
+		@DisplayName("Update account settings, allowed IP ranges")
+		public void updateAllowedIPRanges() throws ApiException {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				final List<AccountAllowedIpRanges> ipRangesList = new ArrayList<>();
+				final AccountAllowedIpRanges ranges = new AccountAllowedIpRanges();
+				ranges.setIpStart(IP_START1);
+				ranges.setIpEnd(IP_END1);
+				ipRangesList.add(ranges);
+				body.setAllowedIpRanges(ipRangesList);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+				final AccountAttributes attributes = response.getData().getAttributes();
+				final List<AccountAttributesAllowedIp> allowedIp = attributes.getAllowedIp();
+				assertThat(allowedIp.get(_0).getIpStart()).isEqualTo(IP_START1);
+				assertThat(allowedIp.get(_0).getIpEnd()).isEqualTo(IP_END1);
+			} catch (final Exception e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setAllowedIpRanges(Collections.<AccountAllowedIpRanges>emptyList());
+				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+			}
+		}
+
+		@Test
+		@DisplayName("Update account settings, custom signature")
+		public void updateCustomSignature() throws ApiException {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setCustomSignature(SIGNATURE);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+				assertThat(response.getData().getAttributes().getCustomSignature()).isEqualTo(SIGNATURE);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setCustomSignature(EMPTY2);
+				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+			}
+		}
+
+		@Test
+		@DisplayName("Update account settings, account onboarding")
+		public void updateAccountOnboarding() throws ApiException {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setAccountOnboarding(false);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+				assertThat(response.getData().getAttributes().isAccountOnboarding()).isFalse();
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				body.setAccountOnboarding(true);
+				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+			}
+		}
+
+		@Test
+		@DisplayName("Update account settings, branding settings")
+		public void updateBrandingSettings() throws ApiException {
+			try {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				final BrandingSettingsValues brandingSettingsValues = new BrandingSettingsValues();
+				brandingSettingsValues.setCompanyName(NAME1);
+				brandingSettingsValues.setCustomEmail(TEST_EMAIL4);
+				brandingSettingsValues.setTheme(THEME);
+				body.setBrandingSettings(brandingSettingsValues);
+				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				validateAccountSettings(response, false);
+			} catch (final ApiException e) {
+				fail(FAILED_DUE_TO, e);
+			} finally {
+				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+				final BrandingSettingsValues brandingSettingsValues = new BrandingSettingsValues();
+				brandingSettingsValues.setCompanyName(EMPTY2);
+				brandingSettingsValues.setCustomEmail(EMPTY2);
+				brandingSettingsValues.setTheme(DEFAULT);
+				body.setBrandingSettings(brandingSettingsValues);
+				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+			}
+		}
 	}
 }
