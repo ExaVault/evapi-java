@@ -659,7 +659,7 @@ public class ApiTestAssertionUtil {
 		assertThat(emailList.getId()).isInstanceOf(Integer.class);
 		assertThat(emailList.getType()).isEqualTo(EMAIL_LIST);
 		final EmailListAttributes attributes = emailList.getAttributes();
-		assertThat(attributes.getName()).isEqualTo(body.getName());
+		assertThat(attributes.getName()).startsWith(EMAIL_LIST_NAME);
 		assertThat(attributes.getEmails()).containsAll(body.getEmails());
 	}
 

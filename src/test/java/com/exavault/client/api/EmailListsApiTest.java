@@ -54,14 +54,15 @@ public class EmailListsApiTest {
 			int id = _1;
 			try {
 				final AddEmailListRequestBody body = defaultEmailList();
-				body.setName(EMAIL_LIST_NAME);
+				final String resource = generateRandomName(EMAIL_LIST_NAME);
+				body.setName(resource);
 				final EmailListResponse response = api.addEmailList(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
 					@Override
 					public void call() throws ApiException {
 						final AddEmailListRequestBody body2 = defaultEmailList();
-						body2.setName(EMAIL_LIST_NAME);
+						body2.setName(resource);
 						api.addEmailList(EV_API_KEY, EV_ACCESS_TOKEN, body2);
 					}
 				}).isInstanceOf(ApiException.class)

@@ -312,6 +312,10 @@ public class ApiTestData {
 		return requestBody;
 	}
 
+	public static AddShareRequestBody createSendShare() {
+		return createSendShare(BASE_FOLDER_);
+	}
+
 	public static AddEmailListRequestBody defaultEmailList() {
 		final AddEmailListRequestBody body = new AddEmailListRequestBody();
 		body.setName(generateRandomName(EMAIL_LIST_NAME));
