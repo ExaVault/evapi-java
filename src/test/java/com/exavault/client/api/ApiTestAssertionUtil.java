@@ -6,6 +6,7 @@ import org.threeten.bp.OffsetDateTime;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import static com.exavault.client.api.testdata.ApiTestData.*;
@@ -479,6 +480,167 @@ public class ApiTestAssertionUtil {
 		assertThat(attributes.getName()).isEqualTo(body.getName());
 		assertThat(attributes.getType().getValue()).isEqualTo(type);
 		assertThat(attributes.getPaths()).containsAll(body.getResources());
+	}
+
+	public static ShareAttributes validateAndGetSharesAttributes(final ShareResponse response, final int responseCode) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(responseCode);
+		final Share share = response.getData();
+		assertThat(share.getId()).isInstanceOf(Integer.class);
+		assertThat(share.getType().getValue()).isEqualTo(SHARE);
+		return share.getAttributes();
+	}
+
+	public static void validateShares(final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode, final OffsetDateTime expiration) throws ParseException {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		final Date parse = dateTimeFormatter2.parse(attributes.getExpiration());
+		final Date parse1 = dateTimeFormatter2.parse(expiration.toString());
+		assertThat(parse).isEqualToIgnoringMillis(parse1);
+	}
+
+	public static void validateShares(final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode, final SharesRecipients sharesRecipients) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		final List<ShareRecipient> recipients = attributes.getRecipients();
+		assertThat(recipients.get(_0).getEmail()).isEqualTo(sharesRecipients.getEmail());
+		assertThat(recipients.get(_0).getType().getValue()).isEqualTo(sharesRecipients.getType());
+	}
+
+	public static void validateShares(final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode, final boolean hasNotification) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		assertThat(attributes.isHasNotification()).isEqualTo(hasNotification);
+	}
+
+	public static void validateShares(final boolean isPublic, final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		assertThat(attributes.isPublic()).isEqualTo(isPublic);
+	}
+
+	public static void validateShares(final String msg, final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		final List<ShareMessage> messages = attributes.getMessages();
+		assertThat(messages.size()).isEqualTo(_1);
+		assertThat(messages.get(_0).getBody()).isEqualTo(msg);
+	}
+
+	public static void validateShares(final ShareResponse response, final AddShareRequestBody body,
+									  final int responseCode, final List<String> emails) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		/*final List<ShareMessage> messages = attributes.get
+		assertThat(messages.size()).isEqualTo(_1);
+		assertThat(messages.get(_0).getAttributes().getBody()).isEqualTo(msg);*/
+	}
+
+	public static void validateSharesWithInvite(final ShareResponse response, final AddShareRequestBody body,
+												final int responseCode, final String inviteEmail,
+												final String messageSubject, final String messageBody) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		final List<ShareMessage> messages = attributes.getMessages();
+		assertThat(messages.size()).isEqualTo(_1);
+		assertThat(messages.get(_0).getBody()).isEqualTo(messageBody);
+		assertThat(messages.get(_0).getSubject()).isEqualTo(messageSubject);
+		final List<ShareRecipient> recipients = attributes.getRecipients();
+		assertThat(recipients.get(_0).getEmail()).isEqualTo(inviteEmail);
+		assertThat(recipients.get(_0).getType().getValue()).isEqualTo(DIRECT_EMAIL);
+	}
+
+	public static void validateSharesWithFileDropFlag(final ShareResponse response, final AddShareRequestBody body,
+													  final int responseCode) {
+		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.RECEIVE.getValue());
+		final Share share = response.getData();
+		final ShareAttributes attributes = share.getAttributes();
+		assertThat(attributes.isFileDropCreateFolders()).isEqualTo(true);
+	}
+
+	public static void validateListSharesByType(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, TYPE_ATTR, newValue);
+	}
+
+	public static void validateListSharesByScope(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, SCOPE_ATTR, newValue);
+	}
+
+	public static void validateListSharesByName(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, NAME, newValue);
+	}
+
+	public static void validateListSharesByRecipients(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, RECIPIENT_ATTR, newValue);
+	}
+
+	public static void validateListSharesByMsg(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, MSG_ATTR, newValue);
+	}
+
+	public static void validateListSharesByUsername(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, USERNAME_ATTRIBUTE, newValue);
+	}
+
+	public static void validateListSharesBySearch(final ShareCollectionResponse response, final String newValue) {
+		validateSharesByAttribute(response, SEARCH_ATTRIBUTE, newValue);
+	}
+
+	private static void validateSharesByAttribute(final ShareCollectionResponse response,
+												  final String attributeName, final Object... args) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(RESPONSE_CODE_200);
+		final List<Share> shares = response.getData();
+		assertThat(shares).isNotNull();
+		for (final Share share : shares) {
+			assertThat(share.getId()).isInstanceOf(Integer.class);
+			assertThat(share.getType().getValue()).isEqualTo(SHARE);
+			final ShareAttributes attributes = share.getAttributes();
+			assertThat(attributes).isNotNull();
+			switch (attributeName) {
+				case TYPE_ATTR:
+					final String real = attributes.getType().getValue();
+					assertThat(real).isEqualTo((String) args[_0]);
+					break;
+				case SCOPE_ATTR:
+					//TODO: check
+					break;
+				case NAME:
+					final String name = attributes.getName();
+					assertThat(name).isEqualTo((String) args[_0]);
+					break;
+				case MSG_ATTR:
+					final List<ShareMessage> messages = attributes.getMessages();
+					for (final ShareMessage message : messages) {
+						assertThat(message.getBody()).isEqualTo((String) args[_0]);
+					}
+					break;
+				case RECIPIENT_ATTR:
+					final List<ShareRecipient> recipients = attributes.getRecipients();
+					for (final ShareRecipient recipient : recipients) {
+						assertThat(recipient.getEmail()).isEqualTo((String) args[_0]);
+					}
+					break;
+				case USERNAME_ATTRIBUTE:
+					break;
+				case SEARCH_ATTRIBUTE:
+
+				default:
+					break;
+			}
+		}
 	}
 
 	public static void validateDefaultEmailList(final EmailListResponse response, final AddEmailListRequestBody body) {
