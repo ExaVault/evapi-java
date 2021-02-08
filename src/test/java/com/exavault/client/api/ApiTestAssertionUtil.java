@@ -643,6 +643,14 @@ public class ApiTestAssertionUtil {
 		}
 	}
 
+	public static void validateForm(final FormResponse response, final int responseCode) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(responseCode);
+		final Form form = response.getData();
+		assertThat(form.getId()).isInstanceOf(Integer.class);
+		assertThat(form.getType()).isEqualTo(FORM);
+	}
+
 	public static void validateDefaultEmailList(final EmailListResponse response, final AddEmailListRequestBody body) {
 		validateDefaultEmailList(response, body, RESPONSE_CODE_201);
 	}

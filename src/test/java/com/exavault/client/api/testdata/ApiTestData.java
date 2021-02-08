@@ -127,8 +127,9 @@ public class ApiTestData {
 	public static final String WILDCARD = "*";
 	public static final String NOTIFICATION = "notification";
 	public static final String SHARE = "share";
-	public static final String PASSWORD = "Hello There! I am a Password";
+	public static final String FORM = "form";
 	public static final String MESSAGE = "Hello There! I am a notification";
+	public static final String PASSWORD = "Hello There! I am a Password";
 	public static final String EMAIL_CONTENT_DEFAULT = "Great news, your new account is ready!\n" +
 			"For your records, we've listed information you'll use to log in below:\n" +
 			"FTP Server: [[ftpserver]]\n" +
@@ -152,6 +153,9 @@ public class ApiTestData {
 	public static final String MESSAGE_SUBJECT = "I am a subject";
 	public static final String OWNER = "owner";
 	public static final String ATTRIBUTES = "attributes";
+	public static final String SOME_DESCRIPTION = "some description";
+	public static final String SOME_TEXT = "some text";
+	public static final String SOME_STYLE = "some style";
 	public static final String EMAIL_LIST_NAME = "EMAIL_LIST_NAME";
 	public static final String EMAIL_LIST = "emailList";
 	public static final String ACCOUNT = "account";
