@@ -3,10 +3,7 @@ package com.exavault.client.api.testdata;
 import com.exavault.client.ApiClient;
 import com.exavault.client.ApiException;
 import com.exavault.client.api.ResourcesApi;
-import com.exavault.client.model.AddNotificationRequestBody;
-import com.exavault.client.model.AddShareRequestBody;
-import com.exavault.client.model.AddUserRequestBody;
-import com.exavault.client.model.UsersPermissions;
+import com.exavault.client.model.*;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.ZoneOffset;
 
@@ -16,12 +13,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class ApiTestData {
-	
+
 	public static final String EV_API_KEY_BAD = "stagingtest-bad-name";
 	// To run tests, add the valid key, token and URL and also set VALID_USER_NAME to the matching username for the acount
 	public static final String EV_API_KEY = "KEY";
@@ -112,8 +107,9 @@ public class ApiTestData {
 	public static final String STATUS_ATTR = "statusattr";
 	public static final String HOMEDIR_ATTR = "homdir";
 	public static final String TYPE_ATTR = "typeAttr";
-	public static final String SCOPE_ATTR = "scopeAttr";
+	public static final String INCLUDE_ATTR = "includeAttr";
 	public static final String ACTION_ATTRIBUTE = "action";
+	public static final String SCOPE_ATTR = "scopeAttr";
 	public static final String EMAIL_ATTR_FALSE = "emailattr_false";
 	public static final String EXPIRATION = "2020-12-12";
 	public static final String EXPIRATION2 = "2020-12-13";
@@ -148,7 +144,9 @@ public class ApiTestData {
 	public static final String MESSAGE_SUBJECT = "I am a subject";
 	public static final String OWNER = "owner";
 	public static final String ATTRIBUTES = "attributes";
-
+	public static final String EMAIL_LIST_NAME = "EMAIL_LIST_NAME";
+	public static final String EMAIL_LIST = "emailList";
+	public static final String OWNER_USER = "ownerUser";
 	private static ApiClient apiClient;
 	private static final Random random = new Random();
 
@@ -292,5 +290,16 @@ public class ApiTestData {
 		requestBody.setName(generateRandomName());
 		requestBody.setResources(Collections.singletonList(resource));
 		return requestBody;
+	}
+
+	public static AddEmailListRequestBody defaultEmailList() {
+		final AddEmailListRequestBody body = new AddEmailListRequestBody();
+		body.setName(generateRandomName(EMAIL_LIST_NAME));
+		final List<String> emails = new ArrayList<>();
+		emails.add(TEST_EMAIL);
+		emails.add(TEST_EMAIL2);
+		emails.add(TEST_EMAIL3);
+		body.setEmails(emails);
+		return body;
 	}
 }

@@ -548,7 +548,7 @@ public class ApiTestAssertionUtil {
 	}
 
 	public static void validateSharesWithInvite(final ShareResponse response, final AddShareRequestBody body,
-												final int responseCode, final String inviteEmail, 
+												final int responseCode, final String inviteEmail,
 												final String messageSubject, final String messageBody) {
 		validateShares(response, body, responseCode, AddShareRequestBody.TypeEnum.SHARED_FOLDER.getValue());
 		final Share share = response.getData();
@@ -642,4 +642,26 @@ public class ApiTestAssertionUtil {
 			}
 		}
 	}
+
+	public static void validateDefaultEmailList(final EmailListResponse response, final AddEmailListRequestBody body) {
+		validateDefaultEmailList(response, body, RESPONSE_CODE_201);
+	}
+
+	public static void validateDefaultEmailList(final EmailListResponse response,
+												final AddEmailListRequestBody body, final int responseCode) {
+		assertThat(response).isNotNull();
+		assertThat(response.getResponseStatus()).isEqualTo(responseCode);
+		final EmailList emailList = response.getData();
+		validateEachEmailGroup(body, emailList);
+	}
+
+	public static void validateEachEmailGroup(final AddEmailListRequestBody body, final EmailList emailList) {
+		assertThat(emailList.getId()).isInstanceOf(Integer.class);
+		assertThat(emailList.getType()).isEqualTo(EMAIL_LIST);
+		final EmailListAttributes attributes = emailList.getAttributes();
+		assertThat(attributes.getName()).isEqualTo(body.getName());
+		assertThat(attributes.getEmails()).containsAll(body.getEmails());
+	}
+
+
 }
