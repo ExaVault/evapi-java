@@ -36,7 +36,6 @@ public class SharesApiTest {
 			try {
 				resource = createResource();
 				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
-				//TODO: resource is a required field, API doc needs to be updated
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
 				validateDefaultShares(response, body, RESPONSE_CODE_201);
@@ -50,7 +49,7 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Current bug in API, Multiple resource for shared_folder not allowed.Asana task added")
+		@Disabled("API Bug: No error from API when you pass multiple resources for shared folder https://app.asana.com/0/1195625154865746/1199548666006564/f")
 		@Test
 		@DisplayName("Create a shared_folder share with multiple resources")
 		public void sharedFolderWithMultipleResources() {
@@ -130,13 +129,19 @@ public class SharesApiTest {
 				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final AccessMode accessMode = new AccessMode();
 				accessMode.setDownload(true);
+				accessMode.setUpload(true);
+				accessMode.setDelete(false);
+				accessMode.setModify(false);
 				body.setAccessMode(accessMode);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
-				//TODO: how does access mode work? does it work on folder level or send or receive? API has to be updated
 				validateShares(response, body, RESPONSE_CODE_201, body.getType().getValue());
 				final ShareAttributes attributes = response.getData().getAttributes();
 				assertThat(attributes.getAccessMode().isDownload()).isTrue();
+				assertThat(attributes.getAccessMode().isUpload()).isTrue();
+				// Disabling assertions because API is returning null rather than false https://app.asana.com/0/956984820471204/1199663247882988/f
+				// assertThat(attributes.getAccessMode().isDelete()).isFalse();
+				// assertThat(attributes.getAccessMode().isModify()).isFalse();
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -240,7 +245,6 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("bug in the API, public flag is not populated")
 		@Test
 		@DisplayName("Create a share with public flag")
 		public void shareWithPublicFlag() throws ApiException {
@@ -252,7 +256,6 @@ public class SharesApiTest {
 				body.isPublic(true);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
-				//TODO: public is null in the response
 				validateShares(true, response, body, RESPONSE_CODE_201);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
@@ -264,20 +267,23 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Need to find how to validate this via response")
 		@Test
-		@DisplayName("Create a share with message body")
-		public void shareWithMsgBody() throws ApiException {
+		@DisplayName("Create a share with an invitation")
+		public void shareWithInvitation() throws ApiException {
 			int id = _1;
 			String resource = null;
 			try {
 				resource = createResource();
 				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				body.setMessageBody(MESSAGE);
+				body.setMessageSubject(MESSAGE_SUBJECT);
+				final SharesRecipients shareRecipient = new SharesRecipients();
+				shareRecipient.setType(DIRECT_EMAIL);
+				shareRecipient.setEmail(TEST_EMAIL3);
+				body.setRecipients(Collections.singletonList(shareRecipient));
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
-				//TODO: Why messages comes empty?
-				validateShares(MESSAGE, response, body, RESPONSE_CODE_201);
+				validateSharesWithInvite(response, body, RESPONSE_CODE_201, TEST_EMAIL3, MESSAGE_SUBJECT, MESSAGE);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -494,7 +500,6 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Need to check the offset")
 		@Test
 		@DisplayName("List shares by offset")
 		public void listByOffset() throws ApiException {
@@ -505,12 +510,24 @@ public class SharesApiTest {
 				final AddShareRequestBody body = ApiTestData.createDefaultShare(resource);
 				final ShareResponse response = api.addShare(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response.getData().getId();
+				final ShareCollectionResponse response0 = 
+						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
+							null, null, null, null, null,
+							null, null, null, null);				
 				final ShareCollectionResponse response1 =
 						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, _1, null,
 								null, null, null, null, null,
 								null, null, null, null);
-				//TODO: Is this expected behaviour of offset? it does not return 0
-				assertThat(response1.getReturnedResults()).isZero();
+				if (response1.getData().size() > 0) {
+					// If for some reason there are existing shares in the account, just verify that 
+					// the offset skips the first response
+					int firstIdResponse0 = response0.getData().get(_0).getId();
+					int firstIdResponse1 = response1.getData().get(_0).getId();
+					assertThat(firstIdResponse0 != firstIdResponse1).isTrue();
+				} else {
+					// If the account has no other shares, there should be nothing returned with offset >= 1
+					assertThat(response1.getReturnedResults()).isZero();
+				}
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -521,11 +538,10 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Know bug, got not found error, should be bad request")
+		@Disabled("API Bug for wrong error message https://app.asana.com/0/956984820471204/1199657062477813/f")
 		@Test
 		@DisplayName("List shares by an invalid offset")
 		public void listByInvalidOffset() {
-			//TODO: wrong error message.
 			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
 				@Override
 				public void call() throws ApiException {
@@ -647,7 +663,6 @@ public class SharesApiTest {
 			}
 		}
 
-
 		@Test
 		@DisplayName("List shares by include")
 		public void listByInclude() throws ApiException {
@@ -660,11 +675,11 @@ public class SharesApiTest {
 				id = response.getData().getId();
 				final ShareCollectionResponse response1 =
 						api.listShares(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
-								null, null, null, NOTIFICATIONS, null,
+								null, null, null, OWNER, null,
 								null, null, null, null);
 				for (final Object o : response1.getIncluded()) {
 					final LinkedTreeMap map = (LinkedTreeMap) o;
-					assertThat(map.get(TYPE)).isEqualTo(NOTIFICATIONS);
+					assertThat(map.get(TYPE)).isEqualTo(USER);
 				}
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
@@ -945,7 +960,7 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Flag is not set correctly, seems like a bug")
+		@Disabled("API Bug: hasNotification flag does not update as expected - https://app.asana.com/0/1195625154865746/1199663247882990/f")
 		@Test
 		@DisplayName("Update has Notification")
 		public void updateHasNotification() throws ApiException {
@@ -975,7 +990,6 @@ public class SharesApiTest {
 			}
 		}
 
-		@Disabled("Flag is not set correctly, seems like a bug")
 		@Test
 		@DisplayName("Update is public flag")
 		public void updateIsPublic() throws ApiException {
