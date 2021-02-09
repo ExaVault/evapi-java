@@ -243,7 +243,7 @@ public class FormApiTest {
 			}
 		}
 
-		@Disabled("500 error, how to test it? https://app.asana.com/0/1199226257934550/1199888654991074/f")
+		@Disabled("Form Element Models need updat https://app.asana.com/0/1199226257934550/1199888654991074/f")
 		@Test
 		@DisplayName("Updates a form with given parameters, elements")
 		public void updateElements() throws ApiException {
@@ -256,7 +256,6 @@ public class FormApiTest {
 				id = response.getData().getId();
 				final int formId = response.getData().getAttributes().getFormId();
 				final FormResponse formById = api.getFormById(formId, EV_API_KEY, EV_ACCESS_TOKEN, null);
-				//TODO: 500 error why? and why get and setter class are different fro elements?
 				final UpdateFormByIdRequestBody updateFormByIdRequestBody = new UpdateFormByIdRequestBody();
 				final List<FormsidElements> elementsList = new ArrayList<>();
 				final FormsidElements elements = new FormsidElements();
