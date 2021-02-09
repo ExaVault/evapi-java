@@ -37,7 +37,6 @@ public class EmailListsApiTest {
 				final AddEmailListRequestBody body = defaultEmailList();
 				final EmailListResponse response = api.addEmailList(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				validateDefaultEmailList(response, body);
-				//TODO: Update API doc to update type i.e emailList, but not EmailList
 				id = response.getData().getId();
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
