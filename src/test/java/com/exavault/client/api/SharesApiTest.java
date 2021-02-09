@@ -947,7 +947,7 @@ public class SharesApiTest {
 				body1.setRecipients(Collections.singletonList(shareRecipient));
 				final ShareResponse shareResponse = api.updateShareById(body1, EV_API_KEY, EV_ACCESS_TOKEN, id);
 				final ShareAttributes shareAttributes = validateAndGetSharesAttributes(shareResponse, RESPONSE_CODE_200);
-				//TODO: why its different sharerecipient vs sharesrecipients
+				//TODO: Models are inconsistent https://app.asana.com/0/956585750779720/1199663247882984/f
 				assertThat(shareAttributes.getRecipients().get(_0).getEmail()).isEqualTo(TEST_EMAIL4);
 				assertThat(shareAttributes.getRecipients().get(_0).getType().getValue()).isEqualTo(DIRECT_EMAIL);
 			} catch (final ApiException e) {
