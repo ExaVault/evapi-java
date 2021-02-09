@@ -4,10 +4,7 @@ import com.exavault.client.ApiException;
 import com.exavault.client.api.testdata.ApiTestData;
 import com.exavault.client.model.*;
 import org.assertj.core.api.ThrowableAssert;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.text.ParseException;
 import java.util.Arrays;
@@ -101,7 +98,6 @@ public class UsersApiTest {
 				id = response.getData().getId();
 				final UserAttributes userAttributes = validateUserAndGetAttributes(response, RESPONSE_CODE_201);
 				validateUserAttributes(userAttributes, body, true);
-				//TODO: API has to be updated accordingly for all permissions for an admin.
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -293,7 +289,7 @@ public class UsersApiTest {
 				id = createUser();
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
 				body.setUsername(INVALID_USER);
-				//TODO: Wrong type of error message, got NOT FOUND
+				//TODO: Wrong error message https://app.asana.com/0/956984820471204/1199916676837998/f
 				final int finalId = id;
 				assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
 					@Override
@@ -365,7 +361,7 @@ public class UsersApiTest {
 				final UserResponse response = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body2);
 				id = response.getData().getId();
 				final UpdateUserRequestBody body = new UpdateUserRequestBody();
-				body.setHomeResource(COPIED_FOLDER); //TODO: it is ok to update home resource for admin?
+				body.setHomeResource(COPIED_FOLDER); // TODO should not work https://app.asana.com/0/956984820471204/1199711587365050/f
 				final UserResponse userResponse = api.updateUser(EV_API_KEY, EV_ACCESS_TOKEN, id, body);
 				final UserAttributes userAttributes = validateUserAndGetAttributes(userResponse, RESPONSE_CODE_200);
 				assertThat(userAttributes.getHomePath()).isEqualTo(COPIED_FOLDER);
@@ -672,7 +668,7 @@ public class UsersApiTest {
 				final UserResponse response1 = api.addUser(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				id = response1.getData().getId();
 
-				//TODO: wrong error when we try to create a user with the same name already exist.
+				//TODO: wrong error https://app.asana.com/0/956984820471204/1199651198566276/f
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, userName, null,
 						null, TEST_EMAIL4, null, null, null, null, null, null,
 						null); //email here should be ignored
@@ -778,7 +774,7 @@ public class UsersApiTest {
 						null, null, null, -_1, null, null, null, null,
 						null);
 				assertThat(response.getTotalResults()).isZero();
-				//TODO: should be an error.
+				//TODO: No error, and there should be https://app.asana.com/0/956984820471204/1199651198566280/f
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			}
@@ -798,7 +794,6 @@ public class UsersApiTest {
 						null, null, null, null, null, null, null, null,
 						null);
 				validateListOfUsersByHomeDir(response, BASE_FOLDER_);
-				//TODO: Not working currently
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
@@ -867,7 +862,7 @@ public class UsersApiTest {
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
 						null, TEST_EMAIL4, null, null, null, _1, null, _1,
 						null);
-				//TODO: offset does not work properly, requires a limit
+				//TODO: offset requires a limit https://app.asana.com/0/956984820471204/1199651198566283/f
 				assertThat(response.getReturnedResults()).isEqualTo(_1);
 				validateListOfUsersByEmail(response, TEST_EMAIL4);
 			} catch (final ApiException e) {
