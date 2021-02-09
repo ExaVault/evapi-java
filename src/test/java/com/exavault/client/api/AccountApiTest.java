@@ -14,7 +14,14 @@ package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
 import com.exavault.client.api.testdata.ApiTestData;
-import com.exavault.client.model.*;
+import com.exavault.client.model.AccountResponse;
+import com.exavault.client.model.UpdateAccountRequestBody;
+import com.exavault.client.model.AccountAllowedIpRanges;
+import com.exavault.client.model.BrandingSettingsValues;
+import com.exavault.client.model.AccountAttributes;
+import com.exavault.client.model.AccountAttributesAllowedIp;
+import com.exavault.client.model.User;
+import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -43,7 +50,6 @@ public class AccountApiTest {
 		@DisplayName("Get account settings")
 		public void getAccountTest() {
 			try {
-				//TODO: how to run these tests for a dummy account, its updating crucial info.
 				final AccountResponse response = api.getAccount(EV_API_KEY, EV_ACCESS_TOKEN, MASTER_USER);
 				validateAccountSettings(response);
 				for (final Object o : response.getIncluded()) {
@@ -70,6 +76,7 @@ public class AccountApiTest {
 	@Nested
 	@DisplayName("Update account settings, Method=PATCH, API=/account ")
 	class UpdateAccount {
+		@Disabled("Account request Quota object changed https://app.asana.com/0/995549068566762/1199905572508585/f")
 		@Test
 		@DisplayName("Update account settings, quotaNoticeEnabled")
 		public void updateQuotaNoticeEnabled() throws ApiException {
@@ -89,7 +96,7 @@ public class AccountApiTest {
 		}
 
 
-		@Disabled("Value does not match")
+		@Disabled("Account request Quota object changed https://app.asana.com/0/995549068566762/1199905572508585/f")
 		@Test
 		@DisplayName("Update account settings, quotaNoticeThreshold")
 		public void updateQuotaNoticeThreshold() throws ApiException {
@@ -109,7 +116,7 @@ public class AccountApiTest {
 		}
 
 
-		@Disabled("Should it fail?")
+		@Disabled("API not returning error for bad request https://app.asana.com/0/956984820471204/1199916676837985/f")
 		@Test
 		@DisplayName("Update account settings, invalid quotaNoticeThreshold")
 		public void updateQuotaNoticeInvalidThreshold() {
@@ -178,7 +185,7 @@ public class AccountApiTest {
 			}
 		}
 
-		@Disabled("Why does it fail?")
+		@Disabled("Not possible to reset to blank https://app.asana.com/0/956984820471204/1199916676837979/f")
 		@Test
 		@DisplayName("Update account settings, external domain")
 		public void updateExternalDomain() {
@@ -229,7 +236,7 @@ public class AccountApiTest {
 			}
 		}
 
-		@Disabled("iprange list is not populated correctly")
+		@Disabled("Need to regenerate java library with updated ipStart/ipEnd property names ")
 		@Test
 		@DisplayName("Update account settings, allowed IP ranges")
 		public void updateAllowedIPRanges() throws ApiException {
@@ -245,6 +252,7 @@ public class AccountApiTest {
 				validateAccountSettings(response, false);
 				final AccountAttributes attributes = response.getData().getAttributes();
 				final List<AccountAttributesAllowedIp> allowedIp = attributes.getAllowedIp();
+				assertThat(allowedIp.size() > 0);
 				assertThat(allowedIp.get(_0).getIpStart()).isEqualTo(IP_START1);
 				assertThat(allowedIp.get(_0).getIpEnd()).isEqualTo(IP_END1);
 			} catch (final Exception e) {
