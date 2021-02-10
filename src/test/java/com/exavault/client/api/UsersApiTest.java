@@ -967,7 +967,7 @@ public class UsersApiTest {
 			try {
 				final UserCollectionResponse response = api.listUsers(EV_API_KEY, EV_ACCESS_TOKEN, null, null,
 						null, null, null, null, null, null, null, null,
-						HOME_RESOURCE);
+						OWNER_ACCOUNT);
 				validateListOfUsersDefault(response);
 				validateListOfUsersNonEmptyInclude(response);
 			} catch (final ApiException e) {
