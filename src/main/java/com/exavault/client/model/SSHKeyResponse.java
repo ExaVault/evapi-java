@@ -14,7 +14,7 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.SSHKeysAttributes;
+import com.exavault.client.model.SSHKey;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -32,7 +32,10 @@ public class SSHKeyResponse {
   private Integer responseStatus = null;
 
   @SerializedName("data")
-  private SSHKeysAttributes data = null;
+  private SSHKey data = null;
+
+  @SerializedName("included")
+  private AnyOfSSHKeyResponseIncluded included = null;
 
   public SSHKeyResponse responseStatus(Integer responseStatus) {
     this.responseStatus = responseStatus;
@@ -52,7 +55,7 @@ public class SSHKeyResponse {
     this.responseStatus = responseStatus;
   }
 
-  public SSHKeyResponse data(SSHKeysAttributes data) {
+  public SSHKeyResponse data(SSHKey data) {
     this.data = data;
     return this;
   }
@@ -62,12 +65,30 @@ public class SSHKeyResponse {
    * @return data
   **/
   @Schema(description = "")
-  public SSHKeysAttributes getData() {
+  public SSHKey getData() {
     return data;
   }
 
-  public void setData(SSHKeysAttributes data) {
+  public void setData(SSHKey data) {
     this.data = data;
+  }
+
+  public SSHKeyResponse included(AnyOfSSHKeyResponseIncluded included) {
+    this.included = included;
+    return this;
+  }
+
+   /**
+   * Get included
+   * @return included
+  **/
+  @Schema(description = "")
+  public AnyOfSSHKeyResponseIncluded getIncluded() {
+    return included;
+  }
+
+  public void setIncluded(AnyOfSSHKeyResponseIncluded included) {
+    this.included = included;
   }
 
 
@@ -81,12 +102,13 @@ public class SSHKeyResponse {
     }
     SSHKeyResponse ssHKeyResponse = (SSHKeyResponse) o;
     return Objects.equals(this.responseStatus, ssHKeyResponse.responseStatus) &&
-        Objects.equals(this.data, ssHKeyResponse.data);
+        Objects.equals(this.data, ssHKeyResponse.data) &&
+        Objects.equals(this.included, ssHKeyResponse.included);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(responseStatus, data);
+    return Objects.hash(responseStatus, data, included);
   }
 
 
@@ -97,6 +119,7 @@ public class SSHKeyResponse {
     
     sb.append("    responseStatus: ").append(toIndentedString(responseStatus)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
+    sb.append("    included: ").append(toIndentedString(included)).append("\n");
     sb.append("}");
     return sb.toString();
   }

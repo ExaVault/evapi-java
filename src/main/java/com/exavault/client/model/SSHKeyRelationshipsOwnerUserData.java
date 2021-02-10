@@ -14,8 +14,6 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.UserAttributes;
-import com.exavault.client.model.UserRelationships;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -24,33 +22,27 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * Object contains user properties.
+ * SSHKeyRelationshipsOwnerUserData
  */
-@Schema(description = "Object contains user properties.")
 
-public class User implements AnyOfSSHKeyResponseIncluded {
+
+public class SSHKeyRelationshipsOwnerUserData {
   @SerializedName("id")
   private Integer id = null;
 
   @SerializedName("type")
   private String type = null;
 
-  @SerializedName("attributes")
-  private UserAttributes attributes = null;
-
-  @SerializedName("relationships")
-  private UserRelationships relationships = null;
-
-  public User id(Integer id) {
+  public SSHKeyRelationshipsOwnerUserData id(Integer id) {
     this.id = id;
     return this;
   }
 
    /**
-   * ID of the user.
+   * Get id
    * @return id
   **/
-  @Schema(example = "655621", description = "ID of the user.")
+  @Schema(description = "")
   public Integer getId() {
     return id;
   }
@@ -59,58 +51,22 @@ public class User implements AnyOfSSHKeyResponseIncluded {
     this.id = id;
   }
 
-  public User type(String type) {
+  public SSHKeyRelationshipsOwnerUserData type(String type) {
     this.type = type;
     return this;
   }
 
    /**
-   * Type of object being returned. Always \&quot;user\&quot;
+   * Get type
    * @return type
   **/
-  @Schema(example = "user", description = "Type of object being returned. Always \"user\"")
+  @Schema(description = "")
   public String getType() {
     return type;
   }
 
   public void setType(String type) {
     this.type = type;
-  }
-
-  public User attributes(UserAttributes attributes) {
-    this.attributes = attributes;
-    return this;
-  }
-
-   /**
-   * Get attributes
-   * @return attributes
-  **/
-  @Schema(description = "")
-  public UserAttributes getAttributes() {
-    return attributes;
-  }
-
-  public void setAttributes(UserAttributes attributes) {
-    this.attributes = attributes;
-  }
-
-  public User relationships(UserRelationships relationships) {
-    this.relationships = relationships;
-    return this;
-  }
-
-   /**
-   * Get relationships
-   * @return relationships
-  **/
-  @Schema(description = "")
-  public UserRelationships getRelationships() {
-    return relationships;
-  }
-
-  public void setRelationships(UserRelationships relationships) {
-    this.relationships = relationships;
   }
 
 
@@ -122,28 +78,24 @@ public class User implements AnyOfSSHKeyResponseIncluded {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    User user = (User) o;
-    return Objects.equals(this.id, user.id) &&
-        Objects.equals(this.type, user.type) &&
-        Objects.equals(this.attributes, user.attributes) &&
-        Objects.equals(this.relationships, user.relationships);
+    SSHKeyRelationshipsOwnerUserData ssHKeyRelationshipsOwnerUserData = (SSHKeyRelationshipsOwnerUserData) o;
+    return Objects.equals(this.id, ssHKeyRelationshipsOwnerUserData.id) &&
+        Objects.equals(this.type, ssHKeyRelationshipsOwnerUserData.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type, attributes, relationships);
+    return Objects.hash(id, type);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class User {\n");
+    sb.append("class SSHKeyRelationshipsOwnerUserData {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    attributes: ").append(toIndentedString(attributes)).append("\n");
-    sb.append("    relationships: ").append(toIndentedString(relationships)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -14,8 +14,8 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.UserAttributes;
-import com.exavault.client.model.UserRelationships;
+import com.exavault.client.model.SSHKeyAttributes;
+import com.exavault.client.model.SSHKeyRelationships;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -24,33 +24,73 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * Object contains user properties.
+ * Object representing an SSH Key associated with a user.
  */
-@Schema(description = "Object contains user properties.")
+@Schema(description = "Object representing an SSH Key associated with a user.")
 
-public class User implements AnyOfSSHKeyResponseIncluded {
+public class SSHKey {
   @SerializedName("id")
   private Integer id = null;
 
-  @SerializedName("type")
-  private String type = null;
+  /**
+   * Type of the object. 
+   */
+  @JsonAdapter(TypeEnum.Adapter.class)
+  public enum TypeEnum {
+    SSHKEY("sshKey");
+
+    private String value;
+
+    TypeEnum(String value) {
+      this.value = value;
+    }
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+    public static TypeEnum fromValue(String text) {
+      for (TypeEnum b : TypeEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+    public static class Adapter extends TypeAdapter<TypeEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final TypeEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public TypeEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return TypeEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }  @SerializedName("type")
+  private TypeEnum type = null;
 
   @SerializedName("attributes")
-  private UserAttributes attributes = null;
+  private SSHKeyAttributes attributes = null;
 
   @SerializedName("relationships")
-  private UserRelationships relationships = null;
+  private SSHKeyRelationships relationships = null;
 
-  public User id(Integer id) {
+  public SSHKey id(Integer id) {
     this.id = id;
     return this;
   }
 
    /**
-   * ID of the user.
+   * ID of the key.
    * @return id
   **/
-  @Schema(example = "655621", description = "ID of the user.")
+  @Schema(example = "655621", description = "ID of the key.")
   public Integer getId() {
     return id;
   }
@@ -59,25 +99,25 @@ public class User implements AnyOfSSHKeyResponseIncluded {
     this.id = id;
   }
 
-  public User type(String type) {
+  public SSHKey type(TypeEnum type) {
     this.type = type;
     return this;
   }
 
    /**
-   * Type of object being returned. Always \&quot;user\&quot;
+   * Type of the object. 
    * @return type
   **/
-  @Schema(example = "user", description = "Type of object being returned. Always \"user\"")
-  public String getType() {
+  @Schema(example = "sshKey", description = "Type of the object. ")
+  public TypeEnum getType() {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(TypeEnum type) {
     this.type = type;
   }
 
-  public User attributes(UserAttributes attributes) {
+  public SSHKey attributes(SSHKeyAttributes attributes) {
     this.attributes = attributes;
     return this;
   }
@@ -87,15 +127,15 @@ public class User implements AnyOfSSHKeyResponseIncluded {
    * @return attributes
   **/
   @Schema(description = "")
-  public UserAttributes getAttributes() {
+  public SSHKeyAttributes getAttributes() {
     return attributes;
   }
 
-  public void setAttributes(UserAttributes attributes) {
+  public void setAttributes(SSHKeyAttributes attributes) {
     this.attributes = attributes;
   }
 
-  public User relationships(UserRelationships relationships) {
+  public SSHKey relationships(SSHKeyRelationships relationships) {
     this.relationships = relationships;
     return this;
   }
@@ -105,11 +145,11 @@ public class User implements AnyOfSSHKeyResponseIncluded {
    * @return relationships
   **/
   @Schema(description = "")
-  public UserRelationships getRelationships() {
+  public SSHKeyRelationships getRelationships() {
     return relationships;
   }
 
-  public void setRelationships(UserRelationships relationships) {
+  public void setRelationships(SSHKeyRelationships relationships) {
     this.relationships = relationships;
   }
 
@@ -122,11 +162,11 @@ public class User implements AnyOfSSHKeyResponseIncluded {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    User user = (User) o;
-    return Objects.equals(this.id, user.id) &&
-        Objects.equals(this.type, user.type) &&
-        Objects.equals(this.attributes, user.attributes) &&
-        Objects.equals(this.relationships, user.relationships);
+    SSHKey ssHKey = (SSHKey) o;
+    return Objects.equals(this.id, ssHKey.id) &&
+        Objects.equals(this.type, ssHKey.type) &&
+        Objects.equals(this.attributes, ssHKey.attributes) &&
+        Objects.equals(this.relationships, ssHKey.relationships);
   }
 
   @Override
@@ -138,7 +178,7 @@ public class User implements AnyOfSSHKeyResponseIncluded {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class User {\n");
+    sb.append("class SSHKey {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");

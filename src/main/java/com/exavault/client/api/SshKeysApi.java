@@ -27,6 +27,7 @@ import java.io.IOException;
 
 
 import com.exavault.client.model.AddSSHKeyRequestBody;
+import com.exavault.client.model.SSHKeyCollectionResponse;
 import com.exavault.client.model.SSHKeyResponse;
 
 import java.lang.reflect.Type;
@@ -571,11 +572,11 @@ public class SshKeysApi {
      * @param username  Only return results for the given username. Does not support wildcard searches. (optional)
      * @param limit  Limits the results by the given number. Cannot be set higher than 100. (optional)
      * @param offset  Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. (optional)
-     * @return SSHKeyResponse
+     * @return SSHKeyCollectionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public SSHKeyResponse getSSHKeysList(String evApiKey, String evAccessToken, String username, Integer limit, Integer offset) throws ApiException {
-        ApiResponse<SSHKeyResponse> resp = getSSHKeysListWithHttpInfo(evApiKey, evAccessToken, username, limit, offset);
+    public SSHKeyCollectionResponse getSSHKeysList(String evApiKey, String evAccessToken, String username, Integer limit, Integer offset) throws ApiException {
+        ApiResponse<SSHKeyCollectionResponse> resp = getSSHKeysListWithHttpInfo(evApiKey, evAccessToken, username, limit, offset);
         return resp.getData();
     }
 
@@ -587,12 +588,12 @@ public class SshKeysApi {
      * @param username  Only return results for the given username. Does not support wildcard searches. (optional)
      * @param limit  Limits the results by the given number. Cannot be set higher than 100. (optional)
      * @param offset  Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. (optional)
-     * @return ApiResponse&lt;SSHKeyResponse&gt;
+     * @return ApiResponse&lt;SSHKeyCollectionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<SSHKeyResponse> getSSHKeysListWithHttpInfo(String evApiKey, String evAccessToken, String username, Integer limit, Integer offset) throws ApiException {
+    public ApiResponse<SSHKeyCollectionResponse> getSSHKeysListWithHttpInfo(String evApiKey, String evAccessToken, String username, Integer limit, Integer offset) throws ApiException {
         com.squareup.okhttp.Call call = getSSHKeysListValidateBeforeCall(evApiKey, evAccessToken, username, limit, offset, null, null);
-        Type localVarReturnType = new TypeToken<SSHKeyResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<SSHKeyCollectionResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -608,7 +609,7 @@ public class SshKeysApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getSSHKeysListAsync(String evApiKey, String evAccessToken, String username, Integer limit, Integer offset, final ApiCallback<SSHKeyResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getSSHKeysListAsync(String evApiKey, String evAccessToken, String username, Integer limit, Integer offset, final ApiCallback<SSHKeyCollectionResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -630,7 +631,7 @@ public class SshKeysApi {
         }
 
         com.squareup.okhttp.Call call = getSSHKeysListValidateBeforeCall(evApiKey, evAccessToken, username, limit, offset, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<SSHKeyResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<SSHKeyCollectionResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
