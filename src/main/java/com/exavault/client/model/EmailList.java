@@ -65,10 +65,10 @@ public class EmailList {
   }
 
    /**
-   * Type of record. \&quot;EmailList\&quot;
+   * Type of record. \&quot;emailList\&quot;
    * @return type
   **/
-  @Schema(description = "Type of record. \"EmailList\"")
+  @Schema(description = "Type of record. \"emailList\"")
   public String getType() {
     return type;
   }

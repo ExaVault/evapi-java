@@ -108,7 +108,7 @@ public class Account {
    * Type of item. \&quot;account\&quot;
    * @return type
   **/
-  @Schema(example = "account", description = "Type of item. \"account\"")
+  @Schema(description = "Type of item. \"account\"")
   public TypeEnum getType() {
     return type;
   }
