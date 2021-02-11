@@ -485,7 +485,7 @@ public class SshKeysApi {
      * Build call for getSSHKeysList
      * @param evApiKey API key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
-     * @param username  Only return results for the given username. Does not support wildcard searches. (optional)
+     * @param userId  Only return results for the given user ID. This is not the username, but the numeric ID of the user. (optional)
      * @param limit  Limits the results by the given number. Cannot be set higher than 100. (optional)
      * @param offset  Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. (optional)
      * @param progressListener Progress listener
@@ -493,7 +493,7 @@ public class SshKeysApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getSSHKeysListCall(String evApiKey, String evAccessToken, String username, Integer limit, Integer offset, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getSSHKeysListCall(String evApiKey, String evAccessToken, String userId, Integer limit, Integer offset, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -501,8 +501,8 @@ public class SshKeysApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (username != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
+        if (userId != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("userId", userId));
         if (limit != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
         if (offset != null)
@@ -545,7 +545,7 @@ public class SshKeysApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getSSHKeysListValidateBeforeCall(String evApiKey, String evAccessToken, String username, Integer limit, Integer offset, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getSSHKeysListValidateBeforeCall(String evApiKey, String evAccessToken, String userId, Integer limit, Integer offset, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling getSSHKeysList(Async)");
@@ -555,7 +555,7 @@ public class SshKeysApi {
             throw new ApiException("Missing the required parameter 'evAccessToken' when calling getSSHKeysList(Async)");
         }
         
-        com.squareup.okhttp.Call call = getSSHKeysListCall(evApiKey, evAccessToken, username, limit, offset, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getSSHKeysListCall(evApiKey, evAccessToken, userId, limit, offset, progressListener, progressRequestListener);
         return call;
 
         
@@ -566,50 +566,50 @@ public class SshKeysApi {
 
     /**
      * Get metadata for a list of SSH Keys
-     * Returns a list of SSH Keys within the account. Can be filtered for a single username.
+     * Returns a list of SSH Keys within the account. Can be filtered for a single user.
      * @param evApiKey API key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
-     * @param username  Only return results for the given username. Does not support wildcard searches. (optional)
+     * @param userId  Only return results for the given user ID. This is not the username, but the numeric ID of the user. (optional)
      * @param limit  Limits the results by the given number. Cannot be set higher than 100. (optional)
      * @param offset  Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. (optional)
      * @return SSHKeyCollectionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public SSHKeyCollectionResponse getSSHKeysList(String evApiKey, String evAccessToken, String username, Integer limit, Integer offset) throws ApiException {
-        ApiResponse<SSHKeyCollectionResponse> resp = getSSHKeysListWithHttpInfo(evApiKey, evAccessToken, username, limit, offset);
+    public SSHKeyCollectionResponse getSSHKeysList(String evApiKey, String evAccessToken, String userId, Integer limit, Integer offset) throws ApiException {
+        ApiResponse<SSHKeyCollectionResponse> resp = getSSHKeysListWithHttpInfo(evApiKey, evAccessToken, userId, limit, offset);
         return resp.getData();
     }
 
     /**
      * Get metadata for a list of SSH Keys
-     * Returns a list of SSH Keys within the account. Can be filtered for a single username.
+     * Returns a list of SSH Keys within the account. Can be filtered for a single user.
      * @param evApiKey API key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
-     * @param username  Only return results for the given username. Does not support wildcard searches. (optional)
+     * @param userId  Only return results for the given user ID. This is not the username, but the numeric ID of the user. (optional)
      * @param limit  Limits the results by the given number. Cannot be set higher than 100. (optional)
      * @param offset  Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. (optional)
      * @return ApiResponse&lt;SSHKeyCollectionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<SSHKeyCollectionResponse> getSSHKeysListWithHttpInfo(String evApiKey, String evAccessToken, String username, Integer limit, Integer offset) throws ApiException {
-        com.squareup.okhttp.Call call = getSSHKeysListValidateBeforeCall(evApiKey, evAccessToken, username, limit, offset, null, null);
+    public ApiResponse<SSHKeyCollectionResponse> getSSHKeysListWithHttpInfo(String evApiKey, String evAccessToken, String userId, Integer limit, Integer offset) throws ApiException {
+        com.squareup.okhttp.Call call = getSSHKeysListValidateBeforeCall(evApiKey, evAccessToken, userId, limit, offset, null, null);
         Type localVarReturnType = new TypeToken<SSHKeyCollectionResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
      * Get metadata for a list of SSH Keys (asynchronously)
-     * Returns a list of SSH Keys within the account. Can be filtered for a single username.
+     * Returns a list of SSH Keys within the account. Can be filtered for a single user.
      * @param evApiKey API key required to make the API call. (required)
      * @param evAccessToken Access token required to make the API call. (required)
-     * @param username  Only return results for the given username. Does not support wildcard searches. (optional)
+     * @param userId  Only return results for the given user ID. This is not the username, but the numeric ID of the user. (optional)
      * @param limit  Limits the results by the given number. Cannot be set higher than 100. (optional)
      * @param offset  Determines which item to start on for pagination. Use zero (0) to start at the beginning of the list. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getSSHKeysListAsync(String evApiKey, String evAccessToken, String username, Integer limit, Integer offset, final ApiCallback<SSHKeyCollectionResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getSSHKeysListAsync(String evApiKey, String evAccessToken, String userId, Integer limit, Integer offset, final ApiCallback<SSHKeyCollectionResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -630,7 +630,7 @@ public class SshKeysApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getSSHKeysListValidateBeforeCall(evApiKey, evAccessToken, username, limit, offset, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getSSHKeysListValidateBeforeCall(evApiKey, evAccessToken, userId, limit, offset, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<SSHKeyCollectionResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
