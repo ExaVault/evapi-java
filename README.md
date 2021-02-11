@@ -50,9 +50,9 @@ We've provided pre-compiled jar files in the `lib` directory. You may manually i
 If you'd like to build the jar package from source, you may do:
 
 ```shell
-mvn clean package
+mvn clean -DskipTests=true package
 ```
-This step will generate JAR files from **our SDK** (and other related dependencies) into the `target` folder at the project root. Generally, you can just use the compiled JAR files (or use maven), but if you want to build yourself, you can.
+This step will generate JAR files from **our SDK** (and other related dependencies) into the `target` folder at the project root. Generally, you can just use the compiled JAR files (or use maven), but if you want to build yourself, you can. 
 
 ## Sample Code
 
