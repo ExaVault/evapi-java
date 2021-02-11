@@ -15,6 +15,7 @@ package com.exavault.client.model;
 import java.util.Objects;
 import java.util.Arrays;
 import com.exavault.client.model.AccountAllowedIpRanges;
+import com.exavault.client.model.AccountQuotaValues;
 import com.exavault.client.model.BrandingSettingsValues;
 import com.exavault.client.model.CallbackSettingsValues;
 import com.google.gson.TypeAdapter;
@@ -32,12 +33,6 @@ import java.util.List;
 
 
 public class UpdateAccountRequestBody {
-  @SerializedName("quotaNoticeEnabled")
-  private Boolean quotaNoticeEnabled = null;
-
-  @SerializedName("quotaNoticeThreshold")
-  private Integer quotaNoticeThreshold = null;
-
   @SerializedName("secureOnly")
   private Boolean secureOnly = null;
 
@@ -71,43 +66,8 @@ public class UpdateAccountRequestBody {
   @SerializedName("customSignature")
   private String customSignature = null;
 
-  public UpdateAccountRequestBody quotaNoticeEnabled(Boolean quotaNoticeEnabled) {
-    this.quotaNoticeEnabled = quotaNoticeEnabled;
-    return this;
-  }
-
-   /**
-   * Whether the system should email the account owner when usage exceeds quotaNoticeThreshold value
-   * @return quotaNoticeEnabled
-  **/
-  @Schema(example = "false", description = "Whether the system should email the account owner when usage exceeds quotaNoticeThreshold value")
-  public Boolean isQuotaNoticeEnabled() {
-    return quotaNoticeEnabled;
-  }
-
-  public void setQuotaNoticeEnabled(Boolean quotaNoticeEnabled) {
-    this.quotaNoticeEnabled = quotaNoticeEnabled;
-  }
-
-  public UpdateAccountRequestBody quotaNoticeThreshold(Integer quotaNoticeThreshold) {
-    this.quotaNoticeThreshold = quotaNoticeThreshold;
-    return this;
-  }
-
-   /**
-   * Percent of account usage to trigger quota notices for.
-   * minimum: 70
-   * maximum: 100
-   * @return quotaNoticeThreshold
-  **/
-  @Schema(example = "90", description = "Percent of account usage to trigger quota notices for.")
-  public Integer getQuotaNoticeThreshold() {
-    return quotaNoticeThreshold;
-  }
-
-  public void setQuotaNoticeThreshold(Integer quotaNoticeThreshold) {
-    this.quotaNoticeThreshold = quotaNoticeThreshold;
-  }
+  @SerializedName("quota")
+  private AccountQuotaValues quota = null;
 
   public UpdateAccountRequestBody secureOnly(Boolean secureOnly) {
     this.secureOnly = secureOnly;
@@ -315,6 +275,24 @@ public class UpdateAccountRequestBody {
     this.customSignature = customSignature;
   }
 
+  public UpdateAccountRequestBody quota(AccountQuotaValues quota) {
+    this.quota = quota;
+    return this;
+  }
+
+   /**
+   * Get quota
+   * @return quota
+  **/
+  @Schema(description = "")
+  public AccountQuotaValues getQuota() {
+    return quota;
+  }
+
+  public void setQuota(AccountQuotaValues quota) {
+    this.quota = quota;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -325,9 +303,7 @@ public class UpdateAccountRequestBody {
       return false;
     }
     UpdateAccountRequestBody updateAccountRequestBody = (UpdateAccountRequestBody) o;
-    return Objects.equals(this.quotaNoticeEnabled, updateAccountRequestBody.quotaNoticeEnabled) &&
-        Objects.equals(this.quotaNoticeThreshold, updateAccountRequestBody.quotaNoticeThreshold) &&
-        Objects.equals(this.secureOnly, updateAccountRequestBody.secureOnly) &&
+    return Objects.equals(this.secureOnly, updateAccountRequestBody.secureOnly) &&
         Objects.equals(this.complexPasswords, updateAccountRequestBody.complexPasswords) &&
         Objects.equals(this.showReferralLinks, updateAccountRequestBody.showReferralLinks) &&
         Objects.equals(this.externalDomain, updateAccountRequestBody.externalDomain) &&
@@ -337,12 +313,13 @@ public class UpdateAccountRequestBody {
         Objects.equals(this.callbackSettings, updateAccountRequestBody.callbackSettings) &&
         Objects.equals(this.brandingSettings, updateAccountRequestBody.brandingSettings) &&
         Objects.equals(this.accountOnboarding, updateAccountRequestBody.accountOnboarding) &&
-        Objects.equals(this.customSignature, updateAccountRequestBody.customSignature);
+        Objects.equals(this.customSignature, updateAccountRequestBody.customSignature) &&
+        Objects.equals(this.quota, updateAccountRequestBody.quota);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(quotaNoticeEnabled, quotaNoticeThreshold, secureOnly, complexPasswords, showReferralLinks, externalDomain, emailContent, emailSubject, allowedIpRanges, callbackSettings, brandingSettings, accountOnboarding, customSignature);
+    return Objects.hash(secureOnly, complexPasswords, showReferralLinks, externalDomain, emailContent, emailSubject, allowedIpRanges, callbackSettings, brandingSettings, accountOnboarding, customSignature, quota);
   }
 
 
@@ -351,8 +328,6 @@ public class UpdateAccountRequestBody {
     StringBuilder sb = new StringBuilder();
     sb.append("class UpdateAccountRequestBody {\n");
     
-    sb.append("    quotaNoticeEnabled: ").append(toIndentedString(quotaNoticeEnabled)).append("\n");
-    sb.append("    quotaNoticeThreshold: ").append(toIndentedString(quotaNoticeThreshold)).append("\n");
     sb.append("    secureOnly: ").append(toIndentedString(secureOnly)).append("\n");
     sb.append("    complexPasswords: ").append(toIndentedString(complexPasswords)).append("\n");
     sb.append("    showReferralLinks: ").append(toIndentedString(showReferralLinks)).append("\n");
@@ -364,6 +339,7 @@ public class UpdateAccountRequestBody {
     sb.append("    brandingSettings: ").append(toIndentedString(brandingSettings)).append("\n");
     sb.append("    accountOnboarding: ").append(toIndentedString(accountOnboarding)).append("\n");
     sb.append("    customSignature: ").append(toIndentedString(customSignature)).append("\n");
+    sb.append("    quota: ").append(toIndentedString(quota)).append("\n");
     sb.append("}");
     return sb.toString();
   }

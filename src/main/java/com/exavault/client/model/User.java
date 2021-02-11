@@ -28,7 +28,7 @@ import java.io.IOException;
  */
 @Schema(description = "Object contains user properties.")
 
-public class User {
+public class User implements AnyOfSSHKeyResponseIncluded {
   @SerializedName("id")
   private Integer id = null;
 

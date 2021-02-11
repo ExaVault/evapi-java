@@ -82,7 +82,7 @@ public class AccountApiTest {
 		public void updateQuotaNoticeEnabled() throws ApiException {
 			try {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-				body.setQuotaNoticeEnabled(true);
+//				body.setQuotaNoticeEnabled(true);
 				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				validateAccountSettings(response, false);
 				assertThat(response.getData().getAttributes().getQuota().isNoticeEnabled()).isTrue();
@@ -90,7 +90,7 @@ public class AccountApiTest {
 				fail(FAILED_DUE_TO, e);
 			} finally {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-				body.setQuotaNoticeEnabled(false);
+//				body.setQuotaNoticeEnabled(false);
 				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 			}
 		}
@@ -102,7 +102,7 @@ public class AccountApiTest {
 		public void updateQuotaNoticeThreshold() throws ApiException {
 			try {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-				body.setQuotaNoticeThreshold(NOTICE_THRESHOLD);
+//				body.setQuotaNoticeThreshold(NOTICE_THRESHOLD);
 				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				validateAccountSettings(response, false);
 				assertThat(response.getData().getAttributes().getQuota().getNoticeThreshold()).isEqualTo(NOTICE_THRESHOLD);
@@ -110,7 +110,7 @@ public class AccountApiTest {
 				fail(FAILED_DUE_TO, e);
 			} finally {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-				body.setQuotaNoticeThreshold(NOTICE_THRESHOLD_DEFAULT);
+//				body.setQuotaNoticeThreshold(NOTICE_THRESHOLD_DEFAULT);
 				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 			}
 		}
@@ -122,7 +122,7 @@ public class AccountApiTest {
 		public void updateQuotaNoticeInvalidThreshold() {
 			try {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-				body.setQuotaNoticeThreshold(_1);
+//				body.setQuotaNoticeThreshold(_1);
 				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				validateAccountSettings(response, false);
 				assertThat(response.getData().getAttributes().getQuota().getNoticeThreshold()).isEqualTo(_1);

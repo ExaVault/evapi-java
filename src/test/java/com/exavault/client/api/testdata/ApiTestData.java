@@ -152,6 +152,7 @@ public class ApiTestData {
 	public static final String CREATED = "created";
 	public static final String MESSAGE_SUBJECT = "I am a subject";
 	public static final String OWNER = "owner";
+	public static final String OWNER_ACCOUNT = "ownerAccount";
 	public static final String ATTRIBUTES = "attributes";
 	public static final String SOME_DESCRIPTION = "some description";
 	public static final String SOME_TEXT = "some text";

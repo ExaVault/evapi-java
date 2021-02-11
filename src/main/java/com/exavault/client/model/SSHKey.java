@@ -14,8 +14,8 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.EmailListAttributes;
-import com.exavault.client.model.EmailListRelationships;
+import com.exavault.client.model.SSHKeyAttributes;
+import com.exavault.client.model.SSHKeyRelationships;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -24,33 +24,73 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * A single email group list
+ * Object representing an SSH Key associated with a user.
  */
-@Schema(description = "A single email group list")
+@Schema(description = "Object representing an SSH Key associated with a user.")
 
-public class EmailList {
+public class SSHKey {
   @SerializedName("id")
   private Integer id = null;
 
-  @SerializedName("type")
-  private String type = null;
+  /**
+   * Type of the object. 
+   */
+  @JsonAdapter(TypeEnum.Adapter.class)
+  public enum TypeEnum {
+    SSHKEY("sshKey");
+
+    private String value;
+
+    TypeEnum(String value) {
+      this.value = value;
+    }
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+    public static TypeEnum fromValue(String text) {
+      for (TypeEnum b : TypeEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+    public static class Adapter extends TypeAdapter<TypeEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final TypeEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public TypeEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return TypeEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }  @SerializedName("type")
+  private TypeEnum type = null;
 
   @SerializedName("attributes")
-  private EmailListAttributes attributes = null;
+  private SSHKeyAttributes attributes = null;
 
   @SerializedName("relationships")
-  private EmailListRelationships relationships = null;
+  private SSHKeyRelationships relationships = null;
 
-  public EmailList id(Integer id) {
+  public SSHKey id(Integer id) {
     this.id = id;
     return this;
   }
 
    /**
-   * ID of the email list
+   * ID of the key.
    * @return id
   **/
-  @Schema(description = "ID of the email list")
+  @Schema(example = "655621", description = "ID of the key.")
   public Integer getId() {
     return id;
   }
@@ -59,25 +99,25 @@ public class EmailList {
     this.id = id;
   }
 
-  public EmailList type(String type) {
+  public SSHKey type(TypeEnum type) {
     this.type = type;
     return this;
   }
 
    /**
-   * Type of record. \&quot;emailList\&quot;
+   * Type of the object. 
    * @return type
   **/
-  @Schema(description = "Type of record. \"emailList\"")
-  public String getType() {
+  @Schema(example = "sshKey", description = "Type of the object. ")
+  public TypeEnum getType() {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(TypeEnum type) {
     this.type = type;
   }
 
-  public EmailList attributes(EmailListAttributes attributes) {
+  public SSHKey attributes(SSHKeyAttributes attributes) {
     this.attributes = attributes;
     return this;
   }
@@ -87,15 +127,15 @@ public class EmailList {
    * @return attributes
   **/
   @Schema(description = "")
-  public EmailListAttributes getAttributes() {
+  public SSHKeyAttributes getAttributes() {
     return attributes;
   }
 
-  public void setAttributes(EmailListAttributes attributes) {
+  public void setAttributes(SSHKeyAttributes attributes) {
     this.attributes = attributes;
   }
 
-  public EmailList relationships(EmailListRelationships relationships) {
+  public SSHKey relationships(SSHKeyRelationships relationships) {
     this.relationships = relationships;
     return this;
   }
@@ -105,11 +145,11 @@ public class EmailList {
    * @return relationships
   **/
   @Schema(description = "")
-  public EmailListRelationships getRelationships() {
+  public SSHKeyRelationships getRelationships() {
     return relationships;
   }
 
-  public void setRelationships(EmailListRelationships relationships) {
+  public void setRelationships(SSHKeyRelationships relationships) {
     this.relationships = relationships;
   }
 
@@ -122,11 +162,11 @@ public class EmailList {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    EmailList emailList = (EmailList) o;
-    return Objects.equals(this.id, emailList.id) &&
-        Objects.equals(this.type, emailList.type) &&
-        Objects.equals(this.attributes, emailList.attributes) &&
-        Objects.equals(this.relationships, emailList.relationships);
+    SSHKey ssHKey = (SSHKey) o;
+    return Objects.equals(this.id, ssHKey.id) &&
+        Objects.equals(this.type, ssHKey.type) &&
+        Objects.equals(this.attributes, ssHKey.attributes) &&
+        Objects.equals(this.relationships, ssHKey.relationships);
   }
 
   @Override
@@ -138,7 +178,7 @@ public class EmailList {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class EmailList {\n");
+    sb.append("class SSHKey {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");

@@ -37,9 +37,6 @@ public class AccountAttributes {
   @SerializedName("accountName")
   private String accountName = null;
 
-  @SerializedName("username")
-  private String username = null;
-
   @SerializedName("maxUsers")
   private Integer maxUsers = null;
 
@@ -150,31 +147,13 @@ public class AccountAttributes {
    * Name of the account
    * @return accountName
   **/
-  @Schema(example = "exampleaccount", description = "Name of the account")
+  @Schema(description = "Name of the account")
   public String getAccountName() {
     return accountName;
   }
 
   public void setAccountName(String accountName) {
     this.accountName = accountName;
-  }
-
-  public AccountAttributes username(String username) {
-    this.username = username;
-    return this;
-  }
-
-   /**
-   * Name of account&#x27;s master user
-   * @return username
-  **/
-  @Schema(example = "exampleuser", description = "Name of account's master user")
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
   }
 
   public AccountAttributes maxUsers(Integer maxUsers) {
@@ -564,7 +543,6 @@ public class AccountAttributes {
     }
     AccountAttributes accountAttributes = (AccountAttributes) o;
     return Objects.equals(this.accountName, accountAttributes.accountName) &&
-        Objects.equals(this.username, accountAttributes.username) &&
         Objects.equals(this.maxUsers, accountAttributes.maxUsers) &&
         Objects.equals(this.userCount, accountAttributes.userCount) &&
         Objects.equals(this.status, accountAttributes.status) &&
@@ -589,7 +567,7 @@ public class AccountAttributes {
 
   @Override
   public int hashCode() {
-    return Objects.hash(accountName, username, maxUsers, userCount, status, branding, customDomain, quota, secureOnly, complexPasswords, showReferralLinks, externalDomains, allowedIp, callbackSettings, brandingSettings, clientId, welcomeEmailContent, welcomeEmailSubject, customSignature, accountOnboarding, created, modified);
+    return Objects.hash(accountName, maxUsers, userCount, status, branding, customDomain, quota, secureOnly, complexPasswords, showReferralLinks, externalDomains, allowedIp, callbackSettings, brandingSettings, clientId, welcomeEmailContent, welcomeEmailSubject, customSignature, accountOnboarding, created, modified);
   }
 
 
@@ -599,7 +577,6 @@ public class AccountAttributes {
     sb.append("class AccountAttributes {\n");
     
     sb.append("    accountName: ").append(toIndentedString(accountName)).append("\n");
-    sb.append("    username: ").append(toIndentedString(username)).append("\n");
     sb.append("    maxUsers: ").append(toIndentedString(maxUsers)).append("\n");
     sb.append("    userCount: ").append(toIndentedString(userCount)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");

@@ -14,8 +14,6 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.EmailListAttributes;
-import com.exavault.client.model.EmailListRelationships;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -24,33 +22,27 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * A single email group list
+ * SSHKeyRelationshipsOwnerUserData
  */
-@Schema(description = "A single email group list")
 
-public class EmailList {
+
+public class SSHKeyRelationshipsOwnerUserData {
   @SerializedName("id")
   private Integer id = null;
 
   @SerializedName("type")
   private String type = null;
 
-  @SerializedName("attributes")
-  private EmailListAttributes attributes = null;
-
-  @SerializedName("relationships")
-  private EmailListRelationships relationships = null;
-
-  public EmailList id(Integer id) {
+  public SSHKeyRelationshipsOwnerUserData id(Integer id) {
     this.id = id;
     return this;
   }
 
    /**
-   * ID of the email list
+   * Get id
    * @return id
   **/
-  @Schema(description = "ID of the email list")
+  @Schema(description = "")
   public Integer getId() {
     return id;
   }
@@ -59,58 +51,22 @@ public class EmailList {
     this.id = id;
   }
 
-  public EmailList type(String type) {
+  public SSHKeyRelationshipsOwnerUserData type(String type) {
     this.type = type;
     return this;
   }
 
    /**
-   * Type of record. \&quot;emailList\&quot;
+   * Get type
    * @return type
   **/
-  @Schema(description = "Type of record. \"emailList\"")
+  @Schema(description = "")
   public String getType() {
     return type;
   }
 
   public void setType(String type) {
     this.type = type;
-  }
-
-  public EmailList attributes(EmailListAttributes attributes) {
-    this.attributes = attributes;
-    return this;
-  }
-
-   /**
-   * Get attributes
-   * @return attributes
-  **/
-  @Schema(description = "")
-  public EmailListAttributes getAttributes() {
-    return attributes;
-  }
-
-  public void setAttributes(EmailListAttributes attributes) {
-    this.attributes = attributes;
-  }
-
-  public EmailList relationships(EmailListRelationships relationships) {
-    this.relationships = relationships;
-    return this;
-  }
-
-   /**
-   * Get relationships
-   * @return relationships
-  **/
-  @Schema(description = "")
-  public EmailListRelationships getRelationships() {
-    return relationships;
-  }
-
-  public void setRelationships(EmailListRelationships relationships) {
-    this.relationships = relationships;
   }
 
 
@@ -122,28 +78,24 @@ public class EmailList {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    EmailList emailList = (EmailList) o;
-    return Objects.equals(this.id, emailList.id) &&
-        Objects.equals(this.type, emailList.type) &&
-        Objects.equals(this.attributes, emailList.attributes) &&
-        Objects.equals(this.relationships, emailList.relationships);
+    SSHKeyRelationshipsOwnerUserData ssHKeyRelationshipsOwnerUserData = (SSHKeyRelationshipsOwnerUserData) o;
+    return Objects.equals(this.id, ssHKeyRelationshipsOwnerUserData.id) &&
+        Objects.equals(this.type, ssHKeyRelationshipsOwnerUserData.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type, attributes, relationships);
+    return Objects.hash(id, type);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class EmailList {\n");
+    sb.append("class SSHKeyRelationshipsOwnerUserData {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    attributes: ").append(toIndentedString(attributes)).append("\n");
-    sb.append("    relationships: ").append(toIndentedString(relationships)).append("\n");
     sb.append("}");
     return sb.toString();
   }

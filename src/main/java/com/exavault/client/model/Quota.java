@@ -39,6 +39,21 @@ public class Quota {
   @SerializedName("noticeThreshold")
   private Integer noticeThreshold = null;
 
+  @SerializedName("bandwidthLimit")
+  private Long bandwidthLimit = null;
+
+  @SerializedName("bandwidthUsed")
+  private Long bandwidthUsed = null;
+
+  @SerializedName("transactionsLimit")
+  private Integer transactionsLimit = null;
+
+  @SerializedName("transactionsNoticeEnabled")
+  private Boolean transactionsNoticeEnabled = null;
+
+  @SerializedName("transactionsNoticeThreshold")
+  private Integer transactionsNoticeThreshold = null;
+
   public Quota diskLimit(Long diskLimit) {
     this.diskLimit = diskLimit;
     return this;
@@ -111,6 +126,96 @@ public class Quota {
     this.noticeThreshold = noticeThreshold;
   }
 
+  public Quota bandwidthLimit(Long bandwidthLimit) {
+    this.bandwidthLimit = bandwidthLimit;
+    return this;
+  }
+
+   /**
+   * Total number of bytes that can be transferred per month.
+   * @return bandwidthLimit
+  **/
+  @Schema(description = "Total number of bytes that can be transferred per month.")
+  public Long getBandwidthLimit() {
+    return bandwidthLimit;
+  }
+
+  public void setBandwidthLimit(Long bandwidthLimit) {
+    this.bandwidthLimit = bandwidthLimit;
+  }
+
+  public Quota bandwidthUsed(Long bandwidthUsed) {
+    this.bandwidthUsed = bandwidthUsed;
+    return this;
+  }
+
+   /**
+   * Number of bytes transferred this month.
+   * @return bandwidthUsed
+  **/
+  @Schema(description = "Number of bytes transferred this month.")
+  public Long getBandwidthUsed() {
+    return bandwidthUsed;
+  }
+
+  public void setBandwidthUsed(Long bandwidthUsed) {
+    this.bandwidthUsed = bandwidthUsed;
+  }
+
+  public Quota transactionsLimit(Integer transactionsLimit) {
+    this.transactionsLimit = transactionsLimit;
+    return this;
+  }
+
+   /**
+   * Total number of transactions allowed in a 24-hour period.
+   * @return transactionsLimit
+  **/
+  @Schema(description = "Total number of transactions allowed in a 24-hour period.")
+  public Integer getTransactionsLimit() {
+    return transactionsLimit;
+  }
+
+  public void setTransactionsLimit(Integer transactionsLimit) {
+    this.transactionsLimit = transactionsLimit;
+  }
+
+  public Quota transactionsNoticeEnabled(Boolean transactionsNoticeEnabled) {
+    this.transactionsNoticeEnabled = transactionsNoticeEnabled;
+    return this;
+  }
+
+   /**
+   * Whether an email should be sent to the account owner up to once per day if transaction usage exceeds &#x60;transactionsNoticeThreshold&#x60; value.
+   * @return transactionsNoticeEnabled
+  **/
+  @Schema(description = "Whether an email should be sent to the account owner up to once per day if transaction usage exceeds `transactionsNoticeThreshold` value.")
+  public Boolean isTransactionsNoticeEnabled() {
+    return transactionsNoticeEnabled;
+  }
+
+  public void setTransactionsNoticeEnabled(Boolean transactionsNoticeEnabled) {
+    this.transactionsNoticeEnabled = transactionsNoticeEnabled;
+  }
+
+  public Quota transactionsNoticeThreshold(Integer transactionsNoticeThreshold) {
+    this.transactionsNoticeThreshold = transactionsNoticeThreshold;
+    return this;
+  }
+
+   /**
+   * Percent of daily transactions limit that will trigger an email if activity exceeds it.
+   * @return transactionsNoticeThreshold
+  **/
+  @Schema(description = "Percent of daily transactions limit that will trigger an email if activity exceeds it.")
+  public Integer getTransactionsNoticeThreshold() {
+    return transactionsNoticeThreshold;
+  }
+
+  public void setTransactionsNoticeThreshold(Integer transactionsNoticeThreshold) {
+    this.transactionsNoticeThreshold = transactionsNoticeThreshold;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -124,12 +229,17 @@ public class Quota {
     return Objects.equals(this.diskLimit, quota.diskLimit) &&
         Objects.equals(this.diskUsed, quota.diskUsed) &&
         Objects.equals(this.noticeEnabled, quota.noticeEnabled) &&
-        Objects.equals(this.noticeThreshold, quota.noticeThreshold);
+        Objects.equals(this.noticeThreshold, quota.noticeThreshold) &&
+        Objects.equals(this.bandwidthLimit, quota.bandwidthLimit) &&
+        Objects.equals(this.bandwidthUsed, quota.bandwidthUsed) &&
+        Objects.equals(this.transactionsLimit, quota.transactionsLimit) &&
+        Objects.equals(this.transactionsNoticeEnabled, quota.transactionsNoticeEnabled) &&
+        Objects.equals(this.transactionsNoticeThreshold, quota.transactionsNoticeThreshold);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(diskLimit, diskUsed, noticeEnabled, noticeThreshold);
+    return Objects.hash(diskLimit, diskUsed, noticeEnabled, noticeThreshold, bandwidthLimit, bandwidthUsed, transactionsLimit, transactionsNoticeEnabled, transactionsNoticeThreshold);
   }
 
 
@@ -142,6 +252,11 @@ public class Quota {
     sb.append("    diskUsed: ").append(toIndentedString(diskUsed)).append("\n");
     sb.append("    noticeEnabled: ").append(toIndentedString(noticeEnabled)).append("\n");
     sb.append("    noticeThreshold: ").append(toIndentedString(noticeThreshold)).append("\n");
+    sb.append("    bandwidthLimit: ").append(toIndentedString(bandwidthLimit)).append("\n");
+    sb.append("    bandwidthUsed: ").append(toIndentedString(bandwidthUsed)).append("\n");
+    sb.append("    transactionsLimit: ").append(toIndentedString(transactionsLimit)).append("\n");
+    sb.append("    transactionsNoticeEnabled: ").append(toIndentedString(transactionsNoticeEnabled)).append("\n");
+    sb.append("    transactionsNoticeThreshold: ").append(toIndentedString(transactionsNoticeThreshold)).append("\n");
     sb.append("}");
     return sb.toString();
   }
