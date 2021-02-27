@@ -72,21 +72,26 @@ public class AccountApiTest {
 	@DisplayName("Update account settings, Method=PATCH, API=/account ")
 	class UpdateAccount {
 		@Test
-		@DisplayName("Update account settings, transaction notice enable flag")
-		public void updateTransactionNoticeEnabled() throws ApiException {
+		@DisplayName("Update account settings, transactionNoticeThreshold and flag")
+		public void updateTransactionNoticeThreshold() throws ApiException {
 			try {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
 				final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
 				accountQuotaValues.setTransactionsNoticeEnabled(true);
+				accountQuotaValues.setTransactionsNoticeThreshold(NOTICE_THRESHOLD);
 				body.setQuota(accountQuotaValues);
 				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				validateAccountSettings(response, false);
-				assertThat(response.getData().getAttributes().getQuota().isTransactionsNoticeEnabled()).isTrue();
+				assertThat(response.getData().getAttributes().getQuota()
+						.getTransactionsNoticeThreshold()).isEqualTo(NOTICE_THRESHOLD);
+				assertThat(response.getData().getAttributes().getQuota()
+						.isTransactionsNoticeEnabled()).isTrue();
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
 				final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
+				accountQuotaValues.setTransactionsNoticeThreshold(NOTICE_THRESHOLD_DEFAULT);
 				accountQuotaValues.setTransactionsNoticeEnabled(false);
 				body.setQuota(accountQuotaValues);
 				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
@@ -94,76 +99,32 @@ public class AccountApiTest {
 		}
 
 		@Test
-		@DisplayName("Update account settings, noticeEnabled")
-		public void updateQuotaNoticeEnabled() throws ApiException {
-			try {
-				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-				final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
-				accountQuotaValues.setNoticeEnabled(true);
-				body.setQuota(accountQuotaValues);
-				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				validateAccountSettings(response, false);
-				assertThat(response.getData().getAttributes().getQuota().isNoticeEnabled()).isTrue();
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-				final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
-				accountQuotaValues.setNoticeEnabled(false);
-				body.setQuota(accountQuotaValues);
-				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
-			}
-		}
-
-		@Disabled("Transaction Notice Threshold is not getting updated correctly, always come 90 ")
-		@Test
-		@DisplayName("Update account settings, transactionNoticeThreshold")
-		public void updateTransactionNoticeThreshold() throws ApiException {
-			try {
-				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-				final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
-				accountQuotaValues.setTransactionsNoticeThreshold(NOTICE_THRESHOLD);
-				body.setQuota(accountQuotaValues);
-				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				validateAccountSettings(response, false);
-				assertThat(response.getData().getAttributes().getQuota()
-						.getTransactionsNoticeThreshold()).isEqualTo(NOTICE_THRESHOLD);
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			} finally {
-				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-				final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
-				accountQuotaValues.setTransactionsNoticeThreshold(NOTICE_THRESHOLD_DEFAULT);
-				body.setQuota(accountQuotaValues);
-				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
-			}
-		}
-		
-		@Disabled("Notice Threshold is not getting updated correctly, always come 90 ")
-		@Test
-		@DisplayName("Update account settings, quotaNoticeThreshold")
+		@DisplayName("Update account settings, quotaNoticeThreshold and flag")
 		public void updateQuotaNoticeThreshold() throws ApiException {
 			try {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
 				final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
 				accountQuotaValues.setNoticeThreshold(NOTICE_THRESHOLD);
+				accountQuotaValues.setNoticeEnabled(true);
 				body.setQuota(accountQuotaValues);
 				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				validateAccountSettings(response, false);
-				assertThat(response.getData().getAttributes().getQuota().getNoticeThreshold()).isEqualTo(NOTICE_THRESHOLD);
+				assertThat(response.getData().getAttributes()
+						.getQuota().getNoticeThreshold()).isEqualTo(NOTICE_THRESHOLD);
+				assertThat(response.getData().getAttributes()
+						.getQuota().isNoticeEnabled()).isTrue();
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
 				final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
 				accountQuotaValues.setNoticeThreshold(NOTICE_THRESHOLD_DEFAULT);
+				accountQuotaValues.setNoticeEnabled(false);
 				body.setQuota(accountQuotaValues);
 				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 			}
 		}
 
-
-		@Disabled("API not returning error for bad request https://app.asana.com/0/956984820471204/1199916676837985/f")
 		@Test
 		@DisplayName("Update account settings, invalid quotaNoticeThreshold")
 		public void updateQuotaNoticeInvalidThreshold() {
@@ -172,7 +133,25 @@ public class AccountApiTest {
 				public void call() throws ApiException {
 					final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
 					final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
+					accountQuotaValues.setNoticeEnabled(true);
 					accountQuotaValues.setNoticeThreshold(-_1);
+					body.setQuota(accountQuotaValues);
+					api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				}
+			}).isInstanceOf(ApiException.class)
+					.hasMessageContaining(BAD_REQUEST);
+		}
+
+		@Test
+		@DisplayName("Update account settings, invalid transactionNoticeThreshold")
+		public void updateTransactionNoticeInvalidThreshold() {
+			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
+				@Override
+				public void call() throws ApiException {
+					final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+					final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
+					accountQuotaValues.setTransactionsNoticeEnabled(true);
+					accountQuotaValues.setTransactionsNoticeThreshold(-_1);
 					body.setQuota(accountQuotaValues);
 					api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				}
