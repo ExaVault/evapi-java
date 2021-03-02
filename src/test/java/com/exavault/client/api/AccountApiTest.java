@@ -25,8 +25,7 @@ import java.util.List;
 import static com.exavault.client.api.ApiTestAssertionUtil.validateAccountSettings;
 import static com.exavault.client.api.testdata.ApiTestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.AssertionsKt.fail;
+import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("Account API Tests")
 public class AccountApiTest {
