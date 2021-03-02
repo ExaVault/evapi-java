@@ -24,12 +24,10 @@ public class ApiTestData {
 	public static final String EV_API_URL = "URL";
 	public static final String VALID_USER_NAME = "USERNAME";
 	public static final String BASE_FOLDER_ = "/folder_for_test";
-	public static final String BASE_FOLDER2_ = "/folder_for_test2";
 	public static final String COPIED_FOLDER = "/copy/copied_%d";
 	public static final String TEST_FOLDER = BASE_FOLDER_ + "/test_%d";
 	public static final String DUMMY_ADD_FOLDER_TEST = "dummy_addFolder_Test";
 	public static final String FILES = "files";
-	public static final SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final SimpleDateFormat dateTimeFormatter2 = new SimpleDateFormat("yyyy-MM-dd");
 	public static final String TEST_ARCHIVE = "test_archive";
 	public static final String UNAUTHORIZED = "Unauthorized";
@@ -58,7 +56,6 @@ public class ApiTestData {
 	public static final String DOCS = "docs";
 	public static final String DOC_1_PDF = "/doc1.pdf";
 	public static final String PARENT_RESOURCE = "parentResource";
-	public static final String HOME_RESOURCE = "homeResource";
 	public static final int _1 = 1;
 	public static final int _0 = 0;
 	public static final String INVALID = "invalid";
@@ -69,7 +66,6 @@ public class ApiTestData {
 	public static final String DIR_TYPE = "dir";
 	public static final String NAME = "name";
 	public static final String ZIP = ".zip";
-	public static final String _DOT = ".";
 	public static final String PATH = "path";
 	public static final String DESTINATION_PATH = "destinationPath";
 	public static final String SESSION_ACTIVITY = "sessionActivity";
@@ -78,12 +74,9 @@ public class ApiTestData {
 	public static final int _900 = 900;
 	public static final String DELETE_TYPE = "Delete";
 	public static final String USERNAME = "username";
-	public static final int _50 = 50;
 	public static final String WEBHOOK_ACTIVITY = "webhookActivity";
 	public static final String UPLOAD = "Upload";
 	public static final String UPLOAD2 = "upload";
-	public static final String UPLOAD_TREE = "/upload tree";
-	public static final String PATH_COLON = "path:";
 	public static final String EVENT = "event";
 	public static final String TEST_EMAIL = "testuser@example.com";
 	public static final String TEST_EMAIL2 = "testuser2@example.com";
@@ -107,13 +100,11 @@ public class ApiTestData {
 	public static final String STATUS_ATTR = "statusattr";
 	public static final String HOMEDIR_ATTR = "homdir";
 	public static final String TYPE_ATTR = "typeAttr";
-	public static final String INCLUDE_ATTR = "includeAttr";
 	public static final String ACTION_ATTRIBUTE = "action";
 	public static final String SCOPE_ATTR = "scopeAttr";
 	public static final String EMAIL_ATTR_FALSE = "emailattr_false";
 	public static final String EXPIRATION = "2020-12-12";
 	public static final String EXPIRATION2 = "2020-12-13";
-	public static final String VALID_NAME = "ValidName";
 	public static final String INVALID_USER = "invalid user with space in the name";
 	public static final int INVALID_USER_ID = 123;
 	public static final String OFFSET_DATE = "date";
@@ -129,7 +120,6 @@ public class ApiTestData {
 	public static final String SHARE = "share";
 	public static final String FORM = "form";
 	public static final String MESSAGE = "Hello There! I am a notification";
-	public static final String PASSWORD = "Hello There! I am a Password";
 	public static final String EMAIL_CONTENT_DEFAULT = "Great news, your new account is ready!\n" +
 			"For your records, we've listed information you'll use to log in below:\n" +
 			"FTP Server: [[ftpserver]]\n" +

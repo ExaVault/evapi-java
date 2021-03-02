@@ -14,13 +14,7 @@ package com.exavault.client.api;
 
 import com.exavault.client.ApiException;
 import com.exavault.client.api.testdata.ApiTestData;
-import com.exavault.client.model.AccountResponse;
-import com.exavault.client.model.UpdateAccountRequestBody;
-import com.exavault.client.model.AccountAllowedIpRanges;
-import com.exavault.client.model.BrandingSettingsValues;
-import com.exavault.client.model.AccountAttributes;
-import com.exavault.client.model.AccountAttributesAllowedIp;
-import com.exavault.client.model.User;
+import com.exavault.client.model.*;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.*;
 
@@ -31,7 +25,7 @@ import java.util.List;
 import static com.exavault.client.api.ApiTestAssertionUtil.validateAccountSettings;
 import static com.exavault.client.api.testdata.ApiTestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.AssertionsKt.fail;
+import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("Account API Tests")
 public class AccountApiTest {
@@ -76,59 +70,92 @@ public class AccountApiTest {
 	@Nested
 	@DisplayName("Update account settings, Method=PATCH, API=/account ")
 	class UpdateAccount {
-		@Disabled("Account request Quota object changed https://app.asana.com/0/995549068566762/1199905572508585/f")
 		@Test
-		@DisplayName("Update account settings, quotaNoticeEnabled")
-		public void updateQuotaNoticeEnabled() throws ApiException {
+		@DisplayName("Update account settings, transactionNoticeThreshold and flag")
+		public void updateTransactionNoticeThreshold() throws ApiException {
 			try {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-//				body.setQuotaNoticeEnabled(true);
+				final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
+				accountQuotaValues.setTransactionsNoticeEnabled(true);
+				accountQuotaValues.setTransactionsNoticeThreshold(NOTICE_THRESHOLD);
+				body.setQuota(accountQuotaValues);
 				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				validateAccountSettings(response, false);
-				assertThat(response.getData().getAttributes().getQuota().isNoticeEnabled()).isTrue();
+				assertThat(response.getData().getAttributes().getQuota()
+						.getTransactionsNoticeThreshold()).isEqualTo(NOTICE_THRESHOLD);
+				assertThat(response.getData().getAttributes().getQuota()
+						.isTransactionsNoticeEnabled()).isTrue();
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-//				body.setQuotaNoticeEnabled(false);
+				final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
+				accountQuotaValues.setTransactionsNoticeThreshold(NOTICE_THRESHOLD_DEFAULT);
+				accountQuotaValues.setTransactionsNoticeEnabled(false);
+				body.setQuota(accountQuotaValues);
 				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 			}
 		}
 
-
-		@Disabled("Account request Quota object changed https://app.asana.com/0/995549068566762/1199905572508585/f")
 		@Test
-		@DisplayName("Update account settings, quotaNoticeThreshold")
+		@DisplayName("Update account settings, quotaNoticeThreshold and flag")
 		public void updateQuotaNoticeThreshold() throws ApiException {
 			try {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-//				body.setQuotaNoticeThreshold(NOTICE_THRESHOLD);
+				final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
+				accountQuotaValues.setNoticeThreshold(NOTICE_THRESHOLD);
+				accountQuotaValues.setNoticeEnabled(true);
+				body.setQuota(accountQuotaValues);
 				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 				validateAccountSettings(response, false);
-				assertThat(response.getData().getAttributes().getQuota().getNoticeThreshold()).isEqualTo(NOTICE_THRESHOLD);
+				assertThat(response.getData().getAttributes()
+						.getQuota().getNoticeThreshold()).isEqualTo(NOTICE_THRESHOLD);
+				assertThat(response.getData().getAttributes()
+						.getQuota().isNoticeEnabled()).isTrue();
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			} finally {
 				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-//				body.setQuotaNoticeThreshold(NOTICE_THRESHOLD_DEFAULT);
+				final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
+				accountQuotaValues.setNoticeThreshold(NOTICE_THRESHOLD_DEFAULT);
+				accountQuotaValues.setNoticeEnabled(false);
+				body.setQuota(accountQuotaValues);
 				api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
 			}
 		}
 
-
-		@Disabled("API not returning error for bad request https://app.asana.com/0/956984820471204/1199916676837985/f")
 		@Test
 		@DisplayName("Update account settings, invalid quotaNoticeThreshold")
 		public void updateQuotaNoticeInvalidThreshold() {
-			try {
-				final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
-//				body.setQuotaNoticeThreshold(_1);
-				final AccountResponse response = api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
-				validateAccountSettings(response, false);
-				assertThat(response.getData().getAttributes().getQuota().getNoticeThreshold()).isEqualTo(_1);
-			} catch (final ApiException e) {
-				fail(FAILED_DUE_TO, e);
-			}
+			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
+				@Override
+				public void call() throws ApiException {
+					final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+					final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
+					accountQuotaValues.setNoticeEnabled(true);
+					accountQuotaValues.setNoticeThreshold(-_1);
+					body.setQuota(accountQuotaValues);
+					api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				}
+			}).isInstanceOf(ApiException.class)
+					.hasMessageContaining(BAD_REQUEST);
+		}
+
+		@Test
+		@DisplayName("Update account settings, invalid transactionNoticeThreshold")
+		public void updateTransactionNoticeInvalidThreshold() {
+			assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
+				@Override
+				public void call() throws ApiException {
+					final UpdateAccountRequestBody body = new UpdateAccountRequestBody();
+					final AccountQuotaValues accountQuotaValues = new AccountQuotaValues();
+					accountQuotaValues.setTransactionsNoticeEnabled(true);
+					accountQuotaValues.setTransactionsNoticeThreshold(-_1);
+					body.setQuota(accountQuotaValues);
+					api.updateAccount(EV_API_KEY, EV_ACCESS_TOKEN, body);
+				}
+			}).isInstanceOf(ApiException.class)
+					.hasMessageContaining(BAD_REQUEST);
 		}
 
 		@Test
