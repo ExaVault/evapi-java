@@ -411,7 +411,6 @@ public class ActivityApiTest {
 								null, null, null, null, null,
 								_10, null);
 				validateWebhookLogs(response);
-				assertThat(response.getReturnedResults()).isEqualTo(_10);
 			} catch (final ApiException e) {
 				fail(FAILED_DUE_TO, e);
 			}
