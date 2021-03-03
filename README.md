@@ -17,7 +17,7 @@ Clone the project from our repository
 git clone https://github.com/ExaVault/evapi-java.git
 ```
 
-As a next step, import the project into your favourite Java IDE, Please refer to this [guide](https://github.com/ExaVault/evapi-java-samples/blob/main/README.md#running-your-first-sample) to install an IDE and import the project into it.
+As a next step, import the project into your favorite Java IDE. Please refer to this [guide](https://github.com/ExaVault/evapi-java-samples/blob/main/README.md#running-your-first-sample) to install an IDE and import the project into it.
 
 
 ## Compiling and Installing the Code Library
@@ -32,7 +32,7 @@ mvn clean install
 
 Now, our Java SDK and its related dependencies are installed into your local maven repository.
 
-Furthermore, Add this dependency to **your project's** ````POM.XML````:
+Furthermore, Add this dependency to **your project's** `POM.XML`:
 
 ```xml
 <dependency>
