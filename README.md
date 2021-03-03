@@ -27,7 +27,7 @@ As a next step, import the project into your favorite Java IDE. Please refer to 
 As a first step, you need to install **our Java SDK** into your local maven repository. To do so, please run the following command from the root folder (where you've imported/cloned our Java SDK).
 
 ```shell
-mvn clean install
+mvn clean -DskipTests=true install
 ```
 
 Now, our Java SDK and its related dependencies are installed into your local maven repository.
@@ -44,6 +44,22 @@ Furthermore, Add this dependency to **your project's** `POM.XML`:
 ```
 
 At the end of this step, your project should be able to use our Java SDK.
+
+### Option 1a - Running Tests During Build
+
+While you don't need to do this strictly to build our SDK, you may want to run our test suite before building. To do so, you'll need to create an API key and access token in your account, and add them to the ``ApiTestData.java`` file. 
+
+Once you've done that, to just run tests:
+
+```shell
+mvn clean test
+```
+
+To run tests and do a full build:
+
+```shell
+mvn clean install
+```
 
 ### Option 2 - Manual Installation
 
