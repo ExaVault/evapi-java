@@ -13,7 +13,9 @@ You will also need an [ExaVault](https://www.exavault.com/) account, as well as 
 
 Clone the project from our repository 
 
-````git clone https://github.com/ExaVault/evapi-java.git````
+```shell
+git clone https://github.com/ExaVault/evapi-java.git
+```
 
 As a next step, import the project into your favourite Java IDE, Please refer to this [guide](https://github.com/ExaVault/evapi-java-samples/blob/main/README.md#running-your-first-sample) to install an IDE and import the project into it.
 
@@ -39,7 +41,7 @@ Furthermore, Add this dependency to **your project's** ````POM.XML````:
   <version>INSERT_VERSION_NUMBER_HERE</version>
   <scope>compile</scope>
 </dependency>
-````
+```
 
 At the end of this step, your project should be able to use our Java SDK.
 
@@ -65,8 +67,8 @@ When you're ready to write your own code using this library, you'll need to:
 1. Install our code library in your project, using above instructions in Installation section.
 2. Provide your API key and access token with every function method on the Api classes, which are in com.exavault.client.api.* namespace.
 3. Whenever you instantiate an Api object (ResourcesApi, UsersApi, etc.), override the configuration to point the code at the correct API URL:
+
 ```java
- 
 public static String apiUrl = "https://YOUR_ACCOUNT_NAME_HERE.exavault.com/api/v2/";
 
 ApiClient apiClient = new ApiClient();
