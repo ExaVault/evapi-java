@@ -5,7 +5,7 @@ Welcome to ExaVault's Java code library for our v2 API. Our v2 API will allow yo
 
 ## Requirements
 
-To use this library, you'll need [Java 1.7+](https://www.java.com/en/download/help/download_options.xml) and [Maven](https://howtodoinjava.com/maven/how-to-install-maven-on-windows/).
+To use this library, you'll need [Java 1.8+](https://www.java.com/en/download/help/download_options.xml) and [Maven](https://howtodoinjava.com/maven/how-to-install-maven-on-windows/).
 
 You will also need an [ExaVault](https://www.exavault.com/) account, as well as an [API key and access token](https://www.exavault.com/developer/api-docs/#section/Obtaining-Your-API-Key-and-Access-Token).
 
