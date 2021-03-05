@@ -117,7 +117,7 @@ public class ApiTestAssertionUtil {
 		assertThat(data.getType()).isInstanceOf(Resource.TypeEnum.class);
 		final ResourceAttributes attributes = data.getAttributes();
 		assertThat(attributes).isNotNull();
-		assertThat(meta.get(PATH)).isEqualTo(BASE_FOLDER_);
+		assertThat(meta.get(PATH)).endsWith(BASE_FOLDER_);
 		assertThat(meta.get(DESTINATION_PATH)).startsWith(copiedFolder);
 	}
 
