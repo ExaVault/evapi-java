@@ -14,7 +14,7 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.SSHKey;
+import com.exavault.client.model.Webhook;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -22,31 +22,33 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 /**
- * SSHKeyResponse
+ * WebhookResponse
  */
 
 
-public class SSHKeyResponse {
+public class WebhookResponse {
   @SerializedName("responseStatus")
   private Integer responseStatus = null;
 
   @SerializedName("data")
-  private SSHKey data = null;
+  private List<Webhook> data = null;
 
   @SerializedName("included")
-  private Object included = null;
+  private List<Object> included = null;
 
-  public SSHKeyResponse responseStatus(Integer responseStatus) {
+  public WebhookResponse responseStatus(Integer responseStatus) {
     this.responseStatus = responseStatus;
     return this;
   }
 
    /**
-   * Http status code of the response.
+   * Http status code of the response. 
    * @return responseStatus
   **/
-  @Schema(description = "Http status code of the response.")
+  @Schema(example = "200", description = "Http status code of the response. ")
   public Integer getResponseStatus() {
     return responseStatus;
   }
@@ -55,8 +57,16 @@ public class SSHKeyResponse {
     this.responseStatus = responseStatus;
   }
 
-  public SSHKeyResponse data(SSHKey data) {
+  public WebhookResponse data(List<Webhook> data) {
     this.data = data;
+    return this;
+  }
+
+  public WebhookResponse addDataItem(Webhook dataItem) {
+    if (this.data == null) {
+      this.data = new ArrayList<Webhook>();
+    }
+    this.data.add(dataItem);
     return this;
   }
 
@@ -65,16 +75,24 @@ public class SSHKeyResponse {
    * @return data
   **/
   @Schema(description = "")
-  public SSHKey getData() {
+  public List<Webhook> getData() {
     return data;
   }
 
-  public void setData(SSHKey data) {
+  public void setData(List<Webhook> data) {
     this.data = data;
   }
 
-  public SSHKeyResponse included(Object included) {
+  public WebhookResponse included(List<Object> included) {
     this.included = included;
+    return this;
+  }
+
+  public WebhookResponse addIncludedItem(Object includedItem) {
+    if (this.included == null) {
+      this.included = new ArrayList<Object>();
+    }
+    this.included.add(includedItem);
     return this;
   }
 
@@ -83,11 +101,11 @@ public class SSHKeyResponse {
    * @return included
   **/
   @Schema(description = "")
-  public Object getIncluded() {
+  public List<Object> getIncluded() {
     return included;
   }
 
-  public void setIncluded(Object included) {
+  public void setIncluded(List<Object> included) {
     this.included = included;
   }
 
@@ -100,10 +118,10 @@ public class SSHKeyResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SSHKeyResponse ssHKeyResponse = (SSHKeyResponse) o;
-    return Objects.equals(this.responseStatus, ssHKeyResponse.responseStatus) &&
-        Objects.equals(this.data, ssHKeyResponse.data) &&
-        Objects.equals(this.included, ssHKeyResponse.included);
+    WebhookResponse webhookResponse = (WebhookResponse) o;
+    return Objects.equals(this.responseStatus, webhookResponse.responseStatus) &&
+        Objects.equals(this.data, webhookResponse.data) &&
+        Objects.equals(this.included, webhookResponse.included);
   }
 
   @Override
@@ -115,7 +133,7 @@ public class SSHKeyResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SSHKeyResponse {\n");
+    sb.append("class WebhookResponse {\n");
     
     sb.append("    responseStatus: ").append(toIndentedString(responseStatus)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");

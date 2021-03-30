@@ -28,7 +28,7 @@ import java.io.IOException;
 
 import org.threeten.bp.OffsetDateTime;
 import com.exavault.client.model.SessionActivityResponse;
-import com.exavault.client.model.WebhooksActivityResponse;
+import com.exavault.client.model.WebhookActivityResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -249,11 +249,14 @@ public class ActivityApi {
      * Build call for getWebhookLogs
      * @param evApiKey API Key (required)
      * @param evAccessToken Access Token (required)
-     * @param event Filter by triggered event (optional)
-     * @param statusCode Filter by webhook response status code (optional)
-     * @param path Path used to filter records (optional)
+     * @param startDate Earliest date of entries to include in list (optional)
+     * @param endDate Latest date of entries to include in list (optional)
+     * @param endpointUrl Webhook listener endpoint (optional)
+     * @param event Type of activity that triggered the webhook attempt (optional)
+     * @param statusCode Response code from the webhook endpoint (optional)
+     * @param resourcePath Path of the resource that triggered the webhook attempt (optional)
      * @param username Filter by triggering username. (optional)
-     * @param offset Records to skip before returning results (optional)
+     * @param offset Records to skip before returning results. (optional)
      * @param limit Limit of the records list (optional)
      * @param sort Comma separated list sort params (optional)
      * @param progressListener Progress listener
@@ -261,7 +264,7 @@ public class ActivityApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getWebhookLogsCall(String evApiKey, String evAccessToken, String event, Integer statusCode, String path, String username, Integer offset, Integer limit, String sort, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getWebhookLogsCall(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String endpointUrl, String event, Integer statusCode, String resourcePath, String username, Integer offset, Integer limit, String sort, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -269,12 +272,18 @@ public class ActivityApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (startDate != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("startDate", startDate));
+        if (endDate != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("endDate", endDate));
+        if (endpointUrl != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("endpointUrl", endpointUrl));
         if (event != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("event", event));
         if (statusCode != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("statusCode", statusCode));
-        if (path != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("path", path));
+        if (resourcePath != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("resourcePath", resourcePath));
         if (username != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
         if (offset != null)
@@ -321,7 +330,7 @@ public class ActivityApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getWebhookLogsValidateBeforeCall(String evApiKey, String evAccessToken, String event, Integer statusCode, String path, String username, Integer offset, Integer limit, String sort, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getWebhookLogsValidateBeforeCall(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String endpointUrl, String event, Integer statusCode, String resourcePath, String username, Integer offset, Integer limit, String sort, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         // verify the required parameter 'evApiKey' is set
         if (evApiKey == null) {
             throw new ApiException("Missing the required parameter 'evApiKey' when calling getWebhookLogs(Async)");
@@ -331,7 +340,7 @@ public class ActivityApi {
             throw new ApiException("Missing the required parameter 'evAccessToken' when calling getWebhookLogs(Async)");
         }
         
-        com.squareup.okhttp.Call call = getWebhookLogsCall(evApiKey, evAccessToken, event, statusCode, path, username, offset, limit, sort, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getWebhookLogsCall(evApiKey, evAccessToken, startDate, endDate, endpointUrl, event, statusCode, resourcePath, username, offset, limit, sort, progressListener, progressRequestListener);
         return call;
 
         
@@ -342,62 +351,71 @@ public class ActivityApi {
 
     /**
      * Get webhook logs
-     * Returns the webhook logs for your account. Optional query paramaters will filter the returned results based on a number of options including path, tpye of event, or status code.   **NOTE:** Total Results will always return as 0 to avoid querying data you&#x27;re not using and stay as performant as possible.   **Event Types**  Webhooks are triggered by enabled event types for your account, which are configured on the [developer settings page](/docs/account/09-settings/06-developer-settings). These are the valid options for event types:  - Upload - Download - Delete File - Delete Folder - Create Folder - Rename - Move - Copy - Compress - Extract - Share Folder - Send Files - Receive Files - Update Share - Update Receive - Delete Send - Delete Receive - Delete Share - Create Notification - Update Notification - Delete Notification - Create User - Update User  - Delete User - Connect - Disconnect
+     * Returns the webhook logs for your account. Use the available query parameters to filter the listing of activity that is returned.  **NOTE:** Total Results will always return as 0 to avoid querying data you&#x27;re not using and stay as performant as possible.   **Event Types**  Webhooks are triggered by enabled event types for your account, which are configured on the [developer settings page](/docs/account/09-settings/06-developer-settings). Not all event types may be allowed for your account type. These are the valid options for event types:  - resources.upload - resources.download - resources.delete - resources.createFolder - resources.rename - resources.move - resources.copy - resources.compress - resources.extract - shares.formSubmit 
      * @param evApiKey API Key (required)
      * @param evAccessToken Access Token (required)
-     * @param event Filter by triggered event (optional)
-     * @param statusCode Filter by webhook response status code (optional)
-     * @param path Path used to filter records (optional)
+     * @param startDate Earliest date of entries to include in list (optional)
+     * @param endDate Latest date of entries to include in list (optional)
+     * @param endpointUrl Webhook listener endpoint (optional)
+     * @param event Type of activity that triggered the webhook attempt (optional)
+     * @param statusCode Response code from the webhook endpoint (optional)
+     * @param resourcePath Path of the resource that triggered the webhook attempt (optional)
      * @param username Filter by triggering username. (optional)
-     * @param offset Records to skip before returning results (optional)
+     * @param offset Records to skip before returning results. (optional)
      * @param limit Limit of the records list (optional)
      * @param sort Comma separated list sort params (optional)
-     * @return WebhooksActivityResponse
+     * @return WebhookActivityResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public WebhooksActivityResponse getWebhookLogs(String evApiKey, String evAccessToken, String event, Integer statusCode, String path, String username, Integer offset, Integer limit, String sort) throws ApiException {
-        ApiResponse<WebhooksActivityResponse> resp = getWebhookLogsWithHttpInfo(evApiKey, evAccessToken, event, statusCode, path, username, offset, limit, sort);
+    public WebhookActivityResponse getWebhookLogs(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String endpointUrl, String event, Integer statusCode, String resourcePath, String username, Integer offset, Integer limit, String sort) throws ApiException {
+        ApiResponse<WebhookActivityResponse> resp = getWebhookLogsWithHttpInfo(evApiKey, evAccessToken, startDate, endDate, endpointUrl, event, statusCode, resourcePath, username, offset, limit, sort);
         return resp.getData();
     }
 
     /**
      * Get webhook logs
-     * Returns the webhook logs for your account. Optional query paramaters will filter the returned results based on a number of options including path, tpye of event, or status code.   **NOTE:** Total Results will always return as 0 to avoid querying data you&#x27;re not using and stay as performant as possible.   **Event Types**  Webhooks are triggered by enabled event types for your account, which are configured on the [developer settings page](/docs/account/09-settings/06-developer-settings). These are the valid options for event types:  - Upload - Download - Delete File - Delete Folder - Create Folder - Rename - Move - Copy - Compress - Extract - Share Folder - Send Files - Receive Files - Update Share - Update Receive - Delete Send - Delete Receive - Delete Share - Create Notification - Update Notification - Delete Notification - Create User - Update User  - Delete User - Connect - Disconnect
+     * Returns the webhook logs for your account. Use the available query parameters to filter the listing of activity that is returned.  **NOTE:** Total Results will always return as 0 to avoid querying data you&#x27;re not using and stay as performant as possible.   **Event Types**  Webhooks are triggered by enabled event types for your account, which are configured on the [developer settings page](/docs/account/09-settings/06-developer-settings). Not all event types may be allowed for your account type. These are the valid options for event types:  - resources.upload - resources.download - resources.delete - resources.createFolder - resources.rename - resources.move - resources.copy - resources.compress - resources.extract - shares.formSubmit 
      * @param evApiKey API Key (required)
      * @param evAccessToken Access Token (required)
-     * @param event Filter by triggered event (optional)
-     * @param statusCode Filter by webhook response status code (optional)
-     * @param path Path used to filter records (optional)
+     * @param startDate Earliest date of entries to include in list (optional)
+     * @param endDate Latest date of entries to include in list (optional)
+     * @param endpointUrl Webhook listener endpoint (optional)
+     * @param event Type of activity that triggered the webhook attempt (optional)
+     * @param statusCode Response code from the webhook endpoint (optional)
+     * @param resourcePath Path of the resource that triggered the webhook attempt (optional)
      * @param username Filter by triggering username. (optional)
-     * @param offset Records to skip before returning results (optional)
+     * @param offset Records to skip before returning results. (optional)
      * @param limit Limit of the records list (optional)
      * @param sort Comma separated list sort params (optional)
-     * @return ApiResponse&lt;WebhooksActivityResponse&gt;
+     * @return ApiResponse&lt;WebhookActivityResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<WebhooksActivityResponse> getWebhookLogsWithHttpInfo(String evApiKey, String evAccessToken, String event, Integer statusCode, String path, String username, Integer offset, Integer limit, String sort) throws ApiException {
-        com.squareup.okhttp.Call call = getWebhookLogsValidateBeforeCall(evApiKey, evAccessToken, event, statusCode, path, username, offset, limit, sort, null, null);
-        Type localVarReturnType = new TypeToken<WebhooksActivityResponse>(){}.getType();
+    public ApiResponse<WebhookActivityResponse> getWebhookLogsWithHttpInfo(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String endpointUrl, String event, Integer statusCode, String resourcePath, String username, Integer offset, Integer limit, String sort) throws ApiException {
+        com.squareup.okhttp.Call call = getWebhookLogsValidateBeforeCall(evApiKey, evAccessToken, startDate, endDate, endpointUrl, event, statusCode, resourcePath, username, offset, limit, sort, null, null);
+        Type localVarReturnType = new TypeToken<WebhookActivityResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
      * Get webhook logs (asynchronously)
-     * Returns the webhook logs for your account. Optional query paramaters will filter the returned results based on a number of options including path, tpye of event, or status code.   **NOTE:** Total Results will always return as 0 to avoid querying data you&#x27;re not using and stay as performant as possible.   **Event Types**  Webhooks are triggered by enabled event types for your account, which are configured on the [developer settings page](/docs/account/09-settings/06-developer-settings). These are the valid options for event types:  - Upload - Download - Delete File - Delete Folder - Create Folder - Rename - Move - Copy - Compress - Extract - Share Folder - Send Files - Receive Files - Update Share - Update Receive - Delete Send - Delete Receive - Delete Share - Create Notification - Update Notification - Delete Notification - Create User - Update User  - Delete User - Connect - Disconnect
+     * Returns the webhook logs for your account. Use the available query parameters to filter the listing of activity that is returned.  **NOTE:** Total Results will always return as 0 to avoid querying data you&#x27;re not using and stay as performant as possible.   **Event Types**  Webhooks are triggered by enabled event types for your account, which are configured on the [developer settings page](/docs/account/09-settings/06-developer-settings). Not all event types may be allowed for your account type. These are the valid options for event types:  - resources.upload - resources.download - resources.delete - resources.createFolder - resources.rename - resources.move - resources.copy - resources.compress - resources.extract - shares.formSubmit 
      * @param evApiKey API Key (required)
      * @param evAccessToken Access Token (required)
-     * @param event Filter by triggered event (optional)
-     * @param statusCode Filter by webhook response status code (optional)
-     * @param path Path used to filter records (optional)
+     * @param startDate Earliest date of entries to include in list (optional)
+     * @param endDate Latest date of entries to include in list (optional)
+     * @param endpointUrl Webhook listener endpoint (optional)
+     * @param event Type of activity that triggered the webhook attempt (optional)
+     * @param statusCode Response code from the webhook endpoint (optional)
+     * @param resourcePath Path of the resource that triggered the webhook attempt (optional)
      * @param username Filter by triggering username. (optional)
-     * @param offset Records to skip before returning results (optional)
+     * @param offset Records to skip before returning results. (optional)
      * @param limit Limit of the records list (optional)
      * @param sort Comma separated list sort params (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getWebhookLogsAsync(String evApiKey, String evAccessToken, String event, Integer statusCode, String path, String username, Integer offset, Integer limit, String sort, final ApiCallback<WebhooksActivityResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getWebhookLogsAsync(String evApiKey, String evAccessToken, OffsetDateTime startDate, OffsetDateTime endDate, String endpointUrl, String event, Integer statusCode, String resourcePath, String username, Integer offset, Integer limit, String sort, final ApiCallback<WebhookActivityResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -418,8 +436,8 @@ public class ActivityApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getWebhookLogsValidateBeforeCall(evApiKey, evAccessToken, event, statusCode, path, username, offset, limit, sort, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<WebhooksActivityResponse>(){}.getType();
+        com.squareup.okhttp.Call call = getWebhookLogsValidateBeforeCall(evApiKey, evAccessToken, startDate, endDate, endpointUrl, event, statusCode, resourcePath, username, offset, limit, sort, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<WebhookActivityResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }

@@ -42,6 +42,15 @@ public class BrandingSettings {
   @SerializedName("theme")
   private String theme = null;
 
+  @SerializedName("verifiedDomain")
+  private String verifiedDomain = null;
+
+  @SerializedName("verifiedDomainId")
+  private String verifiedDomainId = null;
+
+  @SerializedName("verifiedDomainValid")
+  private Boolean verifiedDomainValid = null;
+
   public BrandingSettings companyName(String companyName) {
     this.companyName = companyName;
     return this;
@@ -132,6 +141,60 @@ public class BrandingSettings {
     this.theme = theme;
   }
 
+  public BrandingSettings verifiedDomain(String verifiedDomain) {
+    this.verifiedDomain = verifiedDomain;
+    return this;
+  }
+
+   /**
+   * Get verifiedDomain
+   * @return verifiedDomain
+  **/
+  @Schema(description = "")
+  public String getVerifiedDomain() {
+    return verifiedDomain;
+  }
+
+  public void setVerifiedDomain(String verifiedDomain) {
+    this.verifiedDomain = verifiedDomain;
+  }
+
+  public BrandingSettings verifiedDomainId(String verifiedDomainId) {
+    this.verifiedDomainId = verifiedDomainId;
+    return this;
+  }
+
+   /**
+   * Get verifiedDomainId
+   * @return verifiedDomainId
+  **/
+  @Schema(description = "")
+  public String getVerifiedDomainId() {
+    return verifiedDomainId;
+  }
+
+  public void setVerifiedDomainId(String verifiedDomainId) {
+    this.verifiedDomainId = verifiedDomainId;
+  }
+
+  public BrandingSettings verifiedDomainValid(Boolean verifiedDomainValid) {
+    this.verifiedDomainValid = verifiedDomainValid;
+    return this;
+  }
+
+   /**
+   * Get verifiedDomainValid
+   * @return verifiedDomainValid
+  **/
+  @Schema(description = "")
+  public Boolean isVerifiedDomainValid() {
+    return verifiedDomainValid;
+  }
+
+  public void setVerifiedDomainValid(Boolean verifiedDomainValid) {
+    this.verifiedDomainValid = verifiedDomainValid;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -146,12 +209,15 @@ public class BrandingSettings {
         Objects.equals(this.customEmail, brandingSettings.customEmail) &&
         Objects.equals(this.logo, brandingSettings.logo) &&
         Objects.equals(this.logoExt, brandingSettings.logoExt) &&
-        Objects.equals(this.theme, brandingSettings.theme);
+        Objects.equals(this.theme, brandingSettings.theme) &&
+        Objects.equals(this.verifiedDomain, brandingSettings.verifiedDomain) &&
+        Objects.equals(this.verifiedDomainId, brandingSettings.verifiedDomainId) &&
+        Objects.equals(this.verifiedDomainValid, brandingSettings.verifiedDomainValid);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(companyName, customEmail, logo, logoExt, theme);
+    return Objects.hash(companyName, customEmail, logo, logoExt, theme, verifiedDomain, verifiedDomainId, verifiedDomainValid);
   }
 
 
@@ -165,6 +231,9 @@ public class BrandingSettings {
     sb.append("    logo: ").append(toIndentedString(logo)).append("\n");
     sb.append("    logoExt: ").append(toIndentedString(logoExt)).append("\n");
     sb.append("    theme: ").append(toIndentedString(theme)).append("\n");
+    sb.append("    verifiedDomain: ").append(toIndentedString(verifiedDomain)).append("\n");
+    sb.append("    verifiedDomainId: ").append(toIndentedString(verifiedDomainId)).append("\n");
+    sb.append("    verifiedDomainValid: ").append(toIndentedString(verifiedDomainValid)).append("\n");
     sb.append("}");
     return sb.toString();
   }
