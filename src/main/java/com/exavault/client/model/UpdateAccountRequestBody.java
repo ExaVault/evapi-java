@@ -17,7 +17,6 @@ import java.util.Arrays;
 import com.exavault.client.model.AccountAllowedIpRanges;
 import com.exavault.client.model.AccountQuotaValues;
 import com.exavault.client.model.BrandingSettingsValues;
-import com.exavault.client.model.CallbackSettingsValues;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -53,9 +52,6 @@ public class UpdateAccountRequestBody {
 
   @SerializedName("allowedIpRanges")
   private List<AccountAllowedIpRanges> allowedIpRanges = null;
-
-  @SerializedName("callbackSettings")
-  private CallbackSettingsValues callbackSettings = null;
 
   @SerializedName("brandingSettings")
   private BrandingSettingsValues brandingSettings = null;
@@ -203,24 +199,6 @@ public class UpdateAccountRequestBody {
     this.allowedIpRanges = allowedIpRanges;
   }
 
-  public UpdateAccountRequestBody callbackSettings(CallbackSettingsValues callbackSettings) {
-    this.callbackSettings = callbackSettings;
-    return this;
-  }
-
-   /**
-   * Get callbackSettings
-   * @return callbackSettings
-  **/
-  @Schema(description = "")
-  public CallbackSettingsValues getCallbackSettings() {
-    return callbackSettings;
-  }
-
-  public void setCallbackSettings(CallbackSettingsValues callbackSettings) {
-    this.callbackSettings = callbackSettings;
-  }
-
   public UpdateAccountRequestBody brandingSettings(BrandingSettingsValues brandingSettings) {
     this.brandingSettings = brandingSettings;
     return this;
@@ -310,7 +288,6 @@ public class UpdateAccountRequestBody {
         Objects.equals(this.emailContent, updateAccountRequestBody.emailContent) &&
         Objects.equals(this.emailSubject, updateAccountRequestBody.emailSubject) &&
         Objects.equals(this.allowedIpRanges, updateAccountRequestBody.allowedIpRanges) &&
-        Objects.equals(this.callbackSettings, updateAccountRequestBody.callbackSettings) &&
         Objects.equals(this.brandingSettings, updateAccountRequestBody.brandingSettings) &&
         Objects.equals(this.accountOnboarding, updateAccountRequestBody.accountOnboarding) &&
         Objects.equals(this.customSignature, updateAccountRequestBody.customSignature) &&
@@ -319,7 +296,7 @@ public class UpdateAccountRequestBody {
 
   @Override
   public int hashCode() {
-    return Objects.hash(secureOnly, complexPasswords, showReferralLinks, externalDomain, emailContent, emailSubject, allowedIpRanges, callbackSettings, brandingSettings, accountOnboarding, customSignature, quota);
+    return Objects.hash(secureOnly, complexPasswords, showReferralLinks, externalDomain, emailContent, emailSubject, allowedIpRanges, brandingSettings, accountOnboarding, customSignature, quota);
   }
 
 
@@ -335,7 +312,6 @@ public class UpdateAccountRequestBody {
     sb.append("    emailContent: ").append(toIndentedString(emailContent)).append("\n");
     sb.append("    emailSubject: ").append(toIndentedString(emailSubject)).append("\n");
     sb.append("    allowedIpRanges: ").append(toIndentedString(allowedIpRanges)).append("\n");
-    sb.append("    callbackSettings: ").append(toIndentedString(callbackSettings)).append("\n");
     sb.append("    brandingSettings: ").append(toIndentedString(brandingSettings)).append("\n");
     sb.append("    accountOnboarding: ").append(toIndentedString(accountOnboarding)).append("\n");
     sb.append("    customSignature: ").append(toIndentedString(customSignature)).append("\n");

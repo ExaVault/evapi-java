@@ -14,7 +14,7 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.WebhooksActivityEntry;
+import com.exavault.client.model.WebhookActivityEntry;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 @Schema(description = "Session activity list response")
 
-public class WebhooksActivityResponse {
+public class WebhookActivityResponse {
   @SerializedName("responseStatus")
   private Integer responseStatus = null;
 
@@ -40,9 +40,9 @@ public class WebhooksActivityResponse {
   private Integer returnedResults = null;
 
   @SerializedName("data")
-  private List<WebhooksActivityEntry> data = null;
+  private List<WebhookActivityEntry> data = null;
 
-  public WebhooksActivityResponse responseStatus(Integer responseStatus) {
+  public WebhookActivityResponse responseStatus(Integer responseStatus) {
     this.responseStatus = responseStatus;
     return this;
   }
@@ -60,7 +60,7 @@ public class WebhooksActivityResponse {
     this.responseStatus = responseStatus;
   }
 
-  public WebhooksActivityResponse totalResults(Integer totalResults) {
+  public WebhookActivityResponse totalResults(Integer totalResults) {
     this.totalResults = totalResults;
     return this;
   }
@@ -78,7 +78,7 @@ public class WebhooksActivityResponse {
     this.totalResults = totalResults;
   }
 
-  public WebhooksActivityResponse returnedResults(Integer returnedResults) {
+  public WebhookActivityResponse returnedResults(Integer returnedResults) {
     this.returnedResults = returnedResults;
     return this;
   }
@@ -96,14 +96,14 @@ public class WebhooksActivityResponse {
     this.returnedResults = returnedResults;
   }
 
-  public WebhooksActivityResponse data(List<WebhooksActivityEntry> data) {
+  public WebhookActivityResponse data(List<WebhookActivityEntry> data) {
     this.data = data;
     return this;
   }
 
-  public WebhooksActivityResponse addDataItem(WebhooksActivityEntry dataItem) {
+  public WebhookActivityResponse addDataItem(WebhookActivityEntry dataItem) {
     if (this.data == null) {
-      this.data = new ArrayList<WebhooksActivityEntry>();
+      this.data = new ArrayList<WebhookActivityEntry>();
     }
     this.data.add(dataItem);
     return this;
@@ -114,11 +114,11 @@ public class WebhooksActivityResponse {
    * @return data
   **/
   @Schema(description = "")
-  public List<WebhooksActivityEntry> getData() {
+  public List<WebhookActivityEntry> getData() {
     return data;
   }
 
-  public void setData(List<WebhooksActivityEntry> data) {
+  public void setData(List<WebhookActivityEntry> data) {
     this.data = data;
   }
 
@@ -131,11 +131,11 @@ public class WebhooksActivityResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    WebhooksActivityResponse webhooksActivityResponse = (WebhooksActivityResponse) o;
-    return Objects.equals(this.responseStatus, webhooksActivityResponse.responseStatus) &&
-        Objects.equals(this.totalResults, webhooksActivityResponse.totalResults) &&
-        Objects.equals(this.returnedResults, webhooksActivityResponse.returnedResults) &&
-        Objects.equals(this.data, webhooksActivityResponse.data);
+    WebhookActivityResponse webhookActivityResponse = (WebhookActivityResponse) o;
+    return Objects.equals(this.responseStatus, webhookActivityResponse.responseStatus) &&
+        Objects.equals(this.totalResults, webhookActivityResponse.totalResults) &&
+        Objects.equals(this.returnedResults, webhookActivityResponse.returnedResults) &&
+        Objects.equals(this.data, webhookActivityResponse.data);
   }
 
   @Override
@@ -147,7 +147,7 @@ public class WebhooksActivityResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class WebhooksActivityResponse {\n");
+    sb.append("class WebhookActivityResponse {\n");
     
     sb.append("    responseStatus: ").append(toIndentedString(responseStatus)).append("\n");
     sb.append("    totalResults: ").append(toIndentedString(totalResults)).append("\n");

@@ -14,7 +14,6 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.WebhooksActivityEntryAttributes;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,11 +22,11 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * WebhooksActivityEntry
+ * WebhookActivityEntry
  */
 
 
-public class WebhooksActivityEntry {
+public class WebhookActivityEntry {
   @SerializedName("id")
   private Long id = null;
 
@@ -75,9 +74,9 @@ public class WebhooksActivityEntry {
   private TypeEnum type = null;
 
   @SerializedName("attributes")
-  private WebhooksActivityEntryAttributes attributes = null;
+  private Object attributes = null;
 
-  public WebhooksActivityEntry id(Long id) {
+  public WebhookActivityEntry id(Long id) {
     this.id = id;
     return this;
   }
@@ -95,7 +94,7 @@ public class WebhooksActivityEntry {
     this.id = id;
   }
 
-  public WebhooksActivityEntry type(TypeEnum type) {
+  public WebhookActivityEntry type(TypeEnum type) {
     this.type = type;
     return this;
   }
@@ -113,7 +112,7 @@ public class WebhooksActivityEntry {
     this.type = type;
   }
 
-  public WebhooksActivityEntry attributes(WebhooksActivityEntryAttributes attributes) {
+  public WebhookActivityEntry attributes(Object attributes) {
     this.attributes = attributes;
     return this;
   }
@@ -123,11 +122,11 @@ public class WebhooksActivityEntry {
    * @return attributes
   **/
   @Schema(description = "")
-  public WebhooksActivityEntryAttributes getAttributes() {
+  public Object getAttributes() {
     return attributes;
   }
 
-  public void setAttributes(WebhooksActivityEntryAttributes attributes) {
+  public void setAttributes(Object attributes) {
     this.attributes = attributes;
   }
 
@@ -140,10 +139,10 @@ public class WebhooksActivityEntry {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    WebhooksActivityEntry webhooksActivityEntry = (WebhooksActivityEntry) o;
-    return Objects.equals(this.id, webhooksActivityEntry.id) &&
-        Objects.equals(this.type, webhooksActivityEntry.type) &&
-        Objects.equals(this.attributes, webhooksActivityEntry.attributes);
+    WebhookActivityEntry webhookActivityEntry = (WebhookActivityEntry) o;
+    return Objects.equals(this.id, webhookActivityEntry.id) &&
+        Objects.equals(this.type, webhookActivityEntry.type) &&
+        Objects.equals(this.attributes, webhookActivityEntry.attributes);
   }
 
   @Override
@@ -155,7 +154,7 @@ public class WebhooksActivityEntry {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class WebhooksActivityEntry {\n");
+    sb.append("class WebhookActivityEntry {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");

@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.Arrays;
 import com.exavault.client.model.AccountAttributesAllowedIp;
 import com.exavault.client.model.BrandingSettings;
-import com.exavault.client.model.CallbackSettings;
+import com.exavault.client.model.PlanDetails;
 import com.exavault.client.model.Quota;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -111,11 +111,11 @@ public class AccountAttributes {
   @SerializedName("allowedIp")
   private List<AccountAttributesAllowedIp> allowedIp = null;
 
-  @SerializedName("callbackSettings")
-  private CallbackSettings callbackSettings = null;
-
   @SerializedName("brandingSettings")
   private BrandingSettings brandingSettings = null;
+
+  @SerializedName("planDetails")
+  private PlanDetails planDetails = null;
 
   @SerializedName("clientId")
   private Integer clientId = null;
@@ -370,24 +370,6 @@ public class AccountAttributes {
     this.allowedIp = allowedIp;
   }
 
-  public AccountAttributes callbackSettings(CallbackSettings callbackSettings) {
-    this.callbackSettings = callbackSettings;
-    return this;
-  }
-
-   /**
-   * Get callbackSettings
-   * @return callbackSettings
-  **/
-  @Schema(description = "")
-  public CallbackSettings getCallbackSettings() {
-    return callbackSettings;
-  }
-
-  public void setCallbackSettings(CallbackSettings callbackSettings) {
-    this.callbackSettings = callbackSettings;
-  }
-
   public AccountAttributes brandingSettings(BrandingSettings brandingSettings) {
     this.brandingSettings = brandingSettings;
     return this;
@@ -404,6 +386,24 @@ public class AccountAttributes {
 
   public void setBrandingSettings(BrandingSettings brandingSettings) {
     this.brandingSettings = brandingSettings;
+  }
+
+  public AccountAttributes planDetails(PlanDetails planDetails) {
+    this.planDetails = planDetails;
+    return this;
+  }
+
+   /**
+   * Get planDetails
+   * @return planDetails
+  **/
+  @Schema(description = "")
+  public PlanDetails getPlanDetails() {
+    return planDetails;
+  }
+
+  public void setPlanDetails(PlanDetails planDetails) {
+    this.planDetails = planDetails;
   }
 
   public AccountAttributes clientId(Integer clientId) {
@@ -554,8 +554,8 @@ public class AccountAttributes {
         Objects.equals(this.showReferralLinks, accountAttributes.showReferralLinks) &&
         Objects.equals(this.externalDomains, accountAttributes.externalDomains) &&
         Objects.equals(this.allowedIp, accountAttributes.allowedIp) &&
-        Objects.equals(this.callbackSettings, accountAttributes.callbackSettings) &&
         Objects.equals(this.brandingSettings, accountAttributes.brandingSettings) &&
+        Objects.equals(this.planDetails, accountAttributes.planDetails) &&
         Objects.equals(this.clientId, accountAttributes.clientId) &&
         Objects.equals(this.welcomeEmailContent, accountAttributes.welcomeEmailContent) &&
         Objects.equals(this.welcomeEmailSubject, accountAttributes.welcomeEmailSubject) &&
@@ -567,7 +567,7 @@ public class AccountAttributes {
 
   @Override
   public int hashCode() {
-    return Objects.hash(accountName, maxUsers, userCount, status, branding, customDomain, quota, secureOnly, complexPasswords, showReferralLinks, externalDomains, allowedIp, callbackSettings, brandingSettings, clientId, welcomeEmailContent, welcomeEmailSubject, customSignature, accountOnboarding, created, modified);
+    return Objects.hash(accountName, maxUsers, userCount, status, branding, customDomain, quota, secureOnly, complexPasswords, showReferralLinks, externalDomains, allowedIp, brandingSettings, planDetails, clientId, welcomeEmailContent, welcomeEmailSubject, customSignature, accountOnboarding, created, modified);
   }
 
 
@@ -588,8 +588,8 @@ public class AccountAttributes {
     sb.append("    showReferralLinks: ").append(toIndentedString(showReferralLinks)).append("\n");
     sb.append("    externalDomains: ").append(toIndentedString(externalDomains)).append("\n");
     sb.append("    allowedIp: ").append(toIndentedString(allowedIp)).append("\n");
-    sb.append("    callbackSettings: ").append(toIndentedString(callbackSettings)).append("\n");
     sb.append("    brandingSettings: ").append(toIndentedString(brandingSettings)).append("\n");
+    sb.append("    planDetails: ").append(toIndentedString(planDetails)).append("\n");
     sb.append("    clientId: ").append(toIndentedString(clientId)).append("\n");
     sb.append("    welcomeEmailContent: ").append(toIndentedString(welcomeEmailContent)).append("\n");
     sb.append("    welcomeEmailSubject: ").append(toIndentedString(welcomeEmailSubject)).append("\n");

@@ -14,7 +14,6 @@ package com.exavault.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.exavault.client.model.CallbackSettingsValuesTriggers;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,51 +22,51 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.IOException;
 /**
- * CallbackSettingsValues
+ * WebhookRelationshipsResourceData
  */
 
 
-public class CallbackSettingsValues {
-  @SerializedName("endpointUrl")
-  private String endpointUrl = null;
+public class WebhookRelationshipsResourceData {
+  @SerializedName("type")
+  private String type = null;
 
-  @SerializedName("triggers")
-  private CallbackSettingsValuesTriggers triggers = null;
+  @SerializedName("id")
+  private Integer id = null;
 
-  public CallbackSettingsValues endpointUrl(String endpointUrl) {
-    this.endpointUrl = endpointUrl;
+  public WebhookRelationshipsResourceData type(String type) {
+    this.type = type;
     return this;
   }
 
    /**
-   * Get endpointUrl
-   * @return endpointUrl
+   * Type of thing it is. \&quot;resource\&quot;
+   * @return type
   **/
-  @Schema(description = "")
-  public String getEndpointUrl() {
-    return endpointUrl;
+  @Schema(example = "resource", description = "Type of thing it is. \"resource\"")
+  public String getType() {
+    return type;
   }
 
-  public void setEndpointUrl(String endpointUrl) {
-    this.endpointUrl = endpointUrl;
+  public void setType(String type) {
+    this.type = type;
   }
 
-  public CallbackSettingsValues triggers(CallbackSettingsValuesTriggers triggers) {
-    this.triggers = triggers;
+  public WebhookRelationshipsResourceData id(Integer id) {
+    this.id = id;
     return this;
   }
 
    /**
-   * Get triggers
-   * @return triggers
+   * ID of the resource associated with the webhook
+   * @return id
   **/
-  @Schema(description = "")
-  public CallbackSettingsValuesTriggers getTriggers() {
-    return triggers;
+  @Schema(example = "134122", description = "ID of the resource associated with the webhook")
+  public Integer getId() {
+    return id;
   }
 
-  public void setTriggers(CallbackSettingsValuesTriggers triggers) {
-    this.triggers = triggers;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
 
@@ -79,24 +78,24 @@ public class CallbackSettingsValues {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CallbackSettingsValues callbackSettingsValues = (CallbackSettingsValues) o;
-    return Objects.equals(this.endpointUrl, callbackSettingsValues.endpointUrl) &&
-        Objects.equals(this.triggers, callbackSettingsValues.triggers);
+    WebhookRelationshipsResourceData webhookRelationshipsResourceData = (WebhookRelationshipsResourceData) o;
+    return Objects.equals(this.type, webhookRelationshipsResourceData.type) &&
+        Objects.equals(this.id, webhookRelationshipsResourceData.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(endpointUrl, triggers);
+    return Objects.hash(type, id);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CallbackSettingsValues {\n");
+    sb.append("class WebhookRelationshipsResourceData {\n");
     
-    sb.append("    endpointUrl: ").append(toIndentedString(endpointUrl)).append("\n");
-    sb.append("    triggers: ").append(toIndentedString(triggers)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
   }
